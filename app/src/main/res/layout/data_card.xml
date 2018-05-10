@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EDEDED">
+
+    <TextView
+        android:clickable="false"
+        android:id="@+id/data_card_title_item"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ข้อความ"
+        android:textColor="@color/colorText"
+        android:fontFamily="@font/sukhumvit_bold"
+        android:layout_marginLeft="26dp"
+        android:textSize="30dp"
+        />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/data_card_card_item"
+        android:visibility="visible"
+        android:clickable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="14dp"
+        >
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.CardView
+                android:layout_centerVertical="true"
+                android:id="@+id/data_card_card_icon_area"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="25dp"
+                android:layout_marginLeft="16dp"
+                >
+                <ImageView
+                    android:tint="@color/colorWhite"
+                    android:id="@+id/data_card_card_icon_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_chicken_icon"
+                    android:layout_gravity="center"
+                    />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_centerVertical="true"
+                android:id="@+id/data_card_card_more_area"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="16dp"
+                app:cardElevation="0dp"
+                android:layout_alignParentRight="true"
+                app:cardBackgroundColor="#EDEDED"
+                app:cardCornerRadius="20dp"
+                android:layout_marginLeft="16dp"
+                >
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_more"
+                    android:tint="#b4b4b4"
+                    android:layout_gravity="center"
+                    />
+            </android.support.v7.widget.CardView>
+
+            <RelativeLayout
+                android:layout_marginTop="0dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="82dp"
+                android:layout_width="match_parent"
+                android:layout_marginRight="70dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/data_card_title_text_view"
+                    android:singleLine="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24dp"
+                    android:fontFamily="@font/sukhumvit_bold"
+                    android:text="หัวข้อ"
+                    android:textColor="@color/colorPrimary"
+                    />
+                <TextView
+                    android:id="@+id/data_card_title_description_text_view"
+                    android:singleLine="true"
+                    android:textColor="@color/colorText"
+                    android:layout_marginTop="36dp"
+                    android:fontFamily="@font/sukhumvit_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="รหัสไอดีรายการ"
+                    />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            >
+
+            <!-- Information Card -->
+            <LinearLayout
+                android:id="@+id/data_card_card_info_area"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:singleLine="true"
+                        android:textColor="@color/colorText"
+                        android:fontFamily="@font/sukhumvit_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="19dp"
+                        android:text="วันที่รับเข้า"
+                        />
+                    <TextView
+                        android:id="@+id/data_card_card_info_date_text_view"
+                        android:layout_alignParentRight="true"
+                        android:singleLine="true"
+                        android:textColor="@color/colorText"
+                        android:fontFamily="@font/sukhumvit_light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="19dp"
+                        android:text="1 มกราคม 2500"
+                        />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_marginTop="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:singleLine="true"
+                        android:textColor="@color/colorText"
+                        android:fontFamily="@font/sukhumvit_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="19dp"
+                        android:text="อายุของไก่"
+                        />
+                    <TextView
+                        android:id="@+id/data_card_card_info_age_text_view"
+                        android:layout_alignParentRight="true"
+                        android:singleLine="true"
+                        android:textColor="@color/colorText"
+                        android:fontFamily="@font/sukhumvit_light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="19dp"
+                        android:text="0 วัน"
+                        />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_marginTop="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:singleLine="true"
+                        android:textColor="@color/colorText"
+                        android:fontFamily="@font/sukhumvit_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="19dp"
+                        android:text="วัตถุประสงค์การเลี้ยง"
+                        />
+                    <TextView
+                        android:id="@+id/data_card_card_info_objective_text_view"
+                        android:layout_alignParentRight="true"
+                        android:singleLine="true"
+                        android:textColor="@color/colorText"
+                        android:fontFamily="@font/sukhumvit_light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="19dp"
+                        android:text="ไม่ทราบ"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- Messages Card -->
+            <RelativeLayout
+                android:id="@+id/data_card_card_message_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="36dp"
+                android:layout_marginRight="16dp"
+                >
+                <TextView
+                    android:id="@+id/data_card_card_message_text_view"
+                    android:textColor="@color/colorText"
+                    android:fontFamily="@font/sukhumvit_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="19dp"
+                    android:text="ข้อความ"
+                    />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
