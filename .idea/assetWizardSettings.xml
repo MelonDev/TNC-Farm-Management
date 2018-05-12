@@ -19,8 +19,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/college-studying.png" />
-                                      <entry key="outputName" value="ic_book_icon" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Documents/back.png" />
+                                      <entry key="outputName" value="ic_back_icon" />
                                       <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>

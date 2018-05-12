@@ -43,6 +43,7 @@ class ProgramViewPager(val activity: ProgramMainActivity) {
         adapter.addFragment(activity.notificationFragment, "แจ้งเตือน")
         adapter.addFragment(activity.historyFragment, "ประวัติ")
         viewPager.adapter = adapter
+        viewPager.offscreenPageLimit = 0
 
         //OverScrollDecoratorHelper.setUpOverScroll(viewPager)
 
@@ -56,6 +57,7 @@ class ProgramViewPager(val activity: ProgramMainActivity) {
                 activity.programFragment.fab.show()
             } else {
                 activity.programFragment.fab.hide()
+                activity.programFragment.reset()
             }
             //currentPage = position
         }

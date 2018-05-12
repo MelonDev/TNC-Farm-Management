@@ -73,6 +73,12 @@ class CardVHConfig(val context: Context, val holder: CardViewHolder) {
         return this
     }
 
+    fun infoCheckTheme() :CardVHConfig{
+        holder.message_area.visibility = View.VISIBLE
+        cardThemeColor(infoTheme)
+        return this
+    }
+
     fun injectTheme() :CardVHConfig{
         holder.message_area.visibility = View.VISIBLE
         cardThemeColor(injectTheme)

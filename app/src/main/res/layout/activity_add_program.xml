@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDEDED"
+    tools:context=".AddProgramActivity.AddProgramActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/colorPrimary"
+            android:minHeight="50dp"
+            app:layout_scrollFlags="scroll">
+
+            <RelativeLayout
+
+                android:id="@+id/add_program_back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="16dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_back_icon"
+                    android:tint="@color/colorWhite" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:fontFamily="@font/sukhumvit_light"
+                    android:paddingBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:text="กลับ"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/add_program_title_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="0dp"
+                android:fontFamily="@font/sukhumvit_bold"
+                android:gravity="center_horizontal"
+                android:maxWidth="200dp"
+                android:paddingBottom="0dp"
+                android:paddingRight="0dp"
+                android:text="เพิ่มรายการข้อมูล"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp" />
+
+            <RelativeLayout
+                android:id="@+id/add_program_save_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:fontFamily="@font/sukhumvit_semibold"
+                    android:paddingBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:text="บันทึก"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/sukhumvit_bold"
+                        android:text="ชื่อรายการ"
+                        android:textColor="@color/colorText"
+                        android:textSize="24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:fontFamily="@font/sukhumvit_light"
+                        android:text="หากไม่มีการตั้งชื่อรายการ ผู้ใช้สามารถกดแก้ไขเพื่อตั้งชื่อรายการในภายหลังได้"
+                        android:textColor="#9c9c9c"
+                        android:textSize="16dp" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="22dp"
+                        android:layout_marginTop="6dp"
+                        app:cardBackgroundColor="#EDEDED"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp">
+
+                        <EditText
+                            android:focusableInTouchMode="true"
+                            android:focusable="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:background="@android:color/transparent"
+                            android:hint="พิมพ์ชื่อรายการ.."
+                            android:padding="8dp"
+                            android:singleLine="true"
+                            android:textColor="@color/colorText"
+                            android:textColorHint="#afafaf"
+                            android:textSize="20dp" />
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#cfcfcf" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="16dp"
+                    android:textColor="@color/colorText"
+                    android:fontFamily="@font/sukhumvit_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="รายละเอียด"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_marginBottom="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#cfcfcf" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="0dp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_marginRight="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="64dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:fontFamily="@font/sukhumvit_semibold"
+                                android:text="วันที่รับเข้า"
+                                android:textColor="@color/colorText"
+                                android:textSize="20dp"
+                                android:layout_centerVertical="true"
+                                />
+
+                            <TextView
+
+                                android:layout_alignParentRight="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:fontFamily="@font/sukhumvit_semibold"
+                                android:text="1 มกราคม 2500"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="20dp"
+                                android:layout_centerVertical="true"
+                                />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#cfcfcf" />
+
+                        <RelativeLayout
+                            android:layout_marginRight="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="64dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:fontFamily="@font/sukhumvit_semibold"
+                                android:text="วัตถุประสงค์การเลี้ยง"
+                                android:textColor="@color/colorText"
+                                android:textSize="20dp"
+                                android:layout_centerVertical="true"
+                                />
+
+                            <TextView
+                                android:layout_alignParentRight="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:fontFamily="@font/sukhumvit_semibold"
+                                android:text="ไม่พบข้อมูล"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="20dp"
+                                android:layout_centerVertical="true"
+                                />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#cfcfcf" />
+
+                        <RelativeLayout
+                            android:layout_marginRight="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="64dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:fontFamily="@font/sukhumvit_semibold"
+                                android:text="อายุของไก่"
+                                android:textColor="@color/colorText"
+                                android:textSize="20dp"
+                                android:layout_centerVertical="true"
+                                />
+
+                            <TextView
+                                android:layout_alignParentRight="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:fontFamily="@font/sukhumvit_semibold"
+                                android:text="0 สัปดาห์ 0 วัน"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="20dp"
+                                android:layout_centerVertical="true"
+                                />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_marginTop="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#cfcfcf" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="16dp"
+                    android:textColor="@color/colorText"
+                    android:fontFamily="@font/sukhumvit_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="การแจ้งเตือน"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_marginBottom="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#cfcfcf" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="0dp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_marginRight="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="64dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:fontFamily="@font/sukhumvit_semibold"
+                                android:text="แจ้งเตือนรายการนี้"
+                                android:textColor="@color/colorText"
+                                android:textSize="20dp"
+                                android:layout_centerVertical="true"
+                                />
+
+                            <com.suke.widget.SwitchButton
+                                app:sb_effect_duration="200"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                app:sb_checked="true"
+                                app:sb_background="#EDEDED"
+                                app:sb_show_indicator="false"
+                                app:sb_enable_effect="true"
+                                app:sb_checked_color="@color/colorPrimary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"/>
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#cfcfcf" />
+
+                        <RelativeLayout
+                            android:layout_marginRight="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="64dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:fontFamily="@font/sukhumvit_semibold"
+                                android:text="เตื่อนล่วงหน้าหนึ่งวัน"
+                                android:textColor="@color/colorText"
+                                android:textSize="20dp"
+                                android:layout_centerVertical="true"
+                                />
+
+                            <com.suke.widget.SwitchButton
+                                app:sb_effect_duration="200"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                app:sb_checked="true"
+                                app:sb_background="#EDEDED"
+                                app:sb_show_indicator="false"
+                                app:sb_enable_effect="true"
+                                app:sb_checked_color="@color/colorPrimary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"/>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_marginTop="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#cfcfcf" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</android.support.design.widget.CoordinatorLayout>

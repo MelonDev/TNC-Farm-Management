@@ -26,4 +26,8 @@ class CardViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
     val message_area :RelativeLayout = itemView.data_card_card_message_area
     val message_text :TextView = itemView.data_card_card_message_text_view
 
+    val menu_dialog :RelativeLayout = itemView.data_card_card_menu_dialog
+    var dialogOpen :Boolean = false
+    val card_in_dialog :CardView = itemView.data_card_card_menu_dialog_card
+
 }
