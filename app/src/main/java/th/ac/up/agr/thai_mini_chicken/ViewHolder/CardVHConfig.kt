@@ -2,10 +2,13 @@ package th.ac.up.agr.thai_mini_chicken.ViewHolder
 
 import android.content.Context
 import android.content.res.Resources
+import android.support.v4.app.FragmentActivity
+import android.util.Log
 import android.view.View
 import th.ac.up.agr.thai_mini_chicken.R
+import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 
-class CardVHConfig(val context: Context, val holder: CardViewHolder) {
+class CardVHConfig(val fragment :FragmentActivity, val holder: CardViewHolder) {
 
     /* วิธีใช้งาน
         CardVHConfig.load(this, CardViewHolder(View(this)))
@@ -26,7 +29,7 @@ class CardVHConfig(val context: Context, val holder: CardViewHolder) {
                 .titleItem("")
        */
 
-    private val resource: Resources = context.resources
+    private val resource: Resources = fragment.resources
     private val infoTheme: Int = resource.getColor(R.color.colorPrimary)
     private val injectTheme: Int = resource.getColor(R.color.colorSkyBlue)
     private val parasiteTheme: Int = resource.getColor(R.color.colorLightGreen)
@@ -36,7 +39,7 @@ class CardVHConfig(val context: Context, val holder: CardViewHolder) {
     }
 
     companion object {
-        fun load(context: Context, holder: CardViewHolder) = CardVHConfig(context, holder)
+        fun load(fragment: FragmentActivity, holder: CardViewHolder) = CardVHConfig(fragment, holder)
         val TITLE = "CARD_TITLE"
         val INJECTION = "CARD_INJECTION"
         val PARASITE = "CARD_PARASITE"
@@ -66,7 +69,8 @@ class CardVHConfig(val context: Context, val holder: CardViewHolder) {
     }
 
     fun infoTheme(date: String, age: String, objective: String):CardVHConfig {
-        cardThemeColor(infoTheme)
+        //cardThemeColor(infoTheme)
+        cardThemeColor(resource.getColor(MelonTheme.from(fragment).getColor()))
         holder.info_area.visibility = View.VISIBLE
         setCardInfoText(date,age,objective)
         holder.icon_image.setImageDrawable(resource.getDrawable(R.drawable.ic_chicken_icon))

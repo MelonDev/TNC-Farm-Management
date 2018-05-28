@@ -1,4 +1,4 @@
-package th.ac.up.agr.thai_nativechickenexpertsystem.Tools
+package th.ac.up.agr.thai_mini_chicken.Tools
 
 class ConvertCard {
 
@@ -12,9 +12,21 @@ class ConvertCard {
             add("กรงตับ")
             add("ขังคอก")
             add("ปล่อยอิสระ")
+            add("กึ่งขังกึ่งปล่อย")
             add("อินทรีย์")
         }
         return arrSystem[position.toInt()]
+    }
+
+    fun getSystem() :ArrayList<String>{
+        arrSystem.apply {
+            add("กรงตับ")
+            add("ขังคอก")
+            add("ปล่อยอิสระ")
+            add("กึ่งขังกึ่งปล่อย")
+            add("อินทรีย์")
+        }
+        return arrSystem
     }
 
     fun getMonth(month :String) :String{
@@ -34,6 +46,8 @@ class ConvertCard {
         }
         return arrMonth[month.toInt()-1]
     }
+
+
 
     fun getArrMonth() :ArrayList<String> {
         arrMonth.apply {
@@ -57,11 +71,33 @@ class ConvertCard {
         return (year.toInt() + 543).toString()
     }
 
+    fun getBool(bool :Boolean) :String{
+        return if(bool){
+            "เปิด"
+        }else {
+            "ปิด"
+        }
+    }
+
     fun getObjective(position :String) :String{
         arrObjective.apply {
-            add("พ่อ-แม่พันธุ์")
-            add("ขุนอาหาร")
+            add("ไก่พ่อ-แม่พันธุ์")
+            add("ขายลูกไก่")
+            add("ไก่เนื้อ")
+            add("ประกวด")
+            add("อื่นๆ")
         }
         return arrObjective[position.toInt()]
+    }
+
+    fun getObjective() :ArrayList<String>{
+        arrObjective.apply {
+            add("ไก่พ่อ-แม่พันธุ์")
+            add("ขายลูกไก่")
+            add("ไก่เนื้อ")
+            add("ประกวด")
+            add("อื่นๆ")
+        }
+        return arrObjective
     }
 }

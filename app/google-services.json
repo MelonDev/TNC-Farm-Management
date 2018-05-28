@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "509785584255",
+    "firebase_url": "https://tnc-farm-manager.firebaseio.com",
+    "project_id": "tnc-farm-manager",
+    "storage_bucket": "tnc-farm-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509785584255:android:793fe8a3bd322202",
+        "android_client_info": {
+          "package_name": "th.ac.up.agr.thai_mini_chicken"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509785584255-3c5d8savn2ii0cr5ekbdn0eadgbs53fe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "th.ac.up.agr.thai_mini_chicken",
+            "certificate_hash": "6806c4d4fb837ed9d5cf024216cc28bf37c00da0"
+          }
+        },
+        {
+          "client_id": "509785584255-j9b8a7t4ponufjngnjmhpun1ev59v5ag.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "509785584255-j9b8a7t4ponufjngnjmhpun1ev59v5ag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfzMH3WWRz1fETnyhhMeD97igCgmluaMk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509785584255-j9b8a7t4ponufjngnjmhpun1ev59v5ag.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -32,6 +32,14 @@
         <item name="android:popupBackground">@drawable/abc_popup_background_mtrl_mult</item>
     </style>
 
+    <style name="Fullscreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="SplashTheme" parent="Fullscreen">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

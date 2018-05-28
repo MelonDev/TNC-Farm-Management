@@ -1,12 +1,12 @@
-package th.ac.up.agr.thai_nativechickenexpertsystem.Tools
+package th.ac.up.agr.thai_mini_chicken.Tools
 
 import android.content.Context
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import th.ac.up.agr.thai_nativechickenexpertsystem.Tools.PreCaching.PreCachingGridLayoutManager
-import th.ac.up.agr.thai_nativechickenexpertsystem.Tools.PreCaching.PreCachingLinearLayoutManager
+import th.ac.up.agr.thai_mini_chicken.Tools.PreCaching.PreCachingGridLayoutManager
+import th.ac.up.agr.thai_mini_chicken.Tools.PreCaching.PreCachingLinearLayoutManager
 
 class QuickRecyclerView(private val context: Context, private val recyclerView: RecyclerView, private val layoutManagerType: String, private val columns: Int, private val orientation: String, private val reverse: Boolean, private val overScroll: String, private val cacheQuality: String) {
 
@@ -24,6 +24,14 @@ class QuickRecyclerView(private val context: Context, private val recyclerView: 
                 layoutManager.orientation = gridOrientation()
                 //layoutManager.extraLayoutSpace = extraLayoutSpace()
                 layoutManager.reverseLayout = reverse
+                recyclerView.layoutManager = layoutManager
+            }
+            "spacial" -> {
+                val layoutManager = PreCachingLinearLayoutManager(context)
+                layoutManager.orientation = linearOrientation()
+                //layoutManager.extraLayoutSpace = extraLayoutSpace()
+                layoutManager.reverseLayout = reverse
+                layoutManager.stackFromEnd = true
                 recyclerView.layoutManager = layoutManager
             }
         }

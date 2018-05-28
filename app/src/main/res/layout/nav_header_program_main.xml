@@ -5,143 +5,279 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:orientation="vertical"
-    android:paddingTop="40dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
-        android:textStyle="bold"
-        android:fontFamily="@font/sukhumvit_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="เมนู"
-        android:textColor="@color/colorText"
-        android:layout_marginBottom="26dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"
-        android:textSize="30dp"
-        />
-
-    <LinearLayout
-        android:layout_marginLeft="16dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="20dp"
-            >
+        <LinearLayout
+            android:paddingTop="40dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_card_icon"
-                android:tint="@color/colorWhite"
+            <LinearLayout
+                android:id="@+id/nav_profile_area"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                >
+
+                <android.support.v7.widget.CardView
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="35dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/profile"
+                        />
+
+                </android.support.v7.widget.CardView>
+
+                <RelativeLayout
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_marginRight="16dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginTop="6dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ชื่อฟาร์ม"
+                        android:textColor="@color/colorText"
+                        android:layout_marginLeft="16dp"
+                        android:textSize="22dp"
+                        android:fontFamily="@font/sukhumvit_bold"
+                        />
+                    <TextView
+
+                        android:layout_marginTop="36dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="example@email.com"
+                        android:textColor="@color/colorText"
+                        android:layout_marginLeft="16dp"
+                        android:textSize="18dp"
+                        android:fontFamily="@font/sukhumvit_light"
+                        />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e2e2e2"
                 />
 
-        </android.support.v7.widget.CardView>
-
-        <TextView
-            android:fontFamily="@font/sukhumvit_semibold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="โปรแกรมการจัดการ"
-            android:textColor="@color/colorPrimary"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:textSize="20dp"
-            />
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:background="@color/colorWhite"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.CardView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cardBackgroundColor="#d9d9d9"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="20dp"
-            >
-
-            <ImageView
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_calendar_icon"
-                android:tint="@color/colorText"
+            <TextView
+                android:textStyle="bold"
+                android:fontFamily="@font/sukhumvit_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="เมนู"
+                android:textColor="@color/colorText"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:textSize="30dp"
                 />
 
-        </android.support.v7.widget.CardView>
+            <LinearLayout
+                android:id="@+id/nav_program_area"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:fontFamily="@font/sukhumvit_semibold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="การจัดการไก่ระยะต่างๆ"
-            android:textColor="#b3b3b3"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:textSize="20dp"
-            />
+                <android.support.v7.widget.CardView
+                    android:visibility="gone"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="20dp"
+                    >
 
-    </LinearLayout>
-    <RelativeLayout
-        android:background="@color/colorWhite"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_card_icon"
+                        android:tint="@color/colorWhite"
+                        />
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cardBackgroundColor="#d9d9d9"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="20dp"
-            >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_card_icon"
+                    android:tint="?attr/colorPrimaryDark"
+                    />
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_book_icon"
-                android:tint="@color/colorText"
+                <TextView
+                    android:fontFamily="@font/sukhumvit_semibold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="โปรแกรมการจัดการ"
+                    android:textColor="?attr/colorPrimary"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:textSize="20dp"
+                    />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:background="@color/colorWhite"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:id="@+id/nav_parasite_area"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_parasite_icon"
+                    android:tint="@color/colorText"
+                    />
+
+                <TextView
+                    android:fontFamily="@font/sukhumvit_semibold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="โปรแกรมถ่ายพยาธิ"
+                    android:textColor="#b3b3b3"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:textSize="20dp"
+                    />
+
+            </LinearLayout>
+            <RelativeLayout
+                android:background="@color/colorWhite"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:id="@+id/nav_injection_area"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_injection_icon"
+                    android:tint="@color/colorText"
+                    />
+
+                <TextView
+                    android:fontFamily="@font/sukhumvit_semibold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="โปรแกรมวัคซีน"
+                    android:textColor="#b3b3b3"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:textSize="20dp"
+                    />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e2e2e2"
                 />
+            <LinearLayout
+                android:id="@+id/nav_settings_area"
 
-        </android.support.v7.widget.CardView>
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:fontFamily="@font/sukhumvit_semibold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ความรู้เกี่ยวกับไก่พื้นเมือง"
-            android:textColor="#b3b3b3"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:textSize="20dp"
-            />
+                <ImageView
+                    android:layout_width="43dp"
+                    android:layout_height="43dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_settings_icon"
+                    android:tint="@color/colorText"
+                    />
 
-    </LinearLayout>
+                <TextView
+                    android:fontFamily="@font/sukhumvit_semibold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ตั้งค่า"
+                    android:textColor="#b3b3b3"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:textSize="20dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_about_area"
+
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_contact_icon"
+                    android:tint="@color/colorText"
+                    />
+
+                <TextView
+                    android:fontFamily="@font/sukhumvit_semibold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ติดต่อเรา"
+                    android:textColor="#b3b3b3"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:textSize="20dp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

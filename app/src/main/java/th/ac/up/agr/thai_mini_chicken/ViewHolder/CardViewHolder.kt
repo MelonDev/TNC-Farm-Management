@@ -30,4 +30,6 @@ class CardViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
     var dialogOpen :Boolean = false
     val card_in_dialog :CardView = itemView.data_card_card_menu_dialog_card
 
+    val layout :RelativeLayout = itemView.data_card_layout
+
 }

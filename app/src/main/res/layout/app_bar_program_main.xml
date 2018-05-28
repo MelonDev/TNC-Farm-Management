@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabTextColor="@color/colorTabInActiveText"
-            app:tabBackground="@color/colorPrimary"
+            app:tabBackground="?attr/colorPrimary"
             app:tabIndicatorColor="@color/colorWhite"
             app:tabSelectedTextColor="@color/colorWhite"
             app:tabIndicatorHeight="4dp"
@@ -54,7 +54,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:fabSize="normal"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="?attr/colorPrimary"
         app:srcCompat="@drawable/ic_add"
         app:elevation="6dp"
         />

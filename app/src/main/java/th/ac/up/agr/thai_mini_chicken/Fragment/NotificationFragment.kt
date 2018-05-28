@@ -11,11 +11,15 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import th.ac.up.agr.thai_mini_chicken.Adapter.ProgramAdapter
 
 import th.ac.up.agr.thai_mini_chicken.R
+import th.ac.up.agr.thai_mini_chicken.Tools.QuickRecyclerView
 import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardVHConfig
-import th.ac.up.agr.thai_nativechickenexpertsystem.Tools.QuickRecyclerView
 
 
 class NotificationFragment : Fragment() {
+
+    lateinit var adapter: ProgramAdapter
+    private var run :Boolean = false
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,12 +52,24 @@ class NotificationFragment : Fragment() {
                 , "high")
                 .recyclerView()
 
-        recyclerView.adapter = ProgramAdapter(arr)
+
+        adapter = ProgramAdapter(this.activity!!,1,arr)
+        recyclerView.adapter = adapter
+
+        run = true
+
 
         //OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
 
 
         return view
+    }
+
+    fun reset(){
+        if (run){
+            adapter.resetMenu()
+        }
+
     }
 
 

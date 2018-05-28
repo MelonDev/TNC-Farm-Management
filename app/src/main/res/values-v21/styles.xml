@@ -13,11 +13,111 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="DetailTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorWhite</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/sukhumvit_text</item>
+        <item name="android:statusBarColor">#3c000000</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="TabLayoutStyle" parent="Base.Widget.Design.TabLayout">
         <item name="android:textSize">20dp</item>
-        <item name="android:fontFamily">@font/sukhumvit_bold</item>
+        <item name="android:fontFamily">@font/sukhumvit_medium</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="MelonTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:fontFamily">@font/sukhumvit_text</item>
+    </style>
+
+    <!-- MelonTheme -->
+    <style name="MelonTheme.Amber" parent="MelonTheme">
+        <item name="colorPrimary">@color/colorAmber</item>
+        <item name="colorPrimaryDark">@color/colorAmberDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MelonTheme.Red" parent="MelonTheme">
+        <item name="colorPrimary">@color/colorRed</item>
+        <item name="colorPrimaryDark">@color/colorRedDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MelonTheme.LightGreen" parent="MelonTheme">
+        <item name="colorPrimary">@color/colorLightGreen</item>
+        <item name="colorPrimaryDark">@color/colorLightGreenDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MelonTheme.LightBlue" parent="MelonTheme">
+        <item name="colorPrimary">@color/colorLightBlue</item>
+        <item name="colorPrimaryDark">@color/colorLightBlueDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MelonTheme.DeepPurple" parent="MelonTheme">
+        <item name="colorPrimary">@color/colorDeepPurple</item>
+        <item name="colorPrimaryDark">@color/colorDeepPurpleDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- MaterialTheme -->
+    <style name="MelonTheme.Amber.Material" parent="MelonTheme.Amber">
+        <item name="android:statusBarColor">@color/colorAmberDark</item>
+    </style>
+
+    <style name="MelonTheme.Red.Material" parent="MelonTheme.Red">
+        <item name="android:statusBarColor">@color/colorRedDark</item>
+    </style>
+
+    <style name="MelonTheme.LightGreen.Material" parent="MelonTheme.LightGreen">
+        <item name="android:statusBarColor">@color/colorLightGreenDark</item>
+    </style>
+
+    <style name="MelonTheme.LightBlue.Material" parent="MelonTheme.LightBlue">
+        <item name="android:statusBarColor">@color/colorLightBlueDark</item>
+    </style>
+
+    <style name="MelonTheme.DeepPurple.Material" parent="MelonTheme.DeepPurple">
+        <item name="android:statusBarColor">@color/colorDeepPurpleDark</item>
+    </style>
+
+    <!-- FlatTheme -->
+    <style name="MelonTheme.Amber.Flat" parent="MelonTheme.Amber">
+        <item name="android:statusBarColor">@color/colorAmber</item>
+    </style>
+
+    <style name="MelonTheme.Red.Flat" parent="MelonTheme.Red">
+        <item name="android:statusBarColor">@color/colorRed</item>
+    </style>
+
+    <style name="MelonTheme.LightGreen.Flat" parent="MelonTheme.LightGreen">
+        <item name="android:statusBarColor">@color/colorLightGreen</item>
+    </style>
+
+    <style name="MelonTheme.LightBlue.Flat" parent="MelonTheme.LightBlue">
+        <item name="android:statusBarColor">@color/colorLightBlue</item>
+    </style>
+
+    <style name="MelonTheme.DeepPurple.Flat" parent="MelonTheme.DeepPurple">
+        <item name="android:statusBarColor">@color/colorDeepPurple</item>
+    </style>
+
+
+
+    <style name="Fullscreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="SplashTheme" parent="Fullscreen">
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
     <style name="TitleTabStyle">
@@ -29,6 +129,11 @@
     <style name="SpinnerWithoutArrow" parent="@style/Widget.AppCompat.Spinner">
         <item name="android:background">@null</item>
         <item name="android:popupBackground">@drawable/abc_popup_background_mtrl_mult</item>
+    </style>
+
+    <style name="dialogWindowAnim" parent="android:Animation" mce_bogus="1">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

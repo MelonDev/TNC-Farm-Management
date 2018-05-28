@@ -4,10 +4,27 @@
     <color name="colorPrimaryDark">#FFA000</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorSkyBlue">#62D0D5</color>
-    <color name="colorLightGreen">#81CC51</color>
 
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorRedP">#ffafa9</color>
+    <color name="colorBlack">#000000</color>
+    
     <color name="colorText">#939393</color>
     <color name="colorTabInActiveText">#99ffffff</color>
+
+    <color name="colorStatusBarOverlay">#3c000000</color>
+    <color name="colorLightStatusBarOverlay">#e7e7e7</color>
+
+    <color name="colorRed">#f44336</color>
+    <color name="colorAmber">#FFC107</color>
+    <color name="colorLightGreen">#8bc34a</color>
+    <color name="colorLightBlue">#03a9f4</color>
+    <color name="colorDeepPurple">#673ab7</color>
+
+    <color name="colorRedDark">#d32f2f</color>
+    <color name="colorAmberDark">#FFA000</color>
+    <color name="colorLightGreenDark">#689f38</color>
+    <color name="colorLightBlueDark">#0288d1</color>
+    <color name="colorDeepPurpleDark">#512da8</color>
 
 </resources>

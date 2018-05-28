@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/input_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:background="#ececec"
+            >
+            <android.support.v7.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="6dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="3dp"
+                app:cardBackgroundColor="#b6b6b6"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/colorWhite">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/input_dialog_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/sukhumvit_bold"
+                    android:text="หัวข้อ"
+                    android:textColor="@color/colorText"
+                    android:textSize="28dp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/input_dialog_action_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="36dp"
+                android:paddingTop="16dp">
+
+                <TextView
+                    android:id="@+id/input_dialog_action_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/sukhumvit_bold"
+                    android:text="วันนี้"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="18dp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/input_dialog_date_area"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="6dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.aigestudio.wheelpicker.widgets.WheelDayPicker
+                        android:id="@+id/add_program_day_wheel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="true"
+                        app:wheel_item_text_color="@color/colorText"
+                        app:wheel_item_text_size="22dp"
+                        app:wheel_selected_item_text_color="?attr/colorPrimary" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="0dp"
+                    android:background="?attr/colorPrimary"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                    <com.aigestudio.wheelpicker.WheelPicker
+                        android:id="@+id/add_program_month_wheel_s"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="true"
+                        app:wheel_item_text_color="@color/colorText"
+                        app:wheel_item_text_size="22dp"
+                        app:wheel_selected_item_text_color="?attr/colorPrimary" />
+
+                    <com.aigestudio.wheelpicker.widgets.WheelMonthPicker
+                        android:id="@+id/add_program_month_wheel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="65dp"
+                        android:paddingRight="10dp"
+                        android:visibility="gone"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="true"
+                        app:wheel_item_text_color="@color/colorText"
+                        app:wheel_item_text_size="22dp"
+                        app:wheel_selected_item_text_color="?attr/colorPrimary" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="00dp"
+                    android:background="?attr/colorPrimary"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+
+                    <com.aigestudio.wheelpicker.WheelPicker
+                        android:id="@+id/add_program_year_wheel_s"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="true"
+                        app:wheel_item_text_color="@color/colorText"
+                        app:wheel_item_text_size="22dp"
+                        app:wheel_selected_item_text_color="?attr/colorPrimary" />
+
+
+                    <com.aigestudio.wheelpicker.widgets.WheelYearPicker
+                        android:id="@+id/add_program_year_wheel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:visibility="gone"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="true"
+                        app:wheel_item_text_color="@color/colorText"
+                        app:wheel_item_text_size="22dp"
+                        app:wheel_selected_item_text_color="?attr/colorPrimary"
+
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/input_dialog_objective_area"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp">
+
+                <com.aigestudio.wheelpicker.WheelPicker
+                    android:layout_centerInParent="true"
+                    android:id="@+id/add_program_objective_wheel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    app:wheel_atmospheric="true"
+                    app:wheel_curved="true"
+                    app:wheel_cyclic="false"
+                    app:wheel_item_text_color="@color/colorText"
+                    app:wheel_item_text_size="22dp"
+                    app:wheel_selected_item_text_color="?attr/colorPrimary" />
+
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/input_dialog_amount_area"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/sukhumvit_text"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="เพศผู้"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="22dp" />
+
+                <com.aigestudio.wheelpicker.WheelPicker
+                    android:id="@+id/add_program_count_male_wheel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    app:wheel_atmospheric="true"
+                    app:wheel_curved="true"
+                    app:wheel_cyclic="true"
+                    app:wheel_item_text_color="@color/colorText"
+                    app:wheel_item_text_size="22dp"
+                    app:wheel_selected_item_text_color="?attr/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/sukhumvit_text"
+                    android:paddingRight="10dp"
+                    android:text="ตัว"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="22dp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:background="?attr/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/sukhumvit_text"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="เพศเมีย"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="22dp" />
+
+                <com.aigestudio.wheelpicker.WheelPicker
+                    android:id="@+id/add_program_count_female_wheel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    app:wheel_atmospheric="true"
+                    app:wheel_curved="true"
+                    app:wheel_cyclic="true"
+                    app:wheel_item_text_color="@color/colorText"
+                    app:wheel_item_text_size="22dp"
+                    app:wheel_selected_item_text_color="?attr/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/sukhumvit_text"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="ตัว"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="22dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/input_dialog_age_area"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="6dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.aigestudio.wheelpicker.WheelPicker
+                        android:id="@+id/add_program_old_week_wheel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="false"
+                        app:wheel_item_text_color="@color/colorText"
+                        app:wheel_item_text_size="22dp"
+                        app:wheel_selected_item_text_color="?attr/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/sukhumvit_semibold"
+                        android:paddingRight="10dp"
+                        android:text="สัปดาห์"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="22dp" />
+
+                </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:background="?attr/colorPrimary" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                    <com.aigestudio.wheelpicker.WheelPicker
+                        android:id="@+id/add_program_old_day_wheel"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="false"
+                        app:wheel_item_text_color="@color/colorText"
+                        app:wheel_item_text_size="22dp"
+                        app:wheel_selected_item_text_color="?attr/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/sukhumvit_semibold"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="วัน"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="22dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/input_dialog_cancal_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    app:cardBackgroundColor="#EDEDED"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:fontFamily="@font/sukhumvit_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="1dp"
+                        android:text="ยกเลิก"
+                        android:textColor="@color/colorText"
+                        android:textSize="20dp" />
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/input_dialog_confirm_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="16dp"
+                    app:cardBackgroundColor="?attr/colorPrimary"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:fontFamily="@font/sukhumvit_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="1dp"
+                        android:text="ยืนยัน"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="20dp" />
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
