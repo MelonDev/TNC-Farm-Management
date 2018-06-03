@@ -14,4 +14,6 @@ class CardNotification {
     var cardName: String = ""
     var cardID: String = ""
 
+    var cardMessage :String = ""
+
 }

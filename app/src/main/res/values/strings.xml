@@ -17,4 +17,6 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_test_login">TestLogin</string>
+    <string name="title_activity_test_auth">TestAuthActivity</string>
+    <string name="title_activity_add_noti_card">AddNotiCardActivity</string>
 </resources>

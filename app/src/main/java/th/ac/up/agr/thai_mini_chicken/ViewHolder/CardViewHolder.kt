@@ -32,4 +32,6 @@ class CardViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
 
     val layout :RelativeLayout = itemView.data_card_layout
 
+    val histort_area :CardView = itemView.data_card_card_history_area
+
 }

@@ -1,5 +1,6 @@
 package th.ac.up.agr.thai_mini_chicken.ProgramMainActivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -14,6 +15,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_program_main.*
 import kotlinx.android.synthetic.main.app_bar_program_main.*
+import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
 import th.ac.up.agr.thai_mini_chicken.Fragment.HistoryFragment
 import th.ac.up.agr.thai_mini_chicken.Fragment.NotificationFragment
 import th.ac.up.agr.thai_mini_chicken.Fragment.ProgramFragment
@@ -26,8 +28,7 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     val notificationFragment :NotificationFragment = NotificationFragment()
     val historyFragment :HistoryFragment = HistoryFragment()
 
-    //lateinit var fab :FloatingActionButton
-
+    lateinit var fab :FloatingActionButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +37,13 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_program_main)
         setNavigationDrawer()
+
+        fab = program_main_activity_fab
+        fab.setOnClickListener {
+            val intent = Intent(this, AddProgramActivity::class.java)
+            intent.putExtra("ID", "0")
+            startActivity(intent)
+        }
 
         /*
         fab = program_main_activity_fab

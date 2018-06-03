@@ -30,7 +30,11 @@ import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 import android.os.Build
 import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
-
+import th.ac.up.agr.thai_mini_chicken.Data.Event
+import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
+import th.ac.up.agr.thai_mini_chicken.Tools.ToolReference
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DetailActivity : AppCompatActivity() {
@@ -38,14 +42,24 @@ class DetailActivity : AppCompatActivity() {
     var fab_status = false
     lateinit var path :DatabaseReference
 
+    var type = ""
+
+    var card_key = ""
+    var user_ID = ""
+
+    lateinit var ref: DatabaseReference
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(MelonTheme.from(this).getStyle())
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
         val bundle = intent.extras
-        val card_key = bundle.getString("CARD_KEY")
-        val user_ID = bundle.getString("USER_ID")
+        card_key = bundle.getString("CARD_KEY")
+        user_ID = bundle.getString("USER_ID")
+
+        //var count = 0
 
         val database = FirebaseDatabase.getInstance().reference
         path = database.child("ผู้ใช้").child(user_ID).child("รายการ").child("ใช้งาน").child(card_key)
@@ -58,6 +72,7 @@ class DetailActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 if(p0.value != null){
+
                     val data = p0.getValue(CardData::class.java)
                     setText(data!!)
                 }
@@ -69,6 +84,44 @@ class DetailActivity : AppCompatActivity() {
         //Log.e("DATA",AppTheme(this).read().toString())
 
 
+        val userRef = Firebase.reference.child("ผู้ใช้").child(user_ID)
+        val container = userRef.child("รายการ")
+
+        ref = container.child("ใช้งาน").child(card_key).child("รายการที่ต้องทำ")
+
+        val refs = container.child("ใช้งาน").child(card_key).child("รายละเอียด")
+
+        activity_detail_indicator_text.text = "0"
+        activity_detail_indicator_text.setTextColor(ContextCompat.getColor(this,MelonTheme.from(this).getColor()))
+
+        refs.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.value != null) {
+                    val slot = p0.getValue(CardData::class.java)!!
+
+                    ref.addValueEventListener(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError) {
+                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        }
+
+                        override fun onDataChange(p0: DataSnapshot) {
+                            if (p0.value != null) {
+                                getEvents(p0, slot)
+                                //recyclerView.layoutManager.smoothScrollToPosition(recyclerView, RecyclerView.State(), 0)
+
+                            }
+                        }
+                    })
+
+                }
+
+
+            }
+        })
 
         detail_back_btn.setOnClickListener {
             finish()
@@ -90,8 +143,13 @@ class DetailActivity : AppCompatActivity() {
 
         //showDialog(0, "หัวข้อ","รหัส xxxxxxxxxx", arrayOf("แก้ไข","เก็บประวัติ", "ลบ"))
 
+        detail_feature_reminder.setBackgroundColor(ContextCompat.getColor(this,MelonTheme.from(this).getColor()))
+
         detail_feature_reminder.setOnClickListener {
             var intent = Intent(this,DetailNotificationActivity::class.java)
+            intent.putExtra("USER_ID",user_ID)
+            intent.putExtra("CARD_KEY",card_key)
+            intent.putExtra("TYPE","0")
             startActivity(intent)
         }
 
@@ -147,6 +205,9 @@ class DetailActivity : AppCompatActivity() {
         }else {
             detail_breed_text.text = slot.breed
         }
+
+        type = slot.userObjective
+
         detail_description_text.text = slot.cardID
         detail_amount_male_text.text = "${slot.amountMale} ตัว"
         detail_amount_female_text.text = "${slot.amountFemale} ตัว"
@@ -157,6 +218,29 @@ class DetailActivity : AppCompatActivity() {
 
         detail_notify_me.text = ConvertCard().getBool(slot.notification.toBoolean())
         detail_notify_before.text = ConvertCard().getBool(slot.notiBefore.toBoolean())
+
+        val calendar = Calendar.getInstance()
+        val today = Calendar.getInstance()
+
+        calendar.set(slot.dateYear.toInt(),slot.dateMonth.toInt() - 1,slot.dateDay.toInt())
+
+        val difference = today.timeInMillis - calendar.timeInMillis
+        val days = (difference / (1000 * 60 * 60 * 24)).toInt()
+
+        val w :Int = days / 7
+        val d :Int = days % 7
+
+        var week = slot.ageWeek.toInt() + w
+        var day = slot.ageDay.toInt() + d
+
+        if(day >= 7){
+            week += ( day / 7)
+            day = (day % 7)
+        }
+
+        detail_age_current_text.text = "$week สัปดาห์ $day วัน"
+
+        //Log.e("day",days.toString())
     }
 
     fun showDialog() {
@@ -189,6 +273,7 @@ params.textSize = 10
                 .setTitle("คุณต้องการลบรายการนี้?")
                 .setTitleColor(ContextCompat.getColor(this, R.color.colorText))
                 .setItems(arr) { parent, view, position, id ->
+                    //path.removeValue()
                     path.removeValue()
                     showConDialog()
                 }
@@ -238,6 +323,68 @@ params.textSize = 10
                 .show()
 
 
+
+    }
+
+    fun getEvents(dataSnapshot: DataSnapshot?, cardData: CardData) {
+/*
+        val z = Event()
+        z.apply {
+            title = "INACTIVE_BUTTON"
+            day = -1
+            week = -1
+            message = "BUTTON"
+        }
+        arrEvent.add(z)
+*/
+        //arrData = dataSnapshot!!.getValue(DiseaseData::class.java)!!
+        val calendar = Calendar.getInstance()
+        val today = Calendar.getInstance()
+
+        calendar.set(cardData.dateYear.toInt(), cardData.dateMonth.toInt() - 1, cardData.dateDay.toInt())
+
+        calendar.add(Calendar.WEEK_OF_YEAR, 0 - cardData.ageWeek.toInt())
+        calendar.add(Calendar.DAY_OF_YEAR, 0 - cardData.ageDay.toInt())
+
+        val arrEvent = ArrayList<Event>()
+        arrEvent.clear()
+
+        activity_detail_indicator_text.text = arrEvent.size.toString()
+
+        dataSnapshot!!.children.forEach {
+            //Log.e("KEY",it.key.toString())
+
+            val slot = it.getValue(Event::class.java)!!
+
+            if (slot.cardID.isEmpty()) {
+                slot.cardID = it.key.toString()
+
+                val a = ref.child(it.key.toString())
+                a.setValue(slot)
+            }
+
+            val x = calendar.clone() as Calendar
+
+            x.add(Calendar.WEEK_OF_YEAR, slot.week)
+            x.add(Calendar.DAY_OF_YEAR, slot.day)
+
+            val difference = x.timeInMillis - today.timeInMillis
+            val days = (difference / (1000 * 60 * 60 * 24)).toInt()
+
+            //Log.e("DAY", days.toString())
+
+
+                if (days >= 0 && slot.status.contentEquals("ACTIVE")) {
+                    arrEvent.add(slot)
+                }
+
+
+            activity_detail_indicator_text.text = arrEvent.size.toString()
+
+            //Log.e("arr",arrEvent.size.toString())
+
+
+        }
 
     }
 

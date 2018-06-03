@@ -37,6 +37,11 @@ class AddProgramActivity : AppCompatActivity() {
 
     lateinit var ID :String
 
+    var card_key = ""
+    var user_ID = ""
+
+    var disible = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //setTheme(R.style.MelonTheme_Amber_Material)
@@ -62,8 +67,8 @@ class AddProgramActivity : AppCompatActivity() {
             dialog.setOnStart()
             add_program_title_name.text = "เพิ่มรายการข้อมูล"
         }else if(ID.contentEquals("1")){
-            val card_key = bundle.getString("CARD_KEY")
-            val user_ID = bundle.getString("USER_ID")
+            card_key = bundle.getString("CARD_KEY")
+            user_ID = bundle.getString("USER_ID")
 
             add_program_title_name.text = "แก้ไขรายการข้อมูล"
 

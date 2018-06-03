@@ -22,7 +22,7 @@ class ProgramViewPager(val activity: ProgramMainActivity) {
 
     fun setupViewPager() {
 
-        Log.e("STATUS", "ViewPager")
+        //Log.e("STATUS", "ViewPager")
 
         //activity.programFragment.fab = activity.program_main_activity_fab
 
@@ -51,21 +51,27 @@ class ProgramViewPager(val activity: ProgramMainActivity) {
 
     private inner class PageListener : ViewPager.SimpleOnPageChangeListener() {
         override fun onPageSelected(position: Int) {
-            //Log.e(TAG, "page selected $position")
-            activity.programFragment.fab = activity.program_main_activity_fab
+            //Log.e("PAGE", "page selected $position")
+
+            //activity.programFragment.fab = activity.program_main_activity_fab
             if (position == 0) {
-                activity.programFragment.fab.show()
+                activity.fab.show()
+                //Log.e("PAGE", "FAB SHOW")
                 activity.historyFragment.reset()
                 activity.notificationFragment.reset()
             } else if (position == 1){
-                activity.programFragment.fab.hide()
+                activity.fab.hide()
+                //Log.e("PAGE", "FAB HIDE")
                 activity.programFragment.reset()
                 activity.historyFragment.reset()
-            } else {
-                activity.programFragment.fab.hide()
+            } else if(position == 2){
+                activity.fab.hide()
+                //Log.e("PAGE", "FAB HIDE")
                 activity.programFragment.reset()
                 activity.notificationFragment.reset()
             }
+
+
 /*
             when (position) {
                 0 -> {

@@ -8,6 +8,17 @@
     android:background="#EDEDED"
     >
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/notification_detail_fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorWhite"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:paddingTop="16dp"
         android:paddingBottom="0dp"
@@ -79,6 +90,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/activity_detail_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -94,35 +106,18 @@
                     android:textColor="@color/colorText"
                     android:textSize="22dp" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/detail_noti_add_text_btn"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ประวัติ"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorText"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="2dp"
-                    android:paddingLeft="6dp"
-                    android:paddingRight="16dp"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_edit"
-                        android:tint="@color/colorText" />
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="2dp"
-                        android:src="@drawable/ic_garbage"
-                        android:tint="@color/colorText" />
-
-                </LinearLayout>
-
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/sukhumvit_text"
+                    />
 
                 <RelativeLayout
                     android:visibility="visible"

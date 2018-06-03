@@ -30,6 +30,7 @@ import android.text.InputType
 import android.util.Log
 import android.view.WindowManager
 import android.widget.*
+import com.google.firebase.database.FirebaseDatabase
 import com.mylhyl.circledialog.params.ButtonParams
 import com.mylhyl.circledialog.callback.ConfigButton
 import com.mylhyl.circledialog.params.DialogParams
@@ -46,6 +47,7 @@ import th.ac.up.agr.thai_mini_chicken.Firebase.AddDataFirebase
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 import th.ac.up.agr.thai_mini_chicken.Tools.Date
+import th.ac.up.agr.thai_mini_chicken.Tools.LoadTime
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 
 
@@ -227,7 +229,11 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         }
 
         activity.add_program_save_btn.setOnClickListener {
-            saveData()
+            if(activity.disible == false){
+                saveData()
+                activity.disible = true
+            }
+
         }
 
         activity.add_program_notify_me.setOnCheckedChangeListener { view, isChecked ->
@@ -608,17 +614,16 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
                 lastUpdate = d
                 status = "ACTIVE"
                 cardName = activity.add_program_edittext.text.toString()
-                showConDialog()
             }
         }else{
             cardData.apply {
                 lastUpdate = d
                 cardName = activity.add_program_edittext.text.toString()
-                showConDialog()
             }
         }
 
 
+        //b.setValue()
 
 
         AddDataFirebase.from(activity).setDataToActive(cardData)

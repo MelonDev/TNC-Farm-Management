@@ -14,15 +14,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ข้อความ"
-        android:textColor="@color/colorText"
+        android:layout_marginTop="3dp"
+        android:textColor="#898989"
         android:fontFamily="@font/sukhumvit_bold"
         android:layout_marginLeft="26dp"
-        android:textSize="30dp"
+        android:textSize="26dp"
+        android:layout_marginBottom="3dp"
         />
 
     <android.support.v7.widget.CardView
+
+        android:id="@+id/data_card_card_history_area"
+        android:visibility="gone"
+        android:clickable="false"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="26dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="#f0dcdcdc"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="14dp"
+        >
+        <TextView
+            android:clickable="false"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ประวัติ"
+            android:layout_marginTop="8dp"
+            android:textColor="#898989"
+            android:fontFamily="@font/sukhumvit_text"
+            android:layout_marginLeft="26dp"
+            android:textSize="22dp"
+            android:layout_marginBottom="6dp"
+            />
+        <ImageView
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="16dp"
+            android:rotation="180"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back_icon"
+            android:tint="#898989" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
         android:id="@+id/data_card_card_item"
-        android:visibility="visible"
+        android:visibility="gone"
         android:clickable="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,6 +97,7 @@
                     android:id="@+id/data_card_card_icon_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:backgroundTint="@color/colorWhite"
                     android:src="@drawable/ic_chicken_icon"
                     android:layout_gravity="center"
                     />
@@ -177,7 +219,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="19dp"
-                        android:text="อายุของไก่"
+                        android:text="อายุไก่ปัจจุบัน"
                         />
                     <TextView
                         android:id="@+id/data_card_card_info_age_text_view"

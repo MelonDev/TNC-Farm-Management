@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.activity_program_main.*
 import kotlinx.android.synthetic.main.nav_header_program_main.view.*
 import th.ac.up.agr.thai_mini_chicken.ContainerActivity
 import th.ac.up.agr.thai_mini_chicken.SettingActivity
+import th.ac.up.agr.thai_mini_chicken.TestAuthActivity
 
 class ProgramNavDrawer(private val activity: ProgramMainActivity) {
 
@@ -19,8 +20,8 @@ class ProgramNavDrawer(private val activity: ProgramMainActivity) {
     private fun onClick() {
         navView.nav_profile_area.setOnClickListener {
             //initIntent(ContainerActivity()).put("TITLE", "โปรไฟล์").start()
-            //val intent = Intent(activity,TestLogin::class.java)
-            //activity.startActivity(intent)
+            val intent = Intent(activity,TestAuthActivity::class.java)
+            activity.startActivity(intent)
         }
         navView.nav_program_area.setOnClickListener {
             hideDrawer()
