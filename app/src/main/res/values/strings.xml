@@ -19,4 +19,9 @@
     <string name="title_activity_test_login">TestLogin</string>
     <string name="title_activity_test_auth">TestAuthActivity</string>
     <string name="title_activity_add_noti_card">AddNotiCardActivity</string>
+    <string name="title_activity_noti_detail">NotiDetailActivity</string>
+    <string name="title_activity_custom_plan">CustomPlanActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_register_info">RegisterInfoActivity</string>
 </resources>

@@ -35,10 +35,12 @@ import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import com.google.firebase.FirebaseError
 import com.google.firebase.database.DatabaseReference.CompletionListener
 import th.ac.up.agr.thai_mini_chicken.Data.Event
+import th.ac.up.agr.thai_mini_chicken.Fragment.ProgramFragment
 
 
-class PageProgramAdapter(val activity: FragmentActivity, val ID: String, val data: ArrayList<CardData>) : RecyclerView.Adapter<CardViewHolder>() {
+class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data: ArrayList<CardData>) : RecyclerView.Adapter<CardViewHolder>() {
 
+    private val activity = fragment.activity!!
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.data_card, parent, false)
@@ -118,7 +120,7 @@ class PageProgramAdapter(val activity: FragmentActivity, val ID: String, val dat
 
                                 override fun onDataChange(p0: DataSnapshot) {
                                     if (p0.value != null) {
-                                        ref.setValue("INACTIVE"){ p0, p1 ->
+                                        ref.setValue("INACTIVE") { p0, p1 ->
                                             if (p0 != null) {
                                                 showErrorDialog()
                                             } else {
@@ -262,21 +264,27 @@ class PageProgramAdapter(val activity: FragmentActivity, val ID: String, val dat
         val difference = today.timeInMillis - calendar.timeInMillis
         val days = (difference / (1000 * 60 * 60 * 24)).toInt()
 
-        val w: Int = days / 7
-        val d: Int = days % 7
+        if (days >= 0){
 
-        var week = slot.ageWeek.toInt() + w
-        var day = slot.ageDay.toInt() + d
+            val w: Int = days / 7
+            val d: Int = days % 7
 
-        if (day >= 7) {
-            week += (day / 7)
-            day = (day % 7)
+            var week = slot.ageWeek.toInt() + w
+            var day = slot.ageDay.toInt() + d
+
+            if (day >= 7) {
+                week += (day / 7)
+                day = (day % 7)
+            }
+            holder.info_age.text = "$week สัปดาห์ $day วัน"
+        }else {
+            holder.info_age.text = "ยังไม่ถึงวันรับเข้า"
         }
+
 
         holder.apply {
             card_des.text = plusDes("0")
             info_date.text = "${slot.dateDay} ${ConvertCard().getMonth(slot.dateMonth)} ${ConvertCard().getYear(slot.dateYear)}"
-            info_age.text = "$week สัปดาห์ $day วัน"
             info_objective.text = ConvertCard().getObjective(slot.userObjective)
         }
 
@@ -405,6 +413,7 @@ class PageProgramAdapter(val activity: FragmentActivity, val ID: String, val dat
                     }
                 })
                 .setPositive("รับทราบ", {
+                    fragment.onLoad(false)
                 })
                 .configPositive(object : ConfigButton() {
                     override fun onConfig(params: ButtonParams) {
@@ -436,6 +445,7 @@ class PageProgramAdapter(val activity: FragmentActivity, val ID: String, val dat
                     }
                 })
                 .setPositive("รับทราบ", {
+                    fragment.onLoad(false)
                 })
                 .configPositive(object : ConfigButton() {
                     override fun onConfig(params: ButtonParams) {
@@ -467,6 +477,7 @@ class PageProgramAdapter(val activity: FragmentActivity, val ID: String, val dat
                     }
                 })
                 .setPositive("รับทราบ", {
+                    fragment.onLoad(false)
                 })
                 .configPositive(object : ConfigButton() {
                     override fun onConfig(params: ButtonParams) {

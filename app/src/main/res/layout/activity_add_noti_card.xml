@@ -9,11 +9,257 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:background="?attr/colorPrimary"
+            android:minHeight="50dp">
+
+            <RelativeLayout
+
+                android:id="@+id/add_noti_back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="16dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_back_icon"
+                    android:tint="@color/colorWhite" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:fontFamily="@font/sukhumvit_light"
+                    android:paddingBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:text="กลับ"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/add_noti_title_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="0dp"
+                android:fontFamily="@font/sukhumvit_bold"
+                android:gravity="center_horizontal"
+                android:maxWidth="200dp"
+                android:paddingBottom="0dp"
+                android:paddingRight="0dp"
+                android:text="เพิ่มเหตุการณ์"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp" />
+
+            <RelativeLayout
+                android:id="@+id/add_noti_save_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:fontFamily="@font/sukhumvit_semibold"
+                    android:paddingBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:text="บันทึก"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
 
     </android.support.design.widget.AppBarLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EDEDED"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:id="@+id/add_noti_objective_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="25dp"
+                        android:fontFamily="@font/sukhumvit_semibold"
+                        android:text="วัตถุประสงค์"
+                        android:textColor="@color/colorText"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:id="@+id/add_noti_objective_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:paddingRight="20dp">
+
+                        <LinearLayout
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginRight="14dp"
+                            android:layout_marginTop="8dp"
+                            android:background="#c7c7c7" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/sukhumvit_bold"
+                            android:text="เปลี่ยน"
+                            android:textColor="#a1a1a1"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:id="@+id/add_noti_date_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="25dp"
+                        android:fontFamily="@font/sukhumvit_semibold"
+                        android:text="อายุของไก่"
+                        android:textColor="@color/colorText"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:id="@+id/add_noti_date_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:paddingRight="20dp">
+
+                        <LinearLayout
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginRight="14dp"
+                            android:layout_marginTop="8dp"
+                            android:background="#c7c7c7" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/sukhumvit_bold"
+                            android:text="เปลี่ยน"
+                            android:textColor="#a1a1a1"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    android:minHeight="200dp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <EditText
+                        android:id="@+id/add_noti_message_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/colorWhite"
+                        android:gravity="top"
+                        android:hint="รายละเอียด"
+                        android:maxLines="10"
+                        android:minHeight="50dp"
+                        android:textColor="@color/colorText"
+                        android:textSize="20dp" />
+
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

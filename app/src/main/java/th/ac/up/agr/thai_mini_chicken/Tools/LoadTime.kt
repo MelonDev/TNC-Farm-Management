@@ -12,6 +12,12 @@ class LoadTime {
             "2" -> {
                 TimeManager.get.meat
             }
+            "ไก่พ่อ-แม่พันธุ์" -> {
+                TimeManager.get.breeder
+            }
+            "ไก่เนื้อ" -> {
+                TimeManager.get.meat
+            }
             else -> {
                 ArrayList<Event>()
             }

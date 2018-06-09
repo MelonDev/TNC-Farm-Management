@@ -1,5 +1,6 @@
 package th.ac.up.agr.thai_mini_chicken.Adapter
 
+import android.content.Intent
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -19,6 +20,7 @@ import com.mylhyl.circledialog.params.ItemsParams
 import com.mylhyl.circledialog.params.TextParams
 import com.squareup.picasso.Picasso
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
+import th.ac.up.agr.thai_mini_chicken.DetailActivity
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Fragment.HistoryFragment
 import th.ac.up.agr.thai_mini_chicken.R
@@ -36,7 +38,6 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
     }
 
     override fun getItemCount(): Int {
-        //Log.e("SIZE",data.size.toString())
         //activity.progress.visibility = View.GONE
         if(data.size == 0){
             activity.emptyText.visibility = View.VISIBLE
@@ -52,13 +53,10 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
         val userRef = Firebase.reference.child("ผู้ใช้").child(ID)
         val container = userRef.child("รายการ")
 
-        //Log.e("da","dasda")
-        //Log.e(data[position].cardID,"sadad")
 
         if (data[position].cardID.contentEquals("null")) {
             setTitle(data[position], holder)
         } else {
-            //Log.e("asda",data[position].createDate)
             getValue(data[position], holder)
         }
 
@@ -67,11 +65,11 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
         }
 
         holder.card_item.setOnClickListener {
-            //val intent = Intent(activity, DetailActivity::class.java)
-            //intent.putExtra("CARD_KEY", data[position].cardID)
-            //intent.putExtra("USER_ID", ID)
-            //activity.startActivity(intent)
-            Log.e("ACTION", "CLICKED")
+            val intent = Intent(activity.context, DetailActivity::class.java)
+            intent.putExtra("CARD_KEY", data[position].cardID)
+            intent.putExtra("USER_ID", ID)
+            activity.startActivity(intent)
+            //Log.e("ACTION", "CLICKED")
         }
 
 
@@ -103,8 +101,6 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
 
         //calendar.set(card.dateYear.toInt(), card.dateMonth.toInt() - 1, card.dateDay.toInt())
 
-        //Log.e(today.get(Calendar.DAY_OF_MONTH).toString(),calendar.get(Calendar.DAY_OF_MONTH).toString())
-        //Log.e(card.cardID,card.createDate)
 
         val difference = today.timeInMillis - calendar.timeInMillis
         val days = (difference / (1000 * 60 * 60 * 24)).toInt()
@@ -113,10 +109,8 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
             //Log.e((difference/ (1000 * 60 * 60)).toString(),days.toString())
         } else if (days == 1) {
             holder.title_item.text = "เมื่อวานนี้"
-            //Log.e(card.cardID,days.toString())
         } else {
             holder.title_item.text = "${calendar.get(Calendar.DAY_OF_MONTH).toString()} ${ConvertCard().getMonth((calendar.get(Calendar.MONTH) + 1).toString())} ${calendar.get(Calendar.YEAR) + 543}"
-            //Log.e(card.cardID,days.toString())
         }
 
     }
@@ -151,21 +145,27 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
         val difference = today.timeInMillis - calendar.timeInMillis
         val days = (difference / (1000 * 60 * 60 * 24)).toInt()
 
-        val w: Int = days / 7
-        val d: Int = days % 7
+        if(days >= 0){
+            val w: Int = days / 7
+            val d: Int = days % 7
 
-        var week = slot.ageWeek.toInt() + w
-        var day = slot.ageDay.toInt() + d
+            var week = slot.ageWeek.toInt() + w
+            var day = slot.ageDay.toInt() + d
 
-        if (day >= 7) {
-            week += (day / 7)
-            day = (day % 7)
+            if (day >= 7) {
+                week += (day / 7)
+                day = (day % 7)
+            }
+
+            holder.info_age.text = "$week สัปดาห์ $day วัน"
+        }else {
+            holder.info_age.text = "ยังไม่ถึงวันรับเข้า"
+
         }
 
         holder.apply {
             //card_des.text = plusDes("0")
             info_date.text = "${slot.dateDay} ${ConvertCard().getMonth(slot.dateMonth)} ${ConvertCard().getYear(slot.dateYear)}"
-            info_age.text = "$week สัปดาห์ $day วัน"
             info_objective.text = ConvertCard().getObjective(slot.userObjective)
         }
 
@@ -285,6 +285,7 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
                     }
                 })
                 .setPositive("รับทราบ", {
+                    activity.onLoad()
                 })
                 .configPositive(object : ConfigButton() {
                     override fun onConfig(params: ButtonParams) {
@@ -316,6 +317,7 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
                     }
                 })
                 .setPositive("รับทราบ", {
+                    activity.onLoad()
                 })
                 .configPositive(object : ConfigButton() {
                     override fun onConfig(params: ButtonParams) {
@@ -347,6 +349,7 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
                     }
                 })
                 .setPositive("รับทราบ", {
+                    activity.onLoad()
                 })
                 .configPositive(object : ConfigButton() {
                     override fun onConfig(params: ButtonParams) {

@@ -40,6 +40,60 @@
 
         />
 
+    <LinearLayout
+        android:id="@+id/detail_noti_empty_area"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingBottom="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_marginTop="25dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_empty_box_icon"
+                android:tint="@color/colorText"
+                />
+
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_question_mark_icon"
+                android:tint="@color/colorText"
+                />
+
+        </RelativeLayout>
+        <TextView
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="0dp"
+            android:text="ไม่พบข้อมูล"
+            android:textSize="24dp"
+            android:textColor="@color/colorText"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/detail_noti_empty_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="30dp"
+        android:text="ไม่พบข้อมูล"
+        android:textSize="24dp"
+        android:textColor="@color/colorText"
+        />
+
     <android.support.design.widget.AppBarLayout
         app:elevation="0dp"
         android:layout_width="match_parent"
@@ -106,18 +160,49 @@
                     android:textColor="@color/colorText"
                     android:textSize="22dp" />
 
-                <TextView
-                    android:id="@+id/detail_noti_add_text_btn"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ประวัติ"
-                    android:textSize="20dp"
-                    android:textColor="@color/colorText"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="16dp"
-                    android:fontFamily="@font/sukhumvit_text"
-                    />
+                    >
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/detail_noti_add_text_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ประวัติ"
+                        android:textSize="20dp"
+                        android:textColor="@color/colorText"
+                        android:fontFamily="@font/sukhumvit_text"
+                        />
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/detail_edit_btn"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_stamp_icon"
+                            android:tint="@color/colorText" />
+
+                        <ImageView
+                            android:id="@+id/detail_delete_btn"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="0dp"
+                            android:src="@drawable/ic_garbage"
+                            android:tint="@color/colorText" />
+                    </LinearLayout>
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:visibility="visible"

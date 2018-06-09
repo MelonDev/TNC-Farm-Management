@@ -24,13 +24,18 @@ import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 import java.util.*
 import kotlin.collections.ArrayList
+import android.R.attr.label
+import android.app.Activity
+import android.widget.TextView
+import th.ac.up.agr.thai_mini_chicken.Data.CustomData
+import th.ac.up.agr.thai_mini_chicken.Tools.TimeManager
 
 
 class DetailNotificationActivity : AppCompatActivity() {
 
     lateinit var adapter: DetailNotificationAdapter
 
-    private var arrEvent = ArrayList<Event>()
+    private lateinit var arrEvent: ArrayList<Event>
     private var arrPassed = ArrayList<Event>()
     lateinit var recyclerView: RecyclerView
 
@@ -42,6 +47,8 @@ class DetailNotificationActivity : AppCompatActivity() {
         //setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_notification)
+
+        arrEvent = ArrayList()
 
         val bundle = intent.extras
         val card_key = bundle.getString("CARD_KEY")
@@ -65,13 +72,26 @@ class DetailNotificationActivity : AppCompatActivity() {
             activity_detail_title_text.text = "รายการที่ต้องทำ"
             detail_noti_add_text_btn.visibility = View.VISIBLE
             adapter = DetailNotificationAdapter(this, type.toInt(), arrEvent, arrPassed, card_key, user_ID)
-            notification_detail_fab_add.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this,MelonTheme.from(this).getColor()));
+            notification_detail_fab_add.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, MelonTheme.from(this).getColor()));
             notification_detail_fab_add.show()
         } else if (type.contentEquals("1")) {
             activity_detail_title_text.text = "ประวัติ"
             detail_noti_add_text_btn.visibility = View.GONE
             adapter = DetailNotificationAdapter(this, type.toInt(), arrEvent, arrPassed, card_key, user_ID)
             notification_detail_fab_add.hide()
+        } else if (type.contentEquals("2")) {
+            activity_detail_title_text.text = "รายการที่ต้องทำ"
+            detail_noti_add_text_btn.visibility = View.GONE
+            adapter = DetailNotificationAdapter(this, type.toInt(), arrEvent, arrPassed, card_key, user_ID)
+            notification_detail_fab_add.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, MelonTheme.from(this).getColor()));
+            notification_detail_fab_add.show()
+        } else if (type.contentEquals("3")) {
+            activity_detail_title_text.text = card_key
+            detail_noti_add_text_btn.visibility = View.GONE
+            adapter = DetailNotificationAdapter(this, 3, arrEvent, arrPassed, card_key, user_ID)
+            //notification_detail_fab_add.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, MelonTheme.from(this).getColor()));
+            //notification_detail_fab_add.show()
+            notification_detail_fab_add.visibility = View.GONE
         }
 
         recyclerView.adapter = adapter
@@ -79,41 +99,155 @@ class DetailNotificationActivity : AppCompatActivity() {
         val userRef = Firebase.reference.child("ผู้ใช้").child(user_ID)
         val container = userRef.child("รายการ")
 
-        ref = container.child("ใช้งาน").child(card_key).child("รายการที่ต้องทำ")
+        if (type.contentEquals("0") || type.contentEquals("1")) {
 
-        val refs = container.child("ใช้งาน").child(card_key).child("รายละเอียด")
+            ref = container.child("ใช้งาน").child(card_key).child("รายการที่ต้องทำ")
 
-        refs.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+            val refss = container.child("ใช้งาน").child(card_key).child("รายการที่ต้องทำ").orderByChild("totalDay")
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.value != null) {
-                    val slot = p0.getValue(CardData::class.java)!!
+            val refs = container.child("ใช้งาน").child(card_key).child("รายละเอียด")
 
-                    ref.addValueEventListener(object : ValueEventListener {
-                        override fun onCancelled(p0: DatabaseError) {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                        }
-
-                        override fun onDataChange(p0: DataSnapshot) {
-                            if (p0.value != null) {
-                                getEvents(p0, slot)
-
-                                recyclerView.adapter.notifyDataSetChanged()
-                                //recyclerView.layoutManager.smoothScrollToPosition(recyclerView, RecyclerView.State(), 0)
-
-                            }
-                        }
-                    })
-
+            refs.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
 
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.value != null) {
+                        val slot = p0.getValue(CardData::class.java)!!
 
+                        if(p0.children.count() == 0){
+                            //detail_noti_empty_text.visibility = View.VISIBLE
+                            detail_noti_empty_area.visibility = View.VISIBLE
+                        }else {
+                            //detail_noti_empty_text.visibility = View.GONE
+                            detail_noti_empty_area.visibility = View.GONE
+                        }
+
+
+                        refss.addValueEventListener(object : ValueEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
+                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            }
+
+                            override fun onDataChange(p0: DataSnapshot) {
+                                if (p0.value != null) {
+                                    getEvents(p0, slot)
+
+                                    recyclerView.adapter.notifyDataSetChanged()
+                                    //recyclerView.layoutManager.smoothScrollToPosition(recyclerView, RecyclerView.State(), 0)
+
+                                }
+                            }
+                        })
+
+                    } else {
+                       // detail_noti_empty_text.visibility = View.VISIBLE
+                        detail_noti_empty_area.visibility = View.VISIBLE
+                    }
+
+
+                }
+            })
+        } else if (type.contentEquals("2")) {
+            val firebase = Firebase.reference
+            val dbA = firebase.child("ผู้ใช้").child(user_ID).child("รูปแบบ").child(card_key).child("รายการที่ต้องทำ").orderByChild("totalDay")
+
+            val dbTitle = firebase.child("ผู้ใช้").child(user_ID).child("รูปแบบ").child(card_key).child("รายละเอียด")
+            dbTitle.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.value != null) {
+                        val from = p0.getValue(CustomData::class.java)!!
+                        activity_detail_title_text.text = from.name
+
+                    }
+                }
+            })
+
+            dbA.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.value != null) {
+                        arrEvent.clear()
+                        var w = 0
+                        var d = 0
+
+                        //detail_noti_empty_text.visibility = View.GONE
+                        detail_noti_empty_area.visibility = View.GONE
+
+                        if(p0.children.count() == 0){
+                            //detail_noti_empty_text.visibility = View.VISIBLE
+                            detail_noti_empty_area.visibility = View.VISIBLE
+                        }else {
+                            //detail_noti_empty_text.visibility = View.GONE
+                            detail_noti_empty_area.visibility = View.GONE
+                        }
+
+                        //var wq = p0.children
+                        //Log.e("WQ",wq.count().toString())
+
+                        p0.children.forEach {
+                            val a = it.getValue(Event::class.java)!!
+                            if (arrEvent.size == 0) {
+                                val b = Event()
+                                b.apply {
+                                    this.title = "null"
+                                    this.week = a.week
+                                    this.day = a.day
+                                    this.message = "null"
+                                    this.totalDay = -1
+                                    this.fromID = a.fromID
+                                    this.cardID = "null"
+                                }
+                                arrEvent.add(b)
+                                arrEvent.add(a)
+                                recyclerView.adapter.notifyDataSetChanged()
+                            } else {
+                                var last = arrEvent[arrEvent.lastIndex]
+                                if (last.totalDay != a.totalDay) {
+                                    val b = Event()
+                                    b.apply {
+                                        this.title = "null"
+                                        this.week = a.week
+                                        this.day = a.day
+                                        this.message = "null"
+                                        this.totalDay = -1
+                                        this.fromID = a.fromID
+                                        this.cardID = "null"
+                                    }
+                                    arrEvent.add(b)
+                                    arrEvent.add(a)
+                                    recyclerView.adapter.notifyDataSetChanged()
+                                } else {
+                                    arrEvent.add(a)
+                                    recyclerView.adapter.notifyDataSetChanged()
+                                }
+                            }
+
+                        }
+                    } else {
+                        arrEvent.clear()
+                        recyclerView.adapter.notifyDataSetChanged()
+                        //detail_noti_empty_text.visibility = View.VISIBLE
+                        detail_noti_empty_area.visibility = View.VISIBLE
+
+                    }
+                }
+            })
+        } else if (type.contentEquals("3")) {
+            if (card_key.contentEquals("ไก่พ่อ-แม่พันธุ์")) {
+                tEvent(TimeManager.get.breeder)
+            } else if (card_key.contentEquals("ไก่เนื้อ")) {
+                tEvent(TimeManager.get.meat)
             }
-        })
-
+        }
 
         //OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
 
@@ -126,6 +260,104 @@ class DetailNotificationActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        notification_detail_fab_add.setOnClickListener {
+            if (type.contentEquals("0") || type.contentEquals("1")) {
+                val intent = Intent(this, AddNotiCardActivity::class.java)
+                intent.putExtra("ID", "0")
+                intent.putExtra("USER_ID", user_ID)
+                intent.putExtra("CARD_KEY", card_key)
+                startActivity(intent)
+            } else if (type.contentEquals("2")) {
+                val intent = Intent(this, AddNotiCardActivity::class.java)
+                intent.putExtra("ID", "2")
+                intent.putExtra("USER_ID", user_ID)
+                intent.putExtra("CARD_KEY", card_key)
+                //startActivityForResult ( intent, 999 )
+                startActivity(intent)
+            }
+
+        }
+
+    }
+
+    fun tEvent(arr: ArrayList<Event>) {
+
+        for (a in arr) {
+
+            if (arrEvent.size == 0) {
+                val b = Event()
+                b.apply {
+                    this.title = "null"
+                    this.week = a.week
+                    this.day = a.day
+                    this.message = "null"
+                    this.totalDay = -1
+                    this.fromID = a.fromID
+                    this.cardID = "null"
+                }
+                arrEvent.add(b)
+                arrEvent.add(a)
+                recyclerView.adapter.notifyDataSetChanged()
+            } else {
+                var last = arrEvent[arrEvent.lastIndex]
+                if (last.totalDay != a.totalDay) {
+                    val b = Event()
+                    b.apply {
+                        this.title = "null"
+                        this.week = a.week
+                        this.day = a.day
+                        this.message = "null"
+                        this.totalDay = -1
+                        this.fromID = a.fromID
+                        this.cardID = "null"
+                    }
+                    arrEvent.add(b)
+                    arrEvent.add(a)
+                    recyclerView.adapter.notifyDataSetChanged()
+                } else {
+                    arrEvent.add(a)
+                    recyclerView.adapter.notifyDataSetChanged()
+                }
+            }
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
+        super.onActivityResult(requestCode, resultCode, intent)
+
+        if (resultCode == Activity.RESULT_OK && requestCode == 999) {
+            val objective = intent.getStringExtra("objective")
+            val week = intent.getStringExtra("week")
+            val day = intent.getStringExtra("day")
+            val totalDay = intent.getStringExtra("totalDay")
+            val message = intent.getStringExtra("message")
+
+
+/*
+            val event = Event()
+            event.apply {
+                this.title = objective
+                this.week = week.toInt()
+                this.totalDay = totalDay.toInt()
+                this.message = message
+                this.day = day.toInt()
+            }
+*/
+            //arrEvent.add(event)
+
+            //Log.e("ARR",arrEvent.size.toString())
+            //recyclerView.adapter.notifyDataSetChanged()
+            //Log.e("OBJ",objective)
+            //Log.e("WEEK",week)
+            //Log.e("DAY",day)
+            //Log.e("TOTAL",totalDay)
+            //Log.e("MESSAGE",message)
+
+            //val label = this.findViewById(R.id.label) as TextView
+
+            //label.text = color
+        }
     }
 
     /*

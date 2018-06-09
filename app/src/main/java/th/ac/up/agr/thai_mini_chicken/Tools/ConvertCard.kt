@@ -100,4 +100,28 @@ class ConvertCard {
         }
         return arrObjective
     }
+
+    fun getNotiObjective() :ArrayList<String>{
+        arrObjective.apply {
+            add("ฉีดวัคซีน")
+            add("ให้แสงสว่าง")
+            add("ตัดปาก")
+            add("ถ่ายพยาธิ")
+            add("อื่นๆ")
+        }
+        return arrObjective
+    }
+
+    fun getNotiObjective(position :String) :String{
+        arrObjective.apply {
+            add("ฉีดวัคซีน")
+            add("ให้แสงสว่าง")
+            add("ตัดปาก")
+            add("ถ่ายพยาธิ")
+            add("อื่นๆ")
+        }
+        return arrObjective[position.toInt()]
+    }
+
+
 }

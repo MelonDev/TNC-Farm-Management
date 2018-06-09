@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.NewHistoryFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:paddingTop="16dp"
+        android:paddingBottom="0dp"
+        android:clipToPadding="false"
+        android:id="@+id/new_history_recycler_view"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:drawSelectorOnTop="false"
+        android:scrollbars="vertical"
+        app:layoutManager="LinearLayoutManager"
+        app:spanCount="1"
+        android:listSelector="@android:color/transparent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/data_card"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/new_history_empty_area"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingBottom="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_marginTop="25dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_empty_box_icon"
+                android:tint="@color/colorText"
+                />
+
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_question_mark_icon"
+                android:tint="@color/colorText"
+                />
+
+        </RelativeLayout>
+        <TextView
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="0dp"
+            android:text="ไม่พบข้อมูล"
+            android:textSize="24dp"
+            android:textColor="@color/colorText"
+            />
+    </LinearLayout>
+
+</FrameLayout>

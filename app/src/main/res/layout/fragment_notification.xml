@@ -6,6 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.NotificationFragment">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_notification_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:paddingTop="16dp"
         android:paddingBottom="0dp"
@@ -26,5 +31,6 @@
         tools:listitem="@layout/data_card"
 
         />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

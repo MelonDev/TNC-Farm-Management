@@ -1,5 +1,6 @@
 package th.ac.up.agr.thai_mini_chicken.ProgramMainActivity
 
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -39,11 +40,15 @@ class ProgramViewPager(val activity: ProgramMainActivity) {
     private fun setupViewPager(viewPager: ViewPager) {
         //val adapter = ViewPagerAdapter(myContext.supportFragmentManager)
         val adapter = ViewPagerAdapter(activity.supportFragmentManager)
-        adapter.addFragment(activity.programFragment, "รายการ")
-        adapter.addFragment(activity.notificationFragment, "แจ้งเตือน")
-        adapter.addFragment(activity.historyFragment, "ประวัติ")
+        //adapter.addFragment(activity.programFragment, "รายการ")
+        adapter.addFragment(activity.newProgramFragment, "รายการ")
+        //adapter.addFragment(activity.notificationFragment, "แจ้งเตือน")
+        adapter.addFragment(activity.newNotificationFragment, "แจ้งเตือน")
+        //adapter.addFragment(activity.historyFragment, "ประวัติ")
+        adapter.addFragment(activity.newHistoryFragment, "ประวัติ")
+
         viewPager.adapter = adapter
-        viewPager.offscreenPageLimit = 0
+        viewPager.offscreenPageLimit = 3
 
         //OverScrollDecoratorHelper.setUpOverScroll(viewPager)
 
@@ -54,24 +59,42 @@ class ProgramViewPager(val activity: ProgramMainActivity) {
             //Log.e("PAGE", "page selected $position")
 
             //activity.programFragment.fab = activity.program_main_activity_fab
+            /*
             if (position == 0) {
                 activity.fab.show()
-                //Log.e("PAGE", "FAB SHOW")
-                activity.historyFragment.reset()
-                activity.notificationFragment.reset()
+                //Log.e("PAGE", "0")
+                activity.historyFragment.onStop()
+                activity.notificationFragment.onStop()
             } else if (position == 1){
                 activity.fab.hide()
-                //Log.e("PAGE", "FAB HIDE")
-                activity.programFragment.reset()
-                activity.historyFragment.reset()
+                //Log.e("PAGE", "1")
+                activity.notificationFragment.onLoad()
+                activity.programFragment.onStop()
+                activity.historyFragment.onStop()
             } else if(position == 2){
                 activity.fab.hide()
-                //Log.e("PAGE", "FAB HIDE")
-                activity.programFragment.reset()
-                activity.notificationFragment.reset()
+                //Log.e("PAGE", "2")
+                activity.programFragment.onStop()
+                activity.notificationFragment.onStop()
             }
-
-
+*/
+            if (position == 0) {
+                activity.fab.show()
+                //Log.e("PAGE", "0")
+                //activity.historyFragment.onStop()
+                //activity.notificationFragment.onStop()
+            } else if (position == 1){
+                activity.fab.hide()
+                //Log.e("PAGE", "1")
+                //activity.notificationFragment.onLoad()
+                //activity.programFragment.onStop()
+                //activity.historyFragment.onStop()
+            } else if(position == 2){
+                activity.fab.hide()
+                //Log.e("PAGE", "2")
+                //activity.programFragment.onStop()
+                //activity.notificationFragment.onStop()
+            }
 /*
             when (position) {
                 0 -> {

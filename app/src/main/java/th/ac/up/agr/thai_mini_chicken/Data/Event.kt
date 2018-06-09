@@ -11,11 +11,14 @@ class Event {
     var fromID :String = ""
     var status :String = ""
 
-    fun setEvent(title :String,message:String,week :Int,day :Int) :Event{
+    var totalDay :Int = 0
+
+    fun setEvent(title :String,message:String,week :Int,day :Int,totalDay :Int) :Event{
         this.title = title
         this.message = message
         this.week = week
         this.day = day
+        this.totalDay = totalDay
         return this
     }
 

@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.app_bar_program_main.*
 import kotlinx.android.synthetic.main.fragment_history.view.*
@@ -37,8 +39,10 @@ class HistoryFragment : Fragment() {
 
     private var arrData = ArrayList<CardData>()
 
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+
     val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
-    val ID = "melondev_icloud_com"
+    val ID = FirebaseAuth.getInstance().currentUser!!.uid
 
     lateinit var progress :ProgressBar
     lateinit var emptyText :TextView
@@ -69,9 +73,32 @@ class HistoryFragment : Fragment() {
         progress.visibility = View.VISIBLE
         emptyText.visibility = View.GONE
 
+        mSwipeRefreshLayout = view.swipe_history_container
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark)
+
+        mSwipeRefreshLayout.setOnRefreshListener {
+            mSwipeRefreshLayout.post {
+                mSwipeRefreshLayout.isRefreshing = true
+
+                onLoad()
+                // Fetching data from server
+                //loadRecyclerViewData()
+            }
+            //Log.e("LOAD","sdaksd")
+        }
+
+        run = true
+
+        return view
+    }
+
+    fun onLoad(){
         val databaseReference = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน")
 
-        databaseReference.addValueEventListener(object : ValueEventListener {
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 progress.visibility = View.GONE
                 emptyText.visibility = View.VISIBLE
@@ -83,8 +110,13 @@ class HistoryFragment : Fragment() {
                     //emptyText.visibility = View.GONE
                     arrData.clear()
                     recyclerView.adapter.notifyDataSetChanged()
+
+                    //Log.e("HISTORY","OUTFOR")
+
                     p0.children.forEach {
                         val key = it.key.toString()
+
+                        //Log.e("HISTORY","INFOR")
 
                         val rf = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน").child(key).child("รายละเอียด")
                         rf.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -95,7 +127,6 @@ class HistoryFragment : Fragment() {
                             override fun onDataChange(p0: DataSnapshot) {
                                 if (p0.value != null) {
                                     val slot = p0.getValue(CardData::class.java)!!
-                                    //Log.e("ID", slot.createDate.toString())
 
                                     if (slot.cardID.isEmpty()) {
                                         slot.cardID = key
@@ -114,8 +145,8 @@ class HistoryFragment : Fragment() {
                                             }
                                             arrData.add(slot)
                                             arrData.add(a)
-                                            Log.e("ID", "0")
                                             recyclerView.adapter.notifyDataSetChanged()
+                                            this@HistoryFragment.mSwipeRefreshLayout.isRefreshing = false
                                         } else {
                                             val today = Calendar.getInstance()
 
@@ -174,6 +205,7 @@ class HistoryFragment : Fragment() {
                                             }
                                             //Log.e("PRO", "LOAD")
                                             recyclerView.adapter.notifyDataSetChanged()
+                                            this@HistoryFragment.mSwipeRefreshLayout.isRefreshing = false
                                         }
                                         //arrData.add(slot)
 
@@ -189,14 +221,15 @@ class HistoryFragment : Fragment() {
                 } else {
                     progress.visibility = View.GONE
                     emptyText.visibility = View.VISIBLE
+                    this@HistoryFragment.mSwipeRefreshLayout.isRefreshing = false
                 }
             }
         })
+    }
 
-
-        run = true
-
-        return view
+    override fun onStart() {
+        super.onStart()
+        onLoad()
     }
 
     fun reset(){

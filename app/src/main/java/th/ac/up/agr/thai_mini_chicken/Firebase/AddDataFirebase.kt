@@ -4,6 +4,7 @@ import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import com.mylhyl.circledialog.CircleDialog
@@ -19,8 +20,7 @@ import th.ac.up.agr.thai_mini_chicken.Tools.LoadTime
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 import kotlin.collections.HashMap
 import com.mylhyl.circledialog.params.ProgressParams
-
-
+import th.ac.up.agr.thai_mini_chicken.Data.Event
 
 
 class AddDataFirebase(val activity: FragmentActivity) {
@@ -36,7 +36,7 @@ class AddDataFirebase(val activity: FragmentActivity) {
     lateinit var errorDialog: CircleDialog.Builder
 
     init {
-        userRef = firebase.child("ผู้ใช้").child("melondev_icloud_com")
+        userRef = firebase.child("ผู้ใช้").child(FirebaseAuth.getInstance().currentUser!!.uid)
         container = userRef.child("รายการ")
 
     }
@@ -45,7 +45,7 @@ class AddDataFirebase(val activity: FragmentActivity) {
         fun from(activity: FragmentActivity) = AddDataFirebase(activity)
     }
 
-    fun setDataToActive(dataCard: CardData) {
+    fun setDataToActive(dataCard: CardData, objective: String, result: String, change: Boolean) {
         //val d = CardDate()
         //d.dateTime = Date().getDateNull()
         //d.IDCard = Date().getDateFakeID()
@@ -73,8 +73,14 @@ class AddDataFirebase(val activity: FragmentActivity) {
             override fun onDataChange(p0: DataSnapshot) {
                 setWaitDialog()
                 if (p0.value == null) {
-                    val arr = LoadTime().getTable(dataCard.userObjective)
-                    val objectiveJson = Gson()
+
+                    //val childMap = HashMap<String, Any>()
+
+                    setData(objective, result, dataCard, man)
+
+                    //val arr = LoadTime().getTable(dataCard.userObjective)
+
+                    //val objectiveJson = Gson()
 
                     //val salaries = HashMap<>()
                     //salaries.put("salary", salary(10, 20))
@@ -82,47 +88,9 @@ class AddDataFirebase(val activity: FragmentActivity) {
 
                     //val w = HashMap<String,CardData>()
 
-                    val childMap = HashMap<String, Any>()
+
                     //val reminderMap = HashMap<String, AddSlot>()
 
-                    for (i in arr) {
-
-                        val key: String = man.push().key.toString()
-
-                        val pathA = "/รายการที่ต้องทำ/$key"
-
-                        i.fromID = dataCard.cardID
-                        if (i.status.isEmpty()) {
-                            i.status = "ACTIVE"
-                        }
-
-                        //val a = AddSlot(i,null)
-
-                        childMap.put(pathA, i)
-
-                        //w.put()
-
-                        //Log.e("ADD","TEST")
-                        //b.push().setValue(i)
-                        //val oj = Gson()
-                        //oj.toJson(i)
-                    }
-
-                    //val wer = AddSlot(null,dataCard)
-
-                    childMap.put("/รายละเอียด/", dataCard)
-
-                    man.updateChildren(childMap) { p0, _ ->
-                        if (p0 != null) {
-                            waitDialog.dismiss()
-                            setErrorDialog()
-                            //showErrorDialog()
-                        } else {
-                            waitDialog.dismiss()
-                            setConDialog()
-                            //showConDialog()
-                        }
-                    }
 
                     //objectiveJson.toJson(arr)
                     //ref.setValue(dataCard)
@@ -131,6 +99,60 @@ class AddDataFirebase(val activity: FragmentActivity) {
                     //a.toJson(objectiveJson)
                     //man.setValue(a)
                 } else {
+
+                    Log.e("CHANGE",change.toString())
+                    if (change) {
+                        b.removeValue()
+                        setData(objective, result, dataCard, man)
+
+                        /*
+                        val arr = LoadTime().getTable(dataCard.userObjective)
+                        b.removeValue()
+                        val childMap = HashMap<String, Any>()
+                        for (i in arr) {
+                            val key: String = man.push().key.toString()
+
+                            val pathA = "/รายการที่ต้องทำ/$key"
+                            i.cardID = key
+                            i.fromID = dataCard.cardID
+                            if (i.status.isEmpty()) {
+                                i.status = "ACTIVE"
+                            }
+                            childMap.put(pathA, i)
+                            //b.push().setValue(i)
+                            //Log.e("ADD","TEST")
+                        }
+                        childMap.put("/รายละเอียด/", dataCard)
+                        man.updateChildren(childMap) { p0, _ ->
+                            if (p0 != null) {
+                                waitDialog.dismiss()
+                                setErrorDialog()
+                                //showErrorDialog()
+                            } else {
+                                waitDialog.dismiss()
+                                setConDialog()
+                                //showConDialog()
+                            }
+                        }
+                        */
+                        //ref.setValue(dataCard)
+                    } else {
+                        val childMap = HashMap<String, Any>()
+                        childMap.put("/รายละเอียด/", dataCard)
+                        man.updateChildren(childMap) { p0, _ ->
+                            if (p0 != null) {
+                                waitDialog.dismiss()
+                                setErrorDialog()
+                                //showErrorDialog()
+                            } else {
+                                waitDialog.dismiss()
+                                setConDialog()
+                                //showConDialog()
+                            }
+                        }
+                        //ref.setValue(dataCard)
+                    }
+                    /*
 
                     c.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError) {
@@ -148,6 +170,7 @@ class AddDataFirebase(val activity: FragmentActivity) {
                                         val key: String = man.push().key.toString()
 
                                         val pathA = "/รายการที่ต้องทำ/$key"
+                                        i.cardID = key
                                         i.fromID = dataCard.cardID
                                         if (i.status.isEmpty()) {
                                             i.status = "ACTIVE"
@@ -187,13 +210,150 @@ class AddDataFirebase(val activity: FragmentActivity) {
                                 }
                             }
                         }
-                    })
+                    })*/
                 }
             }
         })
 
     }
 
+    fun setData(objective: String, result: String, dataCard: CardData, man: DatabaseReference) {
+        val childMap = HashMap<String, Any>()
+
+        //Log.e("$objective","$result")
+
+        if(objective.contentEquals("1") && result.contentEquals("ว่างเปล่า")){
+            dataCard.managerName = result
+            dataCard.managerObjective = objective
+            childMap.put("/รายละเอียด/", dataCard)
+
+            man.updateChildren(childMap) { p0, _ ->
+                if (p0 != null) {
+                    waitDialog.dismiss()
+                    setErrorDialog()
+                    //showErrorDialog()
+                } else {
+                    waitDialog.dismiss()
+                    setConDialog()
+                    //showConDialog()
+                }
+            }
+        } else if (objective.contentEquals("1")) {
+            val arr = LoadTime().getTable(result)
+            Log.e("COUNT","${arr.size}")
+            for (i in arr) {
+
+                val key: String = man.push().key.toString()
+
+                val pathA = "/รายการที่ต้องทำ/$key"
+
+                i.fromID = dataCard.cardID
+                i.cardID = key
+
+
+                if (i.status.isEmpty()) {
+                    i.status = "ACTIVE"
+                }
+
+                //val a = AddSlot(i,null)
+
+                childMap.put(pathA, i)
+
+                //w.put()
+
+                //Log.e("ADD","TEST")
+                //b.push().setValue(i)
+                //val oj = Gson()
+                //oj.toJson(i)
+            }
+
+            //val wer = AddSlot(null,dataCard)
+            dataCard.managerName = result
+            dataCard.managerObjective = objective
+            childMap.put("/รายละเอียด/", dataCard)
+
+            man.updateChildren(childMap) { p0, _ ->
+                if (p0 != null) {
+                    waitDialog.dismiss()
+                    setErrorDialog()
+                    //showErrorDialog()
+                } else {
+                    waitDialog.dismiss()
+                    setConDialog()
+                    //showConDialog()
+                }
+            }
+        } else if (objective.contentEquals("2")) {
+            var firebase = Firebase.reference
+            var database = firebase.child("ผู้ใช้").child(FirebaseAuth.getInstance().currentUser!!.uid).child("รูปแบบ")
+            val abs = database.child(result).child("รายการที่ต้องทำ")
+            val refA = database
+
+            dataCard.managerName = result
+            dataCard.managerObjective = objective
+            childMap.put("/รายละเอียด/", dataCard)
+
+            val pathA = "/รายละเอียด/"
+
+            abs.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.value != null) {
+
+                        var count = 0
+                        for (it in p0.children) {
+                            val keys: String = refA.push().key.toString()
+                            val pathB = "/รายการที่ต้องทำ/$keys/"
+
+                            var slot = it.getValue(Event::class.java)!!
+
+                            slot.apply {
+                                this.status = "ACTIVE"
+                                this.fromID = result
+                                this.cardID = keys
+                            }
+
+                            childMap.put(pathB, slot)
+
+                            count += 1
+                            if (count == p0.children.count()) {
+
+                                man.updateChildren(childMap) { p0, _ ->
+                                    if (p0 != null) {
+                                        waitDialog.dismiss()
+                                        setErrorDialog()
+                                        //showErrorDialog()
+                                    } else {
+                                        waitDialog.dismiss()
+                                        setConDialog()
+                                        //showConDialog()
+                                    }
+                                }
+                            }
+                        }
+
+                    } else {
+                        man.updateChildren(childMap) { p0, _ ->
+                            if (p0 != null) {
+                                waitDialog.dismiss()
+                                setErrorDialog()
+                                //showErrorDialog()
+                            } else {
+                                waitDialog.dismiss()
+                                setConDialog()
+                                //showConDialog()
+                            }
+                        }
+                    }
+
+                }
+            })
+
+        }
+    }
 
 
     fun setErrorDialog() {

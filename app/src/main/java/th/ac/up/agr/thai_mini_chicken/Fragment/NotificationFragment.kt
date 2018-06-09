@@ -3,16 +3,21 @@ package th.ac.up.agr.thai_mini_chicken.Fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.app_bar_program_main.*
+import kotlinx.android.synthetic.main.fragment_history.view.*
 import kotlinx.android.synthetic.main.fragment_notification.view.*
+import kotlinx.android.synthetic.main.fragment_program.view.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import th.ac.up.agr.thai_mini_chicken.Adapter.PageNotificationAdapter
 import th.ac.up.agr.thai_mini_chicken.Adapter.ProgramAdapter
@@ -33,18 +38,31 @@ class NotificationFragment : Fragment() {
     lateinit var adapter: PageNotificationAdapter
     private var run: Boolean = false
 
+    private lateinit var recyclerView: RecyclerView
+
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+
+    private lateinit var arr: ArrayList<CardSlot>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_notification, container, false)
 
-        val arr = ArrayList<CardSlot>()
+        arr = ArrayList<CardSlot>()
+
+        mSwipeRefreshLayout = view.swipe_notification_container
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark)
+
+
         var count: Int = 0
 
         //val fab = activity!!.program_main_activity_fab
         //fab.hide()
 
-        val recyclerView = QuickRecyclerView(context!!
+        recyclerView = QuickRecyclerView(context!!
                 , view.notification_recycler_view
                 , "linear"
                 , 1
@@ -55,15 +73,38 @@ class NotificationFragment : Fragment() {
                 .recyclerView()
 
 
-        adapter = PageNotificationAdapter(this.activity!!, arr)
+        adapter = PageNotificationAdapter(this, arr)
         recyclerView.adapter = adapter
+
+
+        mSwipeRefreshLayout.setOnRefreshListener {
+            mSwipeRefreshLayout.post {
+                mSwipeRefreshLayout.isRefreshing = true
+
+                onLoad()
+                // Fetching data from server
+                //loadRecyclerViewData()
+            }
+            //Log.e("LOAD","sdaksd")
+        }
+
+        run = true
+
+
+        //OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
+
+
+        return view
+    }
+
+    fun onLoad() {
 
         val firebase = FirebaseDatabase.getInstance().reference
 
-        val database = firebase.child("ผู้ใช้").child("melondev_icloud_com").child("รายการ").child("ใช้งาน")
+        val database = firebase.child("ผู้ใช้").child(FirebaseAuth.getInstance().currentUser!!.uid).child("รายการ").child("ใช้งาน")
         val today = Calendar.getInstance()
 
-        val x = database.addValueEventListener(object : ValueEventListener {
+        val x = database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -72,7 +113,7 @@ class NotificationFragment : Fragment() {
                 if (p0.value != null) {
                     arr.clear()
                     p0.children.forEach {
-                        val ky = it.key.toString()
+                        //val ky = it.key.toString()
                         val y = database.child(it.key.toString()).child("รายการที่ต้องทำ")
                         val n = database.child(it.key.toString()).child("รายละเอียด")
 
@@ -83,20 +124,21 @@ class NotificationFragment : Fragment() {
 
                             override fun onDataChange(p0: DataSnapshot) {
                                 if (p0.value != null) {
-                                    if (ky.indexOf("-99-99-99") == -1) {
-                                        val cardData = p0.getValue(CardData::class.java)!!
-                                        val calendar = Calendar.getInstance()
+                                    val cardData = p0.getValue(CardData::class.java)!!
+                                    val calendar = Calendar.getInstance()
 
-                                        calendar.set(cardData.dateYear.toInt(), cardData.dateMonth.toInt() - 1, cardData.dateDay.toInt())
-                                        calendar.add(Calendar.WEEK_OF_YEAR, 0 - cardData.ageWeek.toInt())
-                                        calendar.add(Calendar.DAY_OF_YEAR, 0 - cardData.ageDay.toInt())
+                                    calendar.set(cardData.dateYear.toInt(), cardData.dateMonth.toInt() - 1, cardData.dateDay.toInt())
+                                    calendar.add(Calendar.WEEK_OF_YEAR, 0 - cardData.ageWeek.toInt())
+                                    calendar.add(Calendar.DAY_OF_YEAR, 0 - cardData.ageDay.toInt())
 
-                                        y.addListenerForSingleValueEvent(object : ValueEventListener {
-                                            override fun onCancelled(p0: DatabaseError) {
-                                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                                            }
+                                    y.addListenerForSingleValueEvent(object : ValueEventListener {
+                                        override fun onCancelled(p0: DatabaseError) {
+                                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                        }
 
-                                            override fun onDataChange(p0: DataSnapshot) {
+                                        override fun onDataChange(p0: DataSnapshot) {
+                                            if (p0.value != null) {
+
                                                 p0.children.forEach {
                                                     if (p0.value != null) {
                                                         val slot = it.getValue(Event::class.java)!!
@@ -145,7 +187,7 @@ class NotificationFragment : Fragment() {
 
                                                         cs.day = "${daysss}-slot"
 
-                                                        if (days >= 0) {
+                                                        if (days >= 0 && slot.status.contentEquals("ACTIVE") && cardData.status.contentEquals("ACTIVE")) {
                                                             if (!arr.any { it.day.contentEquals(daysss) }) {
                                                                 val m = CardSlot()
                                                                 arr.add(m.apply {
@@ -158,30 +200,30 @@ class NotificationFragment : Fragment() {
                                                             arr.sortBy({ it.day })
                                                         }
                                                         recyclerView.adapter.notifyDataSetChanged()
+                                                        this@NotificationFragment.mSwipeRefreshLayout.isRefreshing = false
                                                     }
                                                 }
-                                            }
-                                        })
+                                            } else {
+                                                arr.clear()
+                                                recyclerView.adapter.notifyDataSetChanged()
+                                                this@NotificationFragment.mSwipeRefreshLayout.isRefreshing = false
 
-                                    }
+                                            }
+                                        }
+                                    })
+
                                 }
+
                             }
                         })
                     }
 
-                    //Log.e("SIZE",arr.size.toString())
 
+                } else {
+                    this@NotificationFragment.mSwipeRefreshLayout.isRefreshing = false
                 }
             }
         })
-
-        run = true
-
-
-        //OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
-
-
-        return view
     }
 
     fun reset() {
@@ -189,6 +231,31 @@ class NotificationFragment : Fragment() {
             //adapter.resetMenu()
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        onLoad()
+        Log.e("ACTIVITY", "ONSTART")
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        Log.e("ACTIVITY", "ONRESUME")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.e("ACTIVITY", "ONPAUSE")
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        Log.e("ACTIVITY", "ONSTOP")
     }
 
 

@@ -21,6 +21,7 @@ import com.mylhyl.circledialog.callback.ConfigItems
 import com.mylhyl.circledialog.callback.ConfigText
 import com.mylhyl.circledialog.params.*
 import com.squareup.picasso.Picasso
+import th.ac.up.agr.thai_mini_chicken.AddNotiCardActivity
 import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Data.CardDate
@@ -48,7 +49,7 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
     }
 
     override fun getItemCount(): Int {
-        return if (ID == 0) {
+        return if (ID == 0 || ID == 2 || ID == 3) {
             data.size
         } else {
             unData.size
@@ -82,6 +83,12 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
             slot = data[position]
         } else if (ID == 1 && unData.size > 0) {
             slot = unData[position]
+        } else if (ID == 2 && data.size > 0) {
+            slot = data[position]
+        } else if(ID == 3 && data.size > 0){
+            slot = data[position]
+            holder.card_more.visibility = View.GONE
+
         }
         if (data.size > 1) {
             if (slot.title.contentEquals("null")) {
@@ -107,6 +114,8 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
                     showDialog(arrayOf("แก้ไข", "ทำแล้ว", "กู้คืน", "ลบ"), userID, position)
                 }
 
+            } else if (ID == 2) {
+                showDialog(arrayOf("แก้ไข", "ลบ"), userID, position)
             }
 
         }
@@ -127,48 +136,68 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
                 //.setSubTitle(sub)
                 .setItems(arr) { parent, view, position, id ->
                     var ref = Firebase.reference
+                    var refDelete = Firebase.reference
                     var status = ""
                     if (ID == 0) {
                         ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายการที่ต้องทำ").child(data[pos].cardID).child("status")
+                        refDelete = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายการที่ต้องทำ").child(data[pos].cardID)
+
                         status = data[pos].status
                     } else if (ID == 1) {
                         ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายการที่ต้องทำ").child(unData[pos].cardID).child("status")
+                        refDelete = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายการที่ต้องทำ").child(unData[pos].cardID)
+
                         status = unData[pos].status
+                    } else if (ID == 2) {
+                        //ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายการที่ต้องทำ").child(data[pos].cardID).child("status")
+                        ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รูปแบบ").child(cardKey).child("รายการที่ต้องทำ").child(data[pos].cardID)
+                        status = data[pos].status
                     }
 
                     if (status.contentEquals("ACTIVE")) {
-                        when (position) {
-                            0 -> {
-                                Log.e("ACTION", "EDIT")
-                            }
-                            1 -> {
-                                setWaitDialog("กำลังบันทึก...")
-                                ref.setValue("PASSED") { p0, _ ->
-                                    if (p0 != null) {
-                                        showErrorDialog()
-                                    } else {
-                                        showMoveDialog(0)
-                                    }
+                        if (ID == 2) {
+                            when (position) {
+                                0 -> {
+                                    goToEdit(data[pos].cardID,3)
+                                }
+                                1 -> {
+                                    showDeleteDialog(ref)
                                 }
                             }
-                            2 -> {
-                                setWaitDialog("กำลังบันทึก...")
-                                ref.setValue("CANCEL") { p0, _ ->
-                                    if (p0 != null) {
-                                        showErrorDialog()
-                                    } else {
-                                        showMoveDialog(0)
+                        } else {
+                            when (position) {
+                                0 -> {
+                                    goToEdit(data[pos].cardID,1)
+                                }
+                                1 -> {
+                                    setWaitDialog("กำลังบันทึก...")
+                                    ref.setValue("PASSED") { p0, _ ->
+                                        if (p0 != null) {
+                                            showErrorDialog()
+                                        } else {
+                                            showMoveDialog(0)
+                                        }
                                     }
                                 }
-                            }
-                            3 -> {
-                                showDeleteDialog(ref)
+                                2 -> {
+                                    setWaitDialog("กำลังบันทึก...")
+                                    ref.setValue("CANCEL") { p0, _ ->
+                                        if (p0 != null) {
+                                            showErrorDialog()
+                                        } else {
+                                            showMoveDialog(0)
+                                        }
+                                    }
+                                }
+                                3 -> {
+                                    showDeleteDialog(refDelete)
+                                }
                             }
                         }
                     } else if (status.contentEquals("PASSED")) {
                         when (position) {
                             0 -> {
-                                Log.e("ACTION", "EDIT")
+                                goToEdit(unData[pos].cardID,1)
                             }
                             1 -> {
                                 setWaitDialog("กำลังบันทึก...")
@@ -181,13 +210,13 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
                                 }
                             }
                             2 -> {
-                                showDeleteDialog(ref)
+                                showDeleteDialog(refDelete)
                             }
                         }
                     } else if (status.contentEquals("CANCEL")) {
                         when (position) {
                             0 -> {
-                                Log.e("ACTION", "EDIT")
+                                goToEdit(unData[pos].cardID,1)
                             }
                             1 -> {
                                 setWaitDialog("กำลังบันทึก...")
@@ -210,7 +239,7 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
                                 }
                             }
                             3 -> {
-                                showDeleteDialog(ref)
+                                showDeleteDialog(refDelete)
                             }
                         }
                     }
@@ -266,6 +295,15 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
                     }
                 })
                 .show()
+    }
+
+    fun goToEdit(notiKey: String,id: Int) {
+        val intent = Intent(activity, AddNotiCardActivity::class.java)
+        intent.putExtra("ID", id.toString())
+        intent.putExtra("USER_ID", userID)
+        intent.putExtra("CARD_KEY", cardKey)
+        intent.putExtra("NOTI_KEY", notiKey)
+        activity.startActivity(intent)
     }
 
     fun showConDialog() {
@@ -394,51 +432,56 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
             slot = data[position + 1]
         } else if (ID == 1) {
             slot = unData[position + 1]
+        } else if (ID == 2 || ID == 3) {
+            slot = data[position + 1]
         }
 
         val userRef = Firebase.reference.child("ผู้ใช้").child(userID)
         val container = userRef.child("รายการ")
+        if (ID == 0 || ID == 1) {
 
-        val ref = container.child("ใช้งาน").child(cardKey).child("รายละเอียด")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+            val ref = container.child("ใช้งาน").child(cardKey).child("รายละเอียด")
+            ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.value != null) {
-                    val card = p0.getValue(CardData::class.java)!!
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.value != null) {
+                        val card = p0.getValue(CardData::class.java)!!
 
-                    val calendar = Calendar.getInstance()
+                        val calendar = Calendar.getInstance()
 
-                    calendar.set(card.dateYear.toInt(), card.dateMonth.toInt() - 1, card.dateDay.toInt())
+                        calendar.set(card.dateYear.toInt(), card.dateMonth.toInt() - 1, card.dateDay.toInt())
 
-                    calendar.add(Calendar.WEEK_OF_YEAR, slot.week - card.ageWeek.toInt())
-                    calendar.add(Calendar.DAY_OF_YEAR, slot.day - card.ageDay.toInt())
-                    //calendar.set(Calendar.WEEK_OF_YEAR,slot.week)
-                    //calendar.set(Calendar.DAY_OF_YEAR,slot.day)
+                        calendar.add(Calendar.WEEK_OF_YEAR, slot.week - card.ageWeek.toInt())
+                        calendar.add(Calendar.DAY_OF_YEAR, slot.day - card.ageDay.toInt())
+                        //calendar.set(Calendar.WEEK_OF_YEAR,slot.week)
+                        //calendar.set(Calendar.DAY_OF_YEAR,slot.day)
 
-                    val today = Calendar.getInstance()
+                        val today = Calendar.getInstance()
 
-                    val difference = calendar.timeInMillis - today.timeInMillis
-                    val day = (difference / (1000 * 60 * 60 * 24)).toInt()
+                        val difference = calendar.timeInMillis - today.timeInMillis
+                        val day = (difference / (1000 * 60 * 60 * 24)).toInt()
 
-                    if (day == 0) {
-                        holder.title_item.text = "วันนี้"
-                    } else if (day == 1) {
-                        holder.title_item.text = "พรุ่งนี้"
-                    } else {
-                        holder.title_item.text = "${calendar.get(Calendar.DAY_OF_MONTH).toString()} ${ConvertCard().getMonth((calendar.get(Calendar.MONTH) + 1).toString())} ${calendar.get(Calendar.YEAR) + 543}"
+                        if (day == 0) {
+                            holder.title_item.text = "วันนี้"
+                        } else if (day == 1) {
+                            holder.title_item.text = "พรุ่งนี้"
+                        } else {
+                            holder.title_item.text = "${calendar.get(Calendar.DAY_OF_MONTH).toString()} ${ConvertCard().getMonth((calendar.get(Calendar.MONTH) + 1).toString())} ${calendar.get(Calendar.YEAR) + 543}"
+
+                        }
+
+                        //holder.title_item.text = "${calendar.get(Calendar.DAY_OF_MONTH).toString()} ${ConvertCard().getMonth((calendar.get(Calendar.MONTH) + 1).toString())} ${calendar.get(Calendar.YEAR) + 543}"
+
 
                     }
-
-                    //holder.title_item.text = "${calendar.get(Calendar.DAY_OF_MONTH).toString()} ${ConvertCard().getMonth((calendar.get(Calendar.MONTH) + 1).toString())} ${calendar.get(Calendar.YEAR) + 543}"
-
-
                 }
-            }
-        })
-
+            })
+        } else {
+            holder.title_item.text = "${slot.week} สัปดาห์ ${slot.day} วัน"
+        }
 
         //val week = slot.week
         //val day = slot.day
@@ -485,6 +528,8 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
             slot = data[position]
         } else if (ID == 1) {
             slot = unData[position]
+        } else if (ID == 2 || ID == 3) {
+            slot = data[position]
         }
 
         val calendar = Calendar.getInstance()
@@ -493,31 +538,36 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
         val userRef = Firebase.reference.child("ผู้ใช้").child(userID)
         val container = userRef.child("รายการ")
 
-        val ref = container.child("ใช้งาน").child(cardKey).child("รายละเอียด")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+        if (ID == 0 || ID == 1) {
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.value != null) {
-                    val card = p0.getValue(CardData::class.java)!!
 
-                    calendar.set(card.dateYear.toInt(), card.dateMonth.toInt() - 1, card.dateDay.toInt())
-
-                    calendar.add(Calendar.WEEK_OF_YEAR, slot.week - card.ageWeek.toInt())
-                    calendar.add(Calendar.DAY_OF_YEAR, slot.day - card.ageDay.toInt())
-
-                    if (ID == 0) {
-                        unpass(position, slot.title, holder)
-                    } else if (ID == 1) {
-                        passed(holder, slot.status)
-                    }
-
+            val ref = container.child("ใช้งาน").child(cardKey).child("รายละเอียด")
+            ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
-            }
-        })
 
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.value != null) {
+                        val card = p0.getValue(CardData::class.java)!!
+
+                        calendar.set(card.dateYear.toInt(), card.dateMonth.toInt() - 1, card.dateDay.toInt())
+
+                        calendar.add(Calendar.WEEK_OF_YEAR, slot.week - card.ageWeek.toInt())
+                        calendar.add(Calendar.DAY_OF_YEAR, slot.day - card.ageDay.toInt())
+
+                        if (ID == 0) {
+                            unpass(position, slot.title, holder)
+                        } else if (ID == 1) {
+                            passed(holder, slot.status)
+                        }
+
+                    }
+                }
+            })
+        } else {
+            unpass(position, slot.title, holder)
+        }
         holder.apply {
             title_item.visibility = View.GONE
             card_item.visibility = View.VISIBLE
@@ -529,6 +579,8 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
                 card_des.text = "อายุ ${data[position].week} สัปดาห์ ${data[position].day} วัน"
             } else if (ID == 1) {
                 card_des.text = "อายุ ${unData[position].week} สัปดาห์ ${unData[position].day} วัน"
+            } else if(ID == 2 || ID == 3){
+                card_des.text = "อายุ ${data[position].week} สัปดาห์ ${data[position].day} วัน"
             }
 
 

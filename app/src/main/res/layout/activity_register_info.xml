@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterInfoActivity">
+
+    <ScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/register_info_image_area"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="50dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/register_info_image_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/man"
+                        android:padding="0dp"
+                        android:scaleType="centerCrop"
+                        />
+
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="25dp"
+                    app:cardBackgroundColor="#ffffff"
+
+                    >
+                    <ImageView
+                        android:padding="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_camera_icon"
+                        android:tint="@color/colorText"
+                        />
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/sukhumvit_bold"
+                android:text="ข้อมูลผู้ใช้"
+                android:textColor="@color/colorText"
+                android:textSize="22dp" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#EDEDED"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/register_info_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="ชื่อ-นามสกุล"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorText"
+                    android:textSize="18dp" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#EDEDED"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/register_info_phone_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="เบอร์โทรศัพท์"
+                    android:inputType="phone"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorText"
+                    android:textSize="18dp" />
+
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:background="#b4b4b4"
+                android:orientation="vertical" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/sukhumvit_bold"
+                    android:text="ข้อมูลฟาร์ม"
+                    android:textColor="@color/colorText"
+                    android:textSize="22dp" />
+                <TextView
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/sukhumvit_text"
+                    android:text="รหัสผ่านอย่างน้อย 6 ตัว"
+                    android:textColor="@color/colorText"
+                    android:textSize="18dp" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#EDEDED"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/register_info_farm_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="ชื่อฟาร์ม"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorText"
+                    android:textSize="18dp" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="0dp"
+                app:cardBackgroundColor="#EDEDED"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/register_info_farm_address_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="ที่อยู่"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorText"
+                    android:textSize="18dp" />
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:background="?attr/colorPrimary"
+            android:minHeight="50dp">
+
+            <RelativeLayout
+                android:id="@+id/register_info_back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="16dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_back_icon"
+                    android:tint="@color/colorWhite" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:fontFamily="@font/sukhumvit_light"
+                    android:paddingBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:text="กลับ"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/register_info_title_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="0dp"
+                android:fontFamily="@font/sukhumvit_bold"
+                android:gravity="center_horizontal"
+                android:maxWidth="200dp"
+                android:paddingBottom="0dp"
+                android:paddingRight="0dp"
+                android:text="ข่้อมูลพื้นฐาน"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp" />
+
+            <RelativeLayout
+                android:id="@+id/register_info_confirm_btn"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:fontFamily="@font/sukhumvit_semibold"
+                    android:paddingBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:text="บันทึก"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

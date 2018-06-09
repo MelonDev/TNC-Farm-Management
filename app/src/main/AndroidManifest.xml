@@ -4,14 +4,16 @@
     package="th.ac.up.agr.thai_mini_chicken">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.READ_PHONE_STATE"
         tools:node="remove" />
 
     <application
+        android:name=".OfflineClient"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="TNC Farm Manager"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -55,16 +57,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TestLogin"
-            android:label="@string/title_activity_test_login"
-            android:theme="@style/DetailTheme" />
-        <activity
             android:name=".TestAuthActivity"
             android:label="@string/title_activity_test_auth"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddNotiCardActivity"
             android:label="@string/title_activity_add_noti_card"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NotiDetailActivity"
+            android:label="@string/title_activity_noti_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CustomPlanActivity"
+            android:label="@string/title_activity_custom_plan"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="TNC Farm Manager"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RegisterInfoActivity"
+            android:label="@string/title_activity_register_info"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -11,14 +11,14 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_program_main.*
 import kotlinx.android.synthetic.main.app_bar_program_main.*
 import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
-import th.ac.up.agr.thai_mini_chicken.Fragment.HistoryFragment
-import th.ac.up.agr.thai_mini_chicken.Fragment.NotificationFragment
-import th.ac.up.agr.thai_mini_chicken.Fragment.ProgramFragment
+import th.ac.up.agr.thai_mini_chicken.CustomPlanActivity
+import th.ac.up.agr.thai_mini_chicken.Fragment.*
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 
@@ -27,6 +27,10 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     val programFragment :ProgramFragment = ProgramFragment()
     val notificationFragment :NotificationFragment = NotificationFragment()
     val historyFragment :HistoryFragment = HistoryFragment()
+
+    val newProgramFragment :NewProgramFragment = NewProgramFragment()
+    val newNotificationFragment :NewNotificationFragment = NewNotificationFragment()
+    val newHistoryFragment :NewHistoryFragment = NewHistoryFragment()
 
     lateinit var fab :FloatingActionButton
 
@@ -42,8 +46,17 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         fab.setOnClickListener {
             val intent = Intent(this, AddProgramActivity::class.java)
             intent.putExtra("ID", "0")
+            intent.putExtra("USER_ID",FirebaseAuth.getInstance().currentUser!!.uid)
             startActivity(intent)
         }
+
+        program_main_activity_custom.setOnClickListener {
+            val intent = Intent(this, CustomPlanActivity::class.java)
+            intent.putExtra("TYPE","0")
+            startActivity(intent)
+        }
+
+
 
         /*
         fab = program_main_activity_fab

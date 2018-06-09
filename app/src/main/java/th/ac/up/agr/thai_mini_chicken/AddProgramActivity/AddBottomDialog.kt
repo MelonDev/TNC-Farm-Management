@@ -71,13 +71,13 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
 
     var monthS: String = "0"
     var yearS: String = "0"
-    var dayS:String = "0"
+    var dayS: String = "0"
 
 
     init {
         bottomSheetDialog.setContentView(bottomSheetView)
 
-        if(activity.ID.contentEquals("0")){
+        if (activity.ID.contentEquals("0")) {
             activity.dataCard.apply {
                 cardName = ""
                 cardID = ""
@@ -229,10 +229,7 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         }
 
         activity.add_program_save_btn.setOnClickListener {
-            if(activity.disible == false){
-                saveData()
-                activity.disible = true
-            }
+            saveData()
 
         }
 
@@ -472,6 +469,19 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
                         0 -> {
                             activity.add_program_objective_text.text = ConvertCard().getObjective()[position]
                             activity.dataCard.userObjective = position.toString()
+                            activity.manager_result = arr[position]
+                            if (activity.manager_result.contentEquals("ไก่พ่อ-แม่พันธุ์") || activity.manager_result.contentEquals("ไก่เนื้อ")) {
+                                activity.manager_objective = "1"
+                                activity.add_program_manager_text.text = activity.manager_result
+                            } else {
+                                activity.manager_result = "ว่างเปล่า"
+                                activity.add_program_manager_text.text = "ว่างเปล่า"
+                                activity.manager_objective = "1"
+
+
+                            }
+                            activity.change = true
+
                         }
                         1 -> {
                             activity.add_program_system_text.text = ConvertCard().getSystem()[position]
@@ -498,11 +508,11 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
                     }
                 })
                 .setText("บันทึกเรียบร้อย")
-                .configText(object :ConfigText(){
+                .configText(object : ConfigText() {
                     override fun onConfig(params: TextParams?) {
                         params!!.textSize = 60
                         params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
-                        params.padding = intArrayOf(0,0,0,0) //(Bottom,TOP,Right,Left)
+                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
                         params.height = 250
                     }
                 })
@@ -519,12 +529,10 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
                 .show()
 
 
-
     }
 
 
-
-    fun onEdit(){
+    fun onEdit() {
         activity.dateTV.text = "${activity.dataCard.dateDay} ${ConvertCard().getMonth(activity.dataCard.dateMonth)} ${ConvertCard().getYear(activity.dataCard.dateYear)}"
         activity.objectiveTV.text = ConvertCard().getObjective(activity.dataCard.userObjective)
         activity.add_program_system_text.text = ConvertCard().getSystem(activity.dataCard.systemFarm)
@@ -555,7 +563,7 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         editText.requestFocus()
 
         if (activity.dataCard.breed.isNotEmpty()) {
-                   editText.setText(activity.dataCard.breed)
+            editText.setText(activity.dataCard.breed)
         }
 
         editText.inputType = InputType.TYPE_CLASS_TEXT
@@ -596,8 +604,36 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         bottomSheetView.input_dialog_amount_area.visibility = View.GONE
     }
 
-    private fun saveData(){
-        val cardData = activity.dataCard
+    fun setAlertDialog() {
+        CircleDialog.Builder(activity
+        )
+                .configDialog(object : ConfigDialog() {
+                    override fun onConfig(params: DialogParams) {
+                        params.canceledOnTouchOutside = false
+                    }
+                })
+                .setText("กรุณาใส่ชื่อรายการ")
+                .configText(object : ConfigText() {
+                    override fun onConfig(params: TextParams?) {
+                        params!!.textSize = 60
+                        params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
+                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                        params.height = 250
+                    }
+                })
+                .setPositive("รับทราบ", {
+                })
+                .configPositive(object : ConfigButton() {
+                    override fun onConfig(params: ButtonParams) {
+                        params.textSize = 50
+                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
+                    }
+                }).show()
+
+
+    }
+
+    private fun saveData() {
         /*val cardData = CardData()
         cardData.apply {
             cardName = activity.add_program_edittext.text.toString()
@@ -605,28 +641,41 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         }
 */
 
-        val d = Date().getDate()
 
-        if(activity.ID.contentEquals("0")){
-            cardData.apply {
-                cardID = d
-                createDate = d
-                lastUpdate = d
-                status = "ACTIVE"
-                cardName = activity.add_program_edittext.text.toString()
-            }
-        }else{
-            cardData.apply {
-                lastUpdate = d
-                cardName = activity.add_program_edittext.text.toString()
-            }
-        }
 
 
         //b.setValue()
+        if (!activity.disible) {
+            val cardData = activity.dataCard
+
+            val d = Date().getDate()
+
+            if (activity.ID.contentEquals("0")) {
+                cardData.apply {
+                    cardID = d
+                    createDate = d
+                    lastUpdate = d
+                    status = "ACTIVE"
+                    cardName = activity.add_program_edittext.text.toString()
+                }
+            } else {
+                cardData.apply {
+                    lastUpdate = d
+                    cardName = activity.add_program_edittext.text.toString()
+                }
+            }
+
+            if(cardData.cardName.isEmpty()){
+                setAlertDialog()
+
+            }else {
+                AddDataFirebase.from(activity).setDataToActive(cardData, activity.manager_objective, activity.manager_result, activity.change)
+                activity.disible = true
+            }
+
+        }
 
 
-        AddDataFirebase.from(activity).setDataToActive(cardData)
 
     }
 

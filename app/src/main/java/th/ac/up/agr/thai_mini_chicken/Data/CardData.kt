@@ -40,4 +40,9 @@ class CardData {
     var notification :String = ""
     var notiBefore :String = ""
 
+    var managerName :String = ""
+    var managerObjective :String = ""
+    //var managerKey :String = ""
+
+
 }
