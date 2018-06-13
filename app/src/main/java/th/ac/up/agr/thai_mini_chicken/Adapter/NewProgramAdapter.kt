@@ -61,7 +61,7 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
         }
 
         holder.card_more.setOnClickListener {
-            showDialog(arrayOf("แก้ไข", "เก็บประวัติ", "ลบ"), ID, data[position].cardID,position)
+            showDialog(arrayOf("แก้ไข", "เก็บประวัติ", "ลบ"), ID, data[position].cardID, position)
         }
 
         holder.card_item.setOnClickListener {
@@ -72,7 +72,7 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
         }
     }
 
-    fun showDialog(arr: Array<String>, userID: String, cardKey: String,pos :Int) {
+    fun showDialog(arr: Array<String>, userID: String, cardKey: String, pos: Int) {
         CircleDialog.Builder(activity
         )
                 .configDialog(object : ConfigDialog() {
@@ -94,7 +94,7 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
 
                             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onCancelled(p0: DatabaseError) {
-                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                    Log.e("", "")
                                 }
 
                                 override fun onDataChange(p0: DataSnapshot) {
@@ -112,7 +112,7 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
 
                         }
                         2 -> {
-                            showDeleteDialog(position, userID, cardKey,pos)
+                            showDeleteDialog(position, userID, cardKey, pos)
                         }
                     }
                 }
@@ -184,7 +184,7 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
         val difference = today.timeInMillis - calendar.timeInMillis
         val days = (difference / (1000 * 60 * 60 * 24)).toInt()
 
-        if (days >= 0){
+        if (days >= 0) {
 
             val w: Int = days / 7
             val d: Int = days % 7
@@ -197,7 +197,7 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
                 day = (day % 7)
             }
             holder.info_age.text = "$week สัปดาห์ $day วัน"
-        }else {
+        } else {
             holder.info_age.text = "ยังไม่ถึงวันรับเข้า"
         }
 
@@ -210,7 +210,7 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
 
         ref.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("", "")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -269,7 +269,7 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
     }
 
 
-    fun showDeleteDialog(positions: Int, userID: String, cardKey: String,pos: Int) {
+    fun showDeleteDialog(positions: Int, userID: String, cardKey: String, pos: Int) {
         val arr = arrayOf("ยืนยันการลบ")
 
         val database = FirebaseDatabase.getInstance().reference
@@ -333,7 +333,7 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
                     //fragment.recyclerView.scrollToPosition(pos)
                     //fragment.recyclerView.adapter.notifyItemRemoved(pos)
 
-                    Log.e("POS",pos.toString())
+                    Log.e("POS", pos.toString())
                 })
                 .configPositive(object : ConfigButton() {
                     override fun onConfig(params: ButtonParams) {

@@ -106,7 +106,7 @@ class NotificationFragment : Fragment() {
 
         val x = database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("","")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -119,7 +119,7 @@ class NotificationFragment : Fragment() {
 
                         n.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onCancelled(p0: DatabaseError) {
-                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                Log.e("","")
                             }
 
                             override fun onDataChange(p0: DataSnapshot) {
@@ -133,7 +133,7 @@ class NotificationFragment : Fragment() {
 
                                     y.addListenerForSingleValueEvent(object : ValueEventListener {
                                         override fun onCancelled(p0: DatabaseError) {
-                                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                            Log.e("","")
                                         }
 
                                         override fun onDataChange(p0: DataSnapshot) {

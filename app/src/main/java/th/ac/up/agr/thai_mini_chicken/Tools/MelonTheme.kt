@@ -45,6 +45,25 @@ class MelonTheme(private val activity: FragmentActivity) {
         }
     }
 
+    fun getOverlay(): Int {
+
+        return when (getStyle()) {
+            R.style.MelonTheme_LightGreen_Material -> R.drawable.wallpaper_overlay_light_green
+            R.style.MelonTheme_LightGreen_Flat -> R.drawable.wallpaper_overlay_light_green
+            R.style.MelonTheme_LightBlue_Material -> R.drawable.wallpaper_overlay_light_blue
+            R.style.MelonTheme_LightBlue_Flat -> R.drawable.wallpaper_overlay_light_blue
+            R.style.MelonTheme_Red_Material -> R.drawable.wallpaper_overlay_red
+            R.style.MelonTheme_Red_Flat -> R.drawable.wallpaper_overlay_red
+            R.style.MelonTheme_DeepPurple_Material -> R.drawable.wallpaper_overlay_purple
+            R.style.MelonTheme_DeepPurple_Flat -> R.drawable.wallpaper_overlay_purple
+            R.style.MelonTheme_Amber_Material -> R.drawable.wallpaper_overlay_amber
+            R.style.MelonTheme_Amber_Flat -> R.drawable.wallpaper_overlay_amber
+            else -> {
+                R.drawable.wallpaper_overlay_amber
+            }
+        }
+    }
+
     fun getStatusBarOverlay(): Int {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             R.color.colorLightStatusBarOverlay

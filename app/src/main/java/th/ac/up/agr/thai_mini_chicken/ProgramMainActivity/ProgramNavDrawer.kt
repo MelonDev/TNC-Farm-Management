@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -27,7 +28,7 @@ class ProgramNavDrawer(private val activity: ProgramMainActivity) {
         val firebase = Firebase.reference.child("ผู้ใช้").child(FirebaseAuth.getInstance().currentUser!!.uid).child("รายละเอียด")
         firebase.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("","")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -63,9 +64,6 @@ class ProgramNavDrawer(private val activity: ProgramMainActivity) {
         navView.nav_program_area.setOnClickListener {
             hideDrawer()
         }
-        navView.nav_parasite_area.setOnClickListener {
-            initIntent(ContainerActivity()).put("TITLE", "โปรแกรมถ่ายพยาธิ").start()
-        }
         navView.nav_manager_area.setOnClickListener {
             val intent = Intent(activity, CustomPlanActivity::class.java)
             intent.putExtra("TYPE", "0")
@@ -73,7 +71,11 @@ class ProgramNavDrawer(private val activity: ProgramMainActivity) {
             hideDrawer()
         }
         navView.nav_injection_area.setOnClickListener {
-            initIntent(ContainerActivity()).put("TITLE", "โปรแกรมวัคซีน").start()
+            val intent = Intent(activity, KnowledgeActivity::class.java)
+            intent.putExtra("TITLE", "ความรู้เพิ่มเติม")
+            intent.putExtra("ID", "0")
+            activity.startActivity(intent)
+            hideDrawer()
         }
         navView.nav_settings_area.setOnClickListener {
             initIntent(SettingActivity()).put("TITLE", "ตั้งค่า").start()
@@ -83,7 +85,7 @@ class ProgramNavDrawer(private val activity: ProgramMainActivity) {
             initIntent(ContainerActivity()).put("TITLE", "ติดต่อเรา").start()
         }
         navView.nav_sign_out_area.setOnClickListener {
-signOut()
+            signOut()
         }
     }
 
@@ -99,10 +101,11 @@ signOut()
         firebaseAuth.signOut()
 
         googleSignInClient.signOut().addOnCompleteListener(activity,
-                OnCompleteListener<Void> { Toast.makeText(activity, "ลงชื่อออกเรียบร้อย", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(activity,LoginActivity::class.java)
+                OnCompleteListener<Void> {
+                    Toast.makeText(activity, "ลงชื่อออกเรียบร้อย", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(activity, LoginActivity::class.java)
                     activity.startActivity(intent)
-                activity.finish()
+                    activity.finish()
                 })
 
     }

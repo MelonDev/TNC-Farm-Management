@@ -18,10 +18,8 @@ import com.mylhyl.circledialog.CircleDialog
 import com.mylhyl.circledialog.callback.ConfigButton
 import com.mylhyl.circledialog.callback.ConfigDialog
 import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.params.ProgressParams
-import com.mylhyl.circledialog.params.TextParams
+import com.mylhyl.circledialog.callback.ConfigTitle
+import com.mylhyl.circledialog.params.*
 
 import kotlinx.android.synthetic.main.activity_register.*
 import th.ac.up.agr.thai_mini_chicken.Data.Information
@@ -41,6 +39,13 @@ class RegisterActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        val bundle = intent.extras
+        val u = bundle.getString("USER")
+        val p = bundle.getString("PASS")
+
+        register_email_edittext.setText(u)
+        register_password_edittext.setText(p)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -64,7 +69,7 @@ class RegisterActivity : AppCompatActivity() {
             firebaseAuthCreateWithEmail(email, passwordA)
         } else {
             //Toast.makeText(this, "ข้อมูลไม่ครบ", Toast.LENGTH_SHORT).show()
-            if (email.isNotEmpty() || passwordA.isEmpty() || passwordB.isEmpty()) {
+            if (email.isEmpty() || passwordA.isEmpty() || passwordB.isEmpty()) {
                 setErrorDialog("ข้อมูลไม่ครบ")
             } else if (passwordA.length < 6) {
                 setErrorDialog("รหัสผ่านอย่างน้อย 6 ตัว")
@@ -85,7 +90,7 @@ class RegisterActivity : AppCompatActivity() {
                         startProcess()
                     } else {
                         waitDialog.dismiss()
-                        setErrorDialog("เกิดข้อผิดพลาด")
+                        setErrorDialog("อีเมลนี้ได้ลงทะเบียนแล้ว")
 
                         //Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show()
                         //updateUI(null)
@@ -107,11 +112,7 @@ class RegisterActivity : AppCompatActivity() {
                     val info = p0.getValue(Information::class.java)!!
 
                     if(info.farmName.isEmpty() || info.username.isEmpty() || info.phoneNumber.isEmpty() || info.farmAddress.isEmpty()){
-                        val intent = Intent(this@RegisterActivity,RegisterInfoActivity::class.java)
-                        waitDialog.dismiss()
-                        finish()
-                        intent.putExtra("ID","1")
-                        startActivity(intent)
+                        setQuestionDialogss()
                     } else {
                         val intent = Intent(this@RegisterActivity, ProgramMainActivity::class.java)
                         waitDialog.dismiss()
@@ -125,6 +126,65 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    fun setQuestionDialogss() {
+        CircleDialog.Builder(this
+        )
+                .configDialog(object : ConfigDialog() {
+                    override fun onConfig(params: DialogParams) {
+                        params.canceledOnTouchOutside = false
+                    }
+                })
+                .setText("บัญชีของคุณยังไม่ได้ใส่ข้อมูลพื้นฐานต่างๆ คุณต้องการไปใส่ข้อมูลตอนนี้เลยไหม?")
+                .configText(object : ConfigText() {
+                    override fun onConfig(params: TextParams?) {
+                        params!!.textSize = 50
+                        params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
+                        params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
+
+                    }
+                })
+                .setTitle("คำอธิบาย")
+                .configTitle(object : ConfigTitle() {
+                    override fun onConfig(params: TitleParams?) {
+                        params!!.textSize = 60
+                        params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
+                    }
+                })
+                .setPositive("ตกลง", {
+                    newStartProcess()
+                })
+                .configPositive(object : ConfigButton() {
+                    override fun onConfig(params: ButtonParams) {
+                        params.textSize = 50
+                        params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
+                    }
+                })
+                .setNegative("ข้าม", {
+                    val intent = Intent(this@RegisterActivity, ProgramMainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                })
+                .configNegative(object : ConfigButton() {
+                    override fun onConfig(params: ButtonParams) {
+                        params.textSize = 50
+
+                        params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
+
+                    }
+                })
+                .show()
+
+
+    }
+
+    fun newStartProcess() {
+        val intent = Intent(this, RegisterInfoActivity::class.java)
+        finish()
+        intent.putExtra("ID", "0")
+        startActivity(intent)
+        finish()
     }
 
     fun setInfo() {
@@ -149,7 +209,7 @@ class RegisterActivity : AppCompatActivity() {
                 setErrorDialog("เกิดข้อผิดพลาด")
             } else {
                 waitDialog.dismiss()
-                setErrorDialog("ลงทะเบียนเรียบร้อย")
+                setConDialog("ลงทะเบียนเรียบร้อย")
             }
         }
 
@@ -195,6 +255,37 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 })
                 .setPositive("รับทราบ", {
+                })
+                .configPositive(object : ConfigButton() {
+                    override fun onConfig(params: ButtonParams) {
+                        params.textSize = 50
+                        params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
+                    }
+                }).show()
+
+
+    }
+
+    fun setConDialog(string: String) {
+        CircleDialog.Builder(this
+        )
+                .configDialog(object : ConfigDialog() {
+                    override fun onConfig(params: DialogParams) {
+                        params.canceledOnTouchOutside = false
+                    }
+                })
+                .setText(string)
+                .configText(object : ConfigText() {
+                    override fun onConfig(params: TextParams?) {
+                        params!!.textSize = 60
+                        params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
+                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                        params.height = 250
+                    }
+                })
+                .setPositive("ต่อไป", {
+                    setWaitDialog("กำลังดำเนินการต่อ")
+                    startProcess()
                 })
                 .configPositive(object : ConfigButton() {
                     override fun onConfig(params: ButtonParams) {

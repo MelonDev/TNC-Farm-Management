@@ -103,7 +103,7 @@ class NewNotificationFragment : Fragment() {
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("","")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -122,7 +122,7 @@ class NewNotificationFragment : Fragment() {
 
                         n.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onCancelled(p1: DatabaseError) {
-                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                Log.e("","")
                             }
 
                             override fun onDataChange(p1: DataSnapshot) {
@@ -136,7 +136,7 @@ class NewNotificationFragment : Fragment() {
 
                                     y.addListenerForSingleValueEvent(object : ValueEventListener {
                                         override fun onCancelled(p0: DatabaseError) {
-                                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                            Log.e("","")
                                         }
 
                                         override fun onDataChange(p2: DataSnapshot) {

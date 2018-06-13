@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.mylhyl.circledialog.CircleDialog
 import com.mylhyl.circledialog.callback.ConfigButton
@@ -30,7 +31,7 @@ import java.util.*
 
 class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :ArrayList<CardSlot>) : RecyclerView.Adapter<CardViewHolder>(){
 
-    private var userID = "melondev_icloud_com"
+    private var userID = FirebaseAuth.getInstance().currentUser!!.uid
     lateinit var waitDialog: DialogFragment
     private val activity = fragment.activity!!
 

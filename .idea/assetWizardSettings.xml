@@ -19,8 +19,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/photo-camera.png" />
-                                      <entry key="outputName" value="ic_camera_icon" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/logout.png" />
+                                      <entry key="outputName" value="ic_logout_icon" />
                                       <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>

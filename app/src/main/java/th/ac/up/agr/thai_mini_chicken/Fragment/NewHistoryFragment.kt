@@ -4,6 +4,7 @@ package th.ac.up.agr.thai_mini_chicken.Fragment
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,7 +95,7 @@ class NewHistoryFragment : Fragment() {
 
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("","")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -113,7 +114,7 @@ class NewHistoryFragment : Fragment() {
                         val rf = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน").child(key).child("รายละเอียด")
                         rf.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onCancelled(p0: DatabaseError) {
-                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                Log.e("","")
                             }
 
                             override fun onDataChange(p1: DataSnapshot) {

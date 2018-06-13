@@ -67,7 +67,7 @@ class DetailActivity : AppCompatActivity() {
 
         data.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("","")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -94,7 +94,7 @@ class DetailActivity : AppCompatActivity() {
 
         refs.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("","")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -123,7 +123,7 @@ class DetailActivity : AppCompatActivity() {
                         val firebase = Firebase.reference.child("ผู้ใช้").child(user_ID).child("รูปแบบ").child(slot.managerName).child("รายละเอียด").child("name")
                         firebase.addListenerForSingleValueEvent(object : ValueEventListener{
                             override fun onCancelled(p0: DatabaseError) {
-                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+Log.e("","")
                             }
 
                             override fun onDataChange(p0: DataSnapshot) {
@@ -151,7 +151,7 @@ class DetailActivity : AppCompatActivity() {
 
                     ref.addValueEventListener(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError) {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            Log.e("","")
                         }
 
                         override fun onDataChange(p0: DataSnapshot) {

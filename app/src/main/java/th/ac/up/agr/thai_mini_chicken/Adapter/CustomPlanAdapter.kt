@@ -2,8 +2,10 @@ package th.ac.up.agr.thai_mini_chicken.Adapter
 
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.google.firebase.auth.FirebaseAuth
 import th.ac.up.agr.thai_mini_chicken.CustomPlanActivity
 import th.ac.up.agr.thai_mini_chicken.Data.CustomData
 import th.ac.up.agr.thai_mini_chicken.DetailNotificationActivity
@@ -21,9 +23,15 @@ class CustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList<Cu
 
         holder.text.text = slot.name
 
+
+
         holder.area.setOnClickListener {
+
+            Log.e("NAME",slot.name)
+            Log.e("KEY",slot.key)
+
             var intent = Intent(activity, DetailNotificationActivity::class.java)
-            intent.putExtra("USER_ID", "melondev_icloud_com")
+            intent.putExtra("USER_ID", FirebaseAuth.getInstance().currentUser!!.uid)
             intent.putExtra("CARD_KEY", slot.key)
             intent.putExtra("TYPE", "2")
             activity.startActivity(intent)

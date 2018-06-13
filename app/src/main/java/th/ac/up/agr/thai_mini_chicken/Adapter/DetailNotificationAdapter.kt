@@ -443,7 +443,7 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
             val ref = container.child("ใช้งาน").child(cardKey).child("รายละเอียด")
             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Log.e("","")
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
@@ -544,7 +544,7 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
             val ref = container.child("ใช้งาน").child(cardKey).child("รายละเอียด")
             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Log.e("","")
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {

@@ -44,7 +44,7 @@ class SettingActivity : AppCompatActivity() {
 
 
         setting_theme_color_area.setOnClickListener {
-            showDialog(0, "เลือกสีของแอป", arrayOf("ส้ม (ค่าเริ่มต้น)", "แดง", "เขียวอ่อน", "ฟ้าอ่อน", "ม่วง"))
+            showDialog(0, "เลือกสีของแอป", arrayOf("เหลือง (ค่าเริ่มต้น)", "แดง", "เขียวอ่อน", "ฟ้าอ่อน", "ม่วง"))
         }
 
         setting_theme_color_switch.setOnCheckedChangeListener { view, isChecked ->
@@ -85,7 +85,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun checkColor(style: Int) {
-        val arr = arrayOf("ส้ม (ค่าเริ่มต้น)", "แดง", "เขียวอ่อน", "ฟ้าอ่อน", "ม่วง")
+        val arr = arrayOf("เหลือง (ค่าเริ่มต้น)", "แดง", "เขียวอ่อน", "ฟ้าอ่อน", "ม่วง")
         when (style) {
             R.style.MelonTheme_Amber_Material -> {
                 setting_theme_color_text.text = arr[0]
@@ -174,7 +174,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun saveData(position :Int) {
-        val arr = arrayOf("ส้ม (ค่าเริ่มต้น)", "แดง", "เขียวอ่อน", "ฟ้าอ่อน", "ม่วง")
+        val arr = arrayOf("เหลือง (ค่าเริ่มต้น)", "แดง", "เขียวอ่อน", "ฟ้าอ่อน", "ม่วง")
         saveColor(arr[position])
         if (material) {
             when (position) {

@@ -121,7 +121,7 @@ class HistoryFragment : Fragment() {
                         val rf = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน").child(key).child("รายละเอียด")
                         rf.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onCancelled(p0: DatabaseError) {
-                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                Log.e("","")
                             }
 
                             override fun onDataChange(p0: DataSnapshot) {

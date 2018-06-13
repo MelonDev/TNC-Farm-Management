@@ -98,7 +98,7 @@ class AddProgramActivity : AppCompatActivity() {
 
             data.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Log.e("", "")
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
@@ -107,11 +107,11 @@ class AddProgramActivity : AppCompatActivity() {
                         dataCard = p0.getValue(CardData::class.java)!!
 
 
-                        if(dataCard.managerObjective.contentEquals("1") || dataCard.managerObjective.contentEquals("0")){
+                        if (dataCard.managerObjective.contentEquals("1") || dataCard.managerObjective.contentEquals("0")) {
 
-                            if(dataCard.managerName.contentEquals("ว่างเปล่า")){
+                            if (dataCard.managerName.contentEquals("ว่างเปล่า")) {
                                 manager_result = "ว่างเปล่า"
-                            }else {
+                            } else {
                                 val table = ConvertCard().getObjective()
 
                                 val num = table.indexOf(dataCard.managerName)
@@ -121,16 +121,16 @@ class AddProgramActivity : AppCompatActivity() {
                             add_program_manager_text.text = manager_result
                             //manager_result = dataCard.managerName
                             manager_objective = dataCard.managerObjective
-                        } else if(dataCard.managerObjective.contentEquals("2")){
+                        } else if (dataCard.managerObjective.contentEquals("2")) {
                             val firebase = Firebase.reference
                             val ref = firebase.child("ผู้ใช้").child(user_ID).child("รูปแบบ").child(dataCard.managerName).child("รายละเอียด").child("name")
-                            ref.addListenerForSingleValueEvent(object : ValueEventListener{
+                            ref.addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onCancelled(p0: DatabaseError) {
-                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                    Log.e("","")
                                 }
 
                                 override fun onDataChange(p0: DataSnapshot) {
-                                    if(p0.value != null){
+                                    if (p0.value != null) {
                                         val name = p0.value.toString()
                                         manager_result = name
                                         add_program_manager_text.text = manager_result
@@ -216,7 +216,7 @@ class AddProgramActivity : AppCompatActivity() {
 
                 add_program_manager_text.text = manager_result
 
-                if(manager_objective.contentEquals("1") || manager_objective.contentEquals("0")){
+                if (manager_objective.contentEquals("1") || manager_objective.contentEquals("0")) {
 
                     //val table = ConvertCard().getObjective()
 
@@ -227,17 +227,17 @@ class AddProgramActivity : AppCompatActivity() {
                     add_program_manager_text.text = manager_result
                     //manager_result = dataCard.managerName
                     //manager_objective = dataCard.managerObjective
-                } else if(manager_objective.contentEquals("2")){
+                } else if (manager_objective.contentEquals("2")) {
 
                     val firebase = Firebase.reference
                     val ref = firebase.child("ผู้ใช้").child(user_ID).child("รูปแบบ").child(manager_result).child("รายละเอียด").child("name")
-                    ref.addListenerForSingleValueEvent(object : ValueEventListener{
+                    ref.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError) {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            Log.e("","")
                         }
 
                         override fun onDataChange(p0: DataSnapshot) {
-                            if(p0.value != null){
+                            if (p0.value != null) {
                                 val name = p0.value.toString()
 
 

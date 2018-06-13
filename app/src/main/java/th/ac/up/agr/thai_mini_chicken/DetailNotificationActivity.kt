@@ -109,7 +109,7 @@ class DetailNotificationActivity : AppCompatActivity() {
 
             refs.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Log.e("","")
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
@@ -127,7 +127,7 @@ class DetailNotificationActivity : AppCompatActivity() {
 
                         refss.addValueEventListener(object : ValueEventListener {
                             override fun onCancelled(p0: DatabaseError) {
-                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                Log.e("","")
                             }
 
                             override fun onDataChange(p0: DataSnapshot) {
@@ -156,7 +156,7 @@ class DetailNotificationActivity : AppCompatActivity() {
             val dbTitle = firebase.child("ผู้ใช้").child(user_ID).child("รูปแบบ").child(card_key).child("รายละเอียด")
             dbTitle.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Log.e("","")
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
@@ -170,7 +170,7 @@ class DetailNotificationActivity : AppCompatActivity() {
 
             dbA.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Log.e("","")
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
@@ -244,8 +244,10 @@ class DetailNotificationActivity : AppCompatActivity() {
         } else if (type.contentEquals("3")) {
             if (card_key.contentEquals("ไก่พ่อ-แม่พันธุ์")) {
                 tEvent(TimeManager.get.breeder)
+                detail_noti_empty_area.visibility = View.GONE
             } else if (card_key.contentEquals("ไก่เนื้อ")) {
                 tEvent(TimeManager.get.meat)
+                detail_noti_empty_area.visibility = View.GONE
             }
         }
 

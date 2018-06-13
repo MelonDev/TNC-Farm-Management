@@ -115,7 +115,7 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
 
                             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onCancelled(p0: DatabaseError) {
-                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                    Log.e("","")
                                 }
 
                                 override fun onDataChange(p0: DataSnapshot) {
@@ -290,7 +290,7 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
 
         ref.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("","")
             }
 
             override fun onDataChange(p0: DataSnapshot) {

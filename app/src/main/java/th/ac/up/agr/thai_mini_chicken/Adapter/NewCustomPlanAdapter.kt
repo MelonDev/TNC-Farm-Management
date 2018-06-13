@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -88,7 +89,7 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                     card_more.visibility = View.VISIBLE
                     card_item.setOnClickListener {
                         var intent = Intent(activity, DetailNotificationActivity::class.java)
-                        intent.putExtra("USER_ID", "melondev_icloud_com")
+                        intent.putExtra("USER_ID", FirebaseAuth.getInstance().currentUser!!.uid)
                         intent.putExtra("CARD_KEY", slot.name)
                         intent.putExtra("TYPE", "3")
                         activity.startActivity(intent)
@@ -105,7 +106,7 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                 }
 
                 card_more.setOnClickListener {
-                    showDialog(arrayOf("ทำสำเนา"), "melondev_icloud_com", position, 0)
+                    showDialog(arrayOf("ทำสำเนา"), FirebaseAuth.getInstance().currentUser!!.uid, position, 0)
                 }
             }
         } else {
@@ -134,7 +135,7 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                     card_more.visibility = View.VISIBLE
                     card_item.setOnClickListener {
                         var intent = Intent(activity, DetailNotificationActivity::class.java)
-                        intent.putExtra("USER_ID", "melondev_icloud_com")
+                        intent.putExtra("USER_ID", FirebaseAuth.getInstance().currentUser!!.uid)
                         intent.putExtra("CARD_KEY", slot.key)
                         intent.putExtra("TYPE", "2")
                         activity.startActivity(intent)
@@ -153,7 +154,7 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                 }
 
                 card_more.setOnClickListener {
-                    showDialog(arrayOf("แก้ไขชื่อ", "ทำสำเนา", "ลบ"), "melondev_icloud_com", position, 1)
+                    showDialog(arrayOf("แก้ไขชื่อ", "ทำสำเนา", "ลบ"), FirebaseAuth.getInstance().currentUser!!.uid, position, 1)
                 }
 
             }
@@ -371,7 +372,7 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
             if (x.isNotEmpty()) {
 
                 var firebase = Firebase.reference
-                var database = firebase.child("ผู้ใช้").child("melondev_icloud_com").child("รูปแบบ")
+                var database = firebase.child("ผู้ใช้").child(FirebaseAuth.getInstance().currentUser!!.uid).child("รูปแบบ")
 
                 var key = ""
                 //var key = database.push().key.toString()
@@ -460,7 +461,7 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                         Log.e("SSSS", "1")
                         abs.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onCancelled(p0: DatabaseError) {
-                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                Log.e("","")
                             }
 
                             override fun onDataChange(p0: DataSnapshot) {

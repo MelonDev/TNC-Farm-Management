@@ -18,10 +18,8 @@ import com.mylhyl.circledialog.CircleDialog
 import com.mylhyl.circledialog.callback.ConfigButton
 import com.mylhyl.circledialog.callback.ConfigDialog
 import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.params.ProgressParams
-import com.mylhyl.circledialog.params.TextParams
+import com.mylhyl.circledialog.callback.ConfigTitle
+import com.mylhyl.circledialog.params.*
 import th.ac.up.agr.thai_mini_chicken.Data.Information
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.ProgramMainActivity.ProgramMainActivity
@@ -46,7 +44,7 @@ class SplashActivity : AppCompatActivity() {
 
         runnable = Runnable {
             if(FirebaseAuth.getInstance().currentUser != null){
-                startProcess()
+                checkProcess()
             } else {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
@@ -85,6 +83,96 @@ class SplashActivity : AppCompatActivity() {
                 }).show()
 
 
+    }
+
+    fun setQuestionDialog() {
+        CircleDialog.Builder(this
+        )
+                .configDialog(object : ConfigDialog() {
+                    override fun onConfig(params: DialogParams) {
+                        params.canceledOnTouchOutside = false
+                    }
+                })
+                .setText("บัญชีของคุณยังไม่ได้ใส่ข้อมูลพื้นฐานต่างๆ คุณต้องการไปใส่ข้อมูลตอนนี้เลยไหม?")
+                .configText(object : ConfigText() {
+                    override fun onConfig(params: TextParams?) {
+                        params!!.textSize = 50
+                        params.textColor = ContextCompat.getColor(this@SplashActivity, R.color.colorText)
+                        params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
+
+                    }
+                })
+                .setTitle("คำอธิบาย")
+                .configTitle(object : ConfigTitle() {
+                    override fun onConfig(params: TitleParams?) {
+                        params!!.textSize = 60
+                        params.textColor = ContextCompat.getColor(this@SplashActivity, MelonTheme.from(this@SplashActivity).getColor())
+                    }
+                })
+                .setPositive("ตกลง", {
+                    newStartProcess()
+                })
+                .configPositive(object : ConfigButton() {
+                    override fun onConfig(params: ButtonParams) {
+                        params.textSize = 50
+                        params.textColor = ContextCompat.getColor(this@SplashActivity, MelonTheme.from(this@SplashActivity).getColor())
+                    }
+                })
+                .setNegative("ข้าม", {
+                    val intent = Intent(this@SplashActivity, ProgramMainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                })
+                .configNegative(object : ConfigButton() {
+                    override fun onConfig(params: ButtonParams) {
+                        params.textSize = 50
+
+                        params.textColor = ContextCompat.getColor(this@SplashActivity, R.color.colorText)
+
+                    }
+                })
+                .show()
+
+
+    }
+
+    fun checkProcess(){
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val firebase = Firebase.reference.child("ผู้ใช้").child(user.uid).child("รายละเอียด")
+        firebase.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                setErrorDialog("คำขอถูกยกเลิก")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.value != null) {
+                    val info = p0.getValue(Information::class.java)!!
+
+                    if (info.farmName.isEmpty() || info.username.isEmpty() || info.phoneNumber.isEmpty() || info.farmAddress.isEmpty()) {
+                        setQuestionDialog()
+                    } else {
+                        val intent = Intent(this@SplashActivity, ProgramMainActivity::class.java)
+                        //setInfo()
+                        startActivity(intent)
+                        firebase.removeEventListener(this)
+                        finish()
+                    }
+
+                } else {
+                    val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        })
+    }
+
+    fun newStartProcess() {
+        val intent = Intent(this@SplashActivity, RegisterInfoActivity::class.java)
+        finish()
+        intent.putExtra("ID", "0")
+        startActivity(intent)
+        finish()
     }
 
 

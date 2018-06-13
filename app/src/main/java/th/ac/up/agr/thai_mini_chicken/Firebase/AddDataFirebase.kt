@@ -67,7 +67,7 @@ class AddDataFirebase(val activity: FragmentActivity) {
 
         b.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("","")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -297,7 +297,7 @@ class AddDataFirebase(val activity: FragmentActivity) {
 
             abs.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Log.e("","")
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {

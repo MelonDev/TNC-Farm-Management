@@ -4,23 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity"
     android:background="?attr/colorPrimary"
-    >
+    tools:context=".SplashActivity">
+
+
 
     <RelativeLayout
-        android:paddingBottom="10dp"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingBottom="300px">
 
         <ImageView
             android:layout_width="250dp"
             android:layout_height="250dp"
+            android:adjustViewBounds="true"
             android:background="@drawable/logo"
-            android:scaleType="centerCrop"
-            />
+            android:scaleType="centerCrop" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginBottom="150px"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="28dp"
+            android:fontFamily="@font/sukhumvit_bold"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="่คณะเกษตรศาสตร์"
+
+            />
+
+        <TextView
+            android:textSize="22dp"
+            android:fontFamily="@font/sukhumvit_text"
+            android:textColor="#d2ffffff"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="มหาวิทยาลัยพะเยา"
+
+            />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package th.ac.up.agr.thai_mini_chicken.Adapter
 import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -180,7 +181,7 @@ class NewHistoryAdapter(val fragment: NewHistoryFragment, val ID: String, val da
 
                             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onCancelled(p0: DatabaseError) {
-                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                    Log.e("","")
                                 }
 
                                 override fun onDataChange(p0: DataSnapshot) {
