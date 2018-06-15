@@ -205,7 +205,7 @@ class LoginActivity : AppCompatActivity() {
                             showEditDialog()
                         }
                         3 -> {
-                            Log.e("","")
+                            this@LoginActivity.startActivity(Intent(this@LoginActivity,HelpActivity::class.java))
                         }
                     }
                 }

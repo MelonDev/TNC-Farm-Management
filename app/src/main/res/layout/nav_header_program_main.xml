@@ -211,7 +211,7 @@
                     android:fontFamily="@font/sukhumvit_semibold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ข้อมูลเพิ่มเติม"
+                    android:text="ความรู้เพิ่มเติม"
                     android:textColor="#b3b3b3"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="16dp"

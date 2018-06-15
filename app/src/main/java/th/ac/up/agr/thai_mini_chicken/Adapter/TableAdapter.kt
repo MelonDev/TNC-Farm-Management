@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import th.ac.up.agr.thai_mini_chicken.Data.TableData
 import th.ac.up.agr.thai_mini_chicken.Fragment.KnowledgeTableFragment
 import th.ac.up.agr.thai_mini_chicken.R
@@ -29,7 +30,7 @@ class TableAdapter(val fragment :KnowledgeTableFragment,val ID :Int,val data :Ar
                 this.type.text = slot.type_card
                 this.manual.text = slot.manual_card
                 this.area.visibility = View.VISIBLE
-
+this.image.visibility = View.GONE
             }
 
             if(position == data.lastIndex){
@@ -44,7 +45,9 @@ class TableAdapter(val fragment :KnowledgeTableFragment,val ID :Int,val data :Ar
                 this.area.visibility = View.GONE
                 this.indicator.visibility = View.GONE
                 this.secoud.text = "วัตถุประสงค์"
+                this.image.visibility = View.VISIBLE
                 this.type.text = slot.type_card
+                Picasso.get().load(slot.image).into(this.image)
 
             }
         }

@@ -82,7 +82,9 @@ class ProgramNavDrawer(private val activity: ProgramMainActivity) {
             activity.finish()
         }
         navView.nav_about_area.setOnClickListener {
-            initIntent(ContainerActivity()).put("TITLE", "ติดต่อเรา").start()
+
+            val intent = Intent(activity, HelpActivity::class.java)
+            activity.startActivity(intent)
         }
         navView.nav_sign_out_area.setOnClickListener {
             signOut()

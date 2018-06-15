@@ -582,7 +582,14 @@ class RegisterInfoActivity : AppCompatActivity() {
     }
 
     fun backAction() {
+
+
+
         if (ID.isNotEmpty()) {
+            val intent = Intent(this, ProgramMainActivity::class.java)
+            startActivity(intent)
+            finish()
+            /*
             if (ID.contentEquals("0")) {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
@@ -592,6 +599,7 @@ class RegisterInfoActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+            */
         }
     }
 

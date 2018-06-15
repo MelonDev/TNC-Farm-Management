@@ -6,4 +6,252 @@
     android:layout_height="match_parent"
     tools:context=".HelpActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/help_email_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/sukhumvit_bold"
+                    android:text="อีเมล"
+                    android:textColor="@color/colorText"
+                    android:textSize="22dp" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="#EDEDED"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp">
+
+                    <EditText
+                        android:id="@+id/help_email_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:hint="กรอกอีเมลที่นี่"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/colorText"
+                        android:textSize="18dp" />
+
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:background="#b4b4b4"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/sukhumvit_bold"
+                    android:text="ข้อความ"
+                    android:textColor="@color/colorText"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/sukhumvit_text"
+                    android:text="รหัสผ่านอย่างน้อย 6 ตัว"
+                    android:textColor="@color/colorText"
+                    android:textSize="18dp"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:minHeight="140dp"
+                app:cardBackgroundColor="#EDEDED"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/help_message_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@android:color/transparent"
+                    android:hint="พิมพ์ข้อความที่นี่"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorText"
+                    android:textSize="18dp" />
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="0dp"
+        app:cardBackgroundColor="?attr/colorPrimary"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp">
+
+        <TextView
+            android:id="@+id/help_confirm_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:text="ส่งข้อความ"
+            android:textColor="@color/colorWhite"
+            android:textSize="20dp" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:background="?attr/colorPrimary"
+            android:minHeight="50dp">
+
+            <RelativeLayout
+
+                android:id="@+id/help_back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="16dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_back_icon"
+                    android:tint="@color/colorWhite" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:fontFamily="@font/sukhumvit_light"
+                    android:paddingBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:text="กลับ"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/help_title_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="0dp"
+                android:fontFamily="@font/sukhumvit_bold"
+                android:gravity="center_horizontal"
+                android:maxWidth="200dp"
+                android:paddingBottom="0dp"
+                android:paddingRight="0dp"
+                android:text="ติดต่อผู้ดูแล"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:fontFamily="@font/sukhumvit_semibold"
+                    android:paddingBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:text="ต่อไป"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
 </android.support.design.widget.CoordinatorLayout>

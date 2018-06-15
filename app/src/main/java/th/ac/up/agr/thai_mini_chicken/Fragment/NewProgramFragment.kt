@@ -89,6 +89,7 @@ class NewProgramFragment : Fragment() {
                                     v.new_program_empty_area.visibility = View.GONE
 
                                     loadAndSetData(p1)
+                                    //newLoadAndSetData(p1)
                                 }
                             }
                         })
@@ -220,4 +221,124 @@ class NewProgramFragment : Fragment() {
             })
         }
     }
+
+    private fun newLoadAndSetData(p0: DataSnapshot) {
+        var size = p0.children.count()
+        var count = 0
+
+        p0.children.forEach {
+            val key = it.key.toString()
+
+            count += 1
+
+
+            val rf = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน").child(key).child("รายละเอียด")
+            rf.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.e("","")
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.value != null) {
+                        val slot = p0.getValue(CardData::class.java)!!
+                        //Log.e("ID", slot.createDate.toString())
+
+                        if (slot.cardID.isEmpty()) {
+                            slot.cardID = key
+                            val ref = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน").child(key).child("รายละเอียด").child("cardID")
+                            ref.setValue(key)
+                        }
+                        if (slot.status.contentEquals("ACTIVE")) {
+
+                            if (arrData.size == 0) {
+                                val calendar = Calendar.getInstance()
+                                val x = Date().reDate(slot.createDate)
+                                calendar.time = x
+                                val a = CardData()
+                                a.apply {
+                                    cardID = "null"
+                                    createDate = slot.createDate
+                                }
+                                arrData.add(a)
+                                arrData.add(slot)
+
+                            } else {
+                                val today = Calendar.getInstance()
+
+                                val last = Calendar.getInstance()
+                                val calendar = Calendar.getInstance()
+
+                                val a = Calendar.getInstance()
+                                val b = Calendar.getInstance()
+
+                                val lSlot = arrData[arrData.lastIndex]
+
+                                val x = Date().reDate(slot.createDate)
+                                val y = Date().reDate(lSlot.createDate)
+
+                                a.time = x
+                                b.time = y
+
+                                calendar.apply {
+                                    set(Calendar.YEAR, a.get(Calendar.YEAR))
+                                    set(Calendar.MONTH, a.get(Calendar.MONTH))
+                                    set(Calendar.DAY_OF_MONTH, a.get(Calendar.DAY_OF_MONTH))
+                                }
+
+                                last.apply {
+                                    set(Calendar.YEAR, b.get(Calendar.YEAR))
+                                    set(Calendar.MONTH, b.get(Calendar.MONTH))
+                                    set(Calendar.DAY_OF_MONTH, b.get(Calendar.DAY_OF_MONTH))
+                                }
+                                val difference = calendar.timeInMillis - last.timeInMillis
+                                val days = (difference / (1000 * 60 * 60 * 24)).toInt()
+                                if (days == 0) {
+                                    //val a = arrData[arrData.lastIndex]
+                                    //arrData.removeAt(arrData.lastIndex)
+                                    arrData.add(slot)
+                                    //arrData.add(a)
+                                } else {
+                                    val a = CardData()
+                                    a.apply {
+                                        cardID = "null"
+                                        createDate = slot.createDate
+                                        //createDate = arrData[arrData.lastIndex].createDate
+                                    }
+                                    arrData.add(a)
+                                    arrData.add(slot)
+
+
+                                }
+                            }
+
+                        } else {
+                            //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
+                        }
+
+                        //Log.e("start",count.toString())
+
+                        if (count == size) {
+                            process = false
+
+                            if (arrData.size == 0) {
+                                v.new_program_empty_area.visibility = View.VISIBLE
+                            } else {
+                                v.new_program_empty_area.visibility = View.GONE
+                            }
+
+                            //Log.e("STARTED", started.toString())
+
+
+                            recyclerView.adapter.notifyDataSetChanged()
+                            recyclerView.scrollToPosition(arrData.lastIndex)
+
+                            //recyclerView.scrollToPosition(arrData.lastIndex)
+                        }
+
+                    }
+                }
+            })
+        }
+    }
+
 }

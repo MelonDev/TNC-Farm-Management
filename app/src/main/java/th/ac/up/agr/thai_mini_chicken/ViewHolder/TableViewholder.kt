@@ -16,4 +16,5 @@ class TableViewholder(itemView:View) :RecyclerView.ViewHolder(itemView){
 
     val secoud :TextView = itemView.table_card_second_title
     val area :LinearLayout = itemView.table_card_third_area
+    val image :ImageView = itemView.table_card_image
 }

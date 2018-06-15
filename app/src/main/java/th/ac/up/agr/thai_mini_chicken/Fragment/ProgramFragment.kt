@@ -76,10 +76,10 @@ class ProgramFragment : Fragment() {
 
         recyclerView = QuickRecyclerView(context!!
                 , view.program_recycler_view
-                , "spacial"
+                , "linear"
                 , 1
                 , "vertical"
-                , true
+                , false
                 , "alway"
                 , "high")
                 .recyclerView()
@@ -153,7 +153,8 @@ class ProgramFragment : Fragment() {
                         this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                     }
 */
-                    loadAndSetData(p0,swipe)
+                    //loadAndSetData(p0,swipe)
+                    newLoadAndSetData(p0,swipe)
 
                 } else {
                     this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
@@ -161,6 +162,131 @@ class ProgramFragment : Fragment() {
             }
         })
     }
+
+    private fun newLoadAndSetData(p0: DataSnapshot,swipe: Boolean) {
+
+        var size = p0.children.count()
+
+        var count = 0
+        p0.children.forEach {
+            val key = it.key.toString()
+
+            count += 1
+
+            val rf = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน").child(key).child("รายละเอียด")
+            rf.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.e("","")
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.value != null) {
+                        val slot = p0.getValue(CardData::class.java)!!
+                        //Log.e("ID", slot.createDate.toString())
+
+                        if (slot.status.contentEquals("ACTIVE")) {
+
+                            if (arrData.size == 0) {
+                                val calendar = Calendar.getInstance()
+                                val x = Date().reDate(slot.createDate)
+                                calendar.time = x
+                                val a = CardData()
+                                a.apply {
+                                    cardID = "null"
+                                    createDate = slot.createDate
+                                }
+                                arrData.add(a)
+                                arrData.add(slot)
+
+                                //Log.e("SIZE",size.toString())
+                                //recyclerView.adapter.notifyDataSetChanged()
+                                //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
+                            } else {
+                                val today = Calendar.getInstance()
+
+                                val last = Calendar.getInstance()
+                                val calendar = Calendar.getInstance()
+
+                                val a = Calendar.getInstance()
+                                val b = Calendar.getInstance()
+
+                                val lSlot = arrData[arrData.lastIndex]
+
+                                val x = Date().reDate(slot.createDate)
+                                val y = Date().reDate(lSlot.createDate)
+
+                                a.time = x
+                                b.time = y
+
+                                calendar.apply {
+                                    set(Calendar.YEAR, a.get(Calendar.YEAR))
+                                    set(Calendar.MONTH, a.get(Calendar.MONTH))
+                                    set(Calendar.DAY_OF_MONTH, a.get(Calendar.DAY_OF_MONTH))
+                                }
+
+                                last.apply {
+                                    set(Calendar.YEAR, b.get(Calendar.YEAR))
+                                    set(Calendar.MONTH, b.get(Calendar.MONTH))
+                                    set(Calendar.DAY_OF_MONTH, b.get(Calendar.DAY_OF_MONTH))
+                                }
+
+                                //Log.e("C",calendar.get(Calendar.DAY_OF_MONTH).toString())
+                                //Log.e("L",last.get(Calendar.DAY_OF_MONTH).toString())
+
+                                //calendar.set(slot.dateYear.toInt(), slot.dateMonth.toInt() - 1, slot.dateDay.toInt())
+                                //last.set(lSlot.dateYear.toInt(), lSlot.dateMonth.toInt() - 1, lSlot.dateDay.toInt())
+                                val difference = calendar.timeInMillis - last.timeInMillis
+                                val days = (difference / (1000 * 60 * 60 * 24)).toInt()
+
+                                //Log.e(slot.createDate,days.toString())
+
+                                if (days == 0) {
+                                    //val a = arrData[arrData.lastIndex]
+                                    //arrData.removeAt(arrData.lastIndex)
+                                    arrData.add(slot)
+                                    //arrData.add(a)
+                                    //Log.e("P","A")
+                                } else {
+                                    //Log.e("P","B")
+                                    val a = CardData()
+                                    a.apply {
+                                        cardID = "null"
+                                        createDate = slot.createDate
+                                    }
+                                    arrData.add(a)
+                                    arrData.add(slot)
+
+
+                                }
+                                //Log.e("PRO", "LOAD")
+                                //Log.e("SIZE",size.toString())
+
+                                //recyclerView.adapter.notifyDataSetChanged()
+                                //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
+                            }
+
+
+                            //arrData.add(slot)
+                        } else {
+                            //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
+                        }
+                        if (count == size) {
+                            //Log.e("SWIPE",swipe.toString())
+                            if (swipe) {
+                                this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
+                            }
+                            recyclerView.adapter.notifyDataSetChanged()
+                        }
+
+                    }
+                }
+            })
+        }
+        //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
+        //recyclerView.adapter.notifyDataSetChanged()
+
+    }
+
 
     private fun loadAndSetData(p0: DataSnapshot,swipe: Boolean) {
 

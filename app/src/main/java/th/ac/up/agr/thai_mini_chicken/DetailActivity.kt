@@ -32,6 +32,7 @@ import android.os.Build
 import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
 import th.ac.up.agr.thai_mini_chicken.Data.Event
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
+import th.ac.up.agr.thai_mini_chicken.Tools.Date
 import th.ac.up.agr.thai_mini_chicken.Tools.ToolReference
 import java.util.*
 import kotlin.collections.ArrayList
@@ -254,7 +255,10 @@ Log.e("","")
 
         type = slot.userObjective
 
-        detail_description_text.text = slot.cardID
+
+        val dat = Date().reDate(slot.lastUpdate)
+
+        detail_description_text.text = "อัปเดตล่าสุดวันที่ ${dat.day}"
         detail_amount_male_text.text = "${slot.amountMale} ตัว"
         detail_amount_female_text.text = "${slot.amountFemale} ตัว"
         detail_age_text.text = "${slot.ageWeek} สัปดาห์ ${slot.ageDay} วัน"

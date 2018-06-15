@@ -650,9 +650,12 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
 
             val d = Date().getDate()
 
+            val key = FirebaseDatabase.getInstance().reference.push().key!!
+
             if (activity.ID.contentEquals("0")) {
                 cardData.apply {
-                    cardID = d
+                    cardID = key
+                    //cardID = d
                     createDate = d
                     lastUpdate = d
                     status = "ACTIVE"
