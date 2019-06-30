@@ -282,6 +282,7 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 waitDialog.dismiss()
                 setErrorDialog("คำขอถูกยกเลิก")
+                Log.e("TEST-1",e.localizedMessage.toString())
                 //Toast.makeText(this, "Google sign in failed", Toast.LENGTH_SHORT).show()
                 //updateUI(null)
             }
@@ -527,6 +528,7 @@ class LoginActivity : AppCompatActivity() {
         firebase.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 setErrorDialog("คำขอถูกยกเลิก")
+                Log.e("TEST-2","CANCEL")
             }
 
             override fun onDataChange(p0: DataSnapshot) {

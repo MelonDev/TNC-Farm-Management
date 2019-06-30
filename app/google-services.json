@@ -1,21 +1,37 @@
 {
   "project_info": {
-    "project_number": "509785584255",
-    "firebase_url": "https://tnc-farm-manager.firebaseio.com",
-    "project_id": "tnc-farm-manager",
-    "storage_bucket": "tnc-farm-manager.appspot.com"
+    "project_number": "562602916596",
+    "firebase_url": "https://tnc-farm-manager-7f541.firebaseio.com",
+    "project_id": "tnc-farm-manager-7f541",
+    "storage_bucket": "tnc-farm-manager-7f541.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:509785584255:android:793fe8a3bd322202",
+        "mobilesdk_app_id": "1:562602916596:android:793fe8a3bd322202",
         "android_client_info": {
           "package_name": "th.ac.up.agr.thai_mini_chicken"
         }
       },
       "oauth_client": [
         {
-          "client_id": "509785584255-3c5d8savn2ii0cr5ekbdn0eadgbs53fe.apps.googleusercontent.com",
+          "client_id": "562602916596-r663knj6k1gk9eqhir1lhlbdvucj7v6s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "th.ac.up.agr.thai_mini_chicken",
+            "certificate_hash": "e63a6030696ad6619fcf92c3b13597f4b0041b35"
+          }
+        },
+        {
+          "client_id": "562602916596-4fih71gqlqtour21hu1t1rsqfeslmsc3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "th.ac.up.agr.thai_mini_chicken",
+            "certificate_hash": "04a77daf4539c2946c0cf6ddc6afa9fe8ab36511"
+          }
+        },
+        {
+          "client_id": "562602916596-nhfk06c9gg92i8ond9d4p32qrulagad9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "th.ac.up.agr.thai_mini_chicken",
@@ -23,34 +39,23 @@
           }
         },
         {
-          "client_id": "509785584255-j9b8a7t4ponufjngnjmhpun1ev59v5ag.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "509785584255-j9b8a7t4ponufjngnjmhpun1ev59v5ag.apps.googleusercontent.com",
+          "client_id": "562602916596-9unst58a54i3i3levruhbc70v9eaqbng.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAfzMH3WWRz1fETnyhhMeD97igCgmluaMk"
+          "current_key": "AIzaSyA5MAlQa5arQiSr6Q-SITtr3USXhsgZwoA"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "509785584255-j9b8a7t4ponufjngnjmhpun1ev59v5ag.apps.googleusercontent.com",
+              "client_id": "562602916596-9unst58a54i3i3levruhbc70v9eaqbng.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
