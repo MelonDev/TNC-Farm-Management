@@ -16,7 +16,7 @@
 [Download](https://play.google.com/store/apps/details?id=th.ac.up.agr.thai_mini_chicken)
 
 ### Publication
-[Journal](https://www.cabdirect.org/cabdirect/abstract/20193172519)
+[Journal](http://www.jare.mju.ac.th/index.php/journal/book/17-35-2-2-vol35-no2-suppl-2/15-vol35)
 
 
 ## Development
