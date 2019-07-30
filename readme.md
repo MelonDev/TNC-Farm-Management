@@ -11,14 +11,6 @@
 ![Screenshot2.png](https://lh3.googleusercontent.com/LCnSj8T4HyzhzvlbIPFfc2AZRibX_lH-8s0EXAZ9V18pgSvBdiv7cs8gqVSfN2FPf0Zm=w1440-h620)
 ![Screenshot4.png](https://lh3.googleusercontent.com/6NiL36k0OSTcCbvLeumqyf8Dejvg4HeT6oUtpeltgtfRZDAg04pl1xl9_5OQxTww7Ek=w1440-h620)
 
-
-- Show invertebrate inoculation program in each model and Calculates
-- Show lists and details of the disease in buffaloes
-- Show lists and details of the induction of estrus and IVF equipment
-- Show the process of breeding buffaloes
-- Show the vocabulary of the buffalo insemination with translation in thai
-- Show the example pictures of estrus in buffalo
-
 ## Download and Installing
 ### Google Play Store
 [Download](https://play.google.com/store/apps/details?id=th.ac.up.agr.thai_mini_chicken)
