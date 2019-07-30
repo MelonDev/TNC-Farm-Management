@@ -10,9 +10,9 @@
 ## Screenshot
 ![Screenshot1.png](https://lh3.googleusercontent.com/6MywShCcFXaHK0Lqhg1Sda8aikPkCYxC_ZkartiQUg6jCc2bMTK10FWqVsLqmA5V9Iut=w1440-h620)
 ![Screenshot2.png](https://lh3.googleusercontent.com/LCnSj8T4HyzhzvlbIPFfc2AZRibX_lH-8s0EXAZ9V18pgSvBdiv7cs8gqVSfN2FPf0Zm=w1440-h620)
-![Download](https://play.google.com/store/apps/details?id=th.ac.up.agr.thai_mini_chicken)
-![Download](https://play.google.com/store/apps/details?id=th.ac.up.agr.thai_mini_chicken)
-![Download](https://play.google.com/store/apps/details?id=th.ac.up.agr.thai_mini_chicken)
+![Screenshot4.png](https://lh3.googleusercontent.com/6NiL36k0OSTcCbvLeumqyf8Dejvg4HeT6oUtpeltgtfRZDAg04pl1xl9_5OQxTww7Ek=w1440-h620)
+
+
 - Show invertebrate inoculation program in each model and Calculates
 - Show lists and details of the disease in buffaloes
 - Show lists and details of the induction of estrus and IVF equipment
