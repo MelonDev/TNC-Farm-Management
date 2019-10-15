@@ -483,7 +483,7 @@ class LoginActivity : AppCompatActivity() {
                         params.height = 250
                     }
                 })
-                .setPositive(positive, {
+                .setPositive(positive) {
                     if (ID == 0) {
                         toRegister(login_sign_in_email_email.text.toString(), login_sign_in_email_password.text.toString())
                     } else if (ID == 1) {
@@ -491,7 +491,7 @@ class LoginActivity : AppCompatActivity() {
                     } else if (ID == 2) {
                         showEditDialog()
                     }
-                })
+                }
                 .configPositive(object : ConfigButton() {
                     override fun onConfig(params: ButtonParams) {
                         params.textSize = 50
@@ -503,9 +503,9 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 })
-                .setNegative(negative, {
+                .setNegative(negative) {
 
-                })
+                }
                 .configNegative(object : ConfigButton() {
                     override fun onConfig(params: ButtonParams) {
                         params.textSize = 50
