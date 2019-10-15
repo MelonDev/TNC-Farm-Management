@@ -44,6 +44,9 @@ class TestAuthActivity : AppCompatActivity() {
             signOut()
         }
 
+
+        
+
     }
 
     override fun onStart() {
