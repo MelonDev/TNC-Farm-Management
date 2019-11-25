@@ -3,8 +3,8 @@ package th.ac.up.agr.thai_mini_chicken
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+
+import androidx.appcompat.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.activity_container.*
 import th.ac.up.agr.thai_mini_chicken.Fragment.KnowledgeListFragment
@@ -21,7 +21,7 @@ class ContainerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_container)
 
-        val bundle = intent.extras
+        val bundle = intent.extras!!
         val title = bundle.getString("TITLE")
 
         container_title_name.text = title

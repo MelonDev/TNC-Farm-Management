@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/input_bottom_sheet"
     android:layout_width="match_parent"
@@ -18,7 +18,8 @@
             android:layout_height="15dp"
             android:background="#ececec"
             >
-            <android.support.v7.widget.CardView
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="30dp"
                 android:layout_height="6dp"
                 app:cardElevation="0dp"
@@ -449,7 +450,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true">
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/input_dialog_cancal_btn"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
@@ -467,9 +468,9 @@
                         android:textColor="@color/colorText"
                         android:textSize="20dp" />
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/input_dialog_confirm_btn"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
@@ -488,7 +489,7 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="20dp" />
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
@@ -497,4 +498,4 @@
     </LinearLayout>
 
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

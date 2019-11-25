@@ -1,16 +1,16 @@
 package th.ac.up.agr.thai_mini_chicken.Adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import th.ac.up.agr.thai_mini_chicken.Data.TableData
 import th.ac.up.agr.thai_mini_chicken.Fragment.KnowledgeTableFragment
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.ViewHolder.TableViewholder
 
-class TableAdapter(val fragment :KnowledgeTableFragment,val ID :Int,val data :ArrayList<TableData>) :RecyclerView.Adapter<TableViewholder>(){
+class TableAdapter(val fragment: KnowledgeTableFragment, val ID: Int, val data: ArrayList<TableData>) : RecyclerView.Adapter<TableViewholder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableViewholder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.table_card,parent,false)
         return TableViewholder(view)

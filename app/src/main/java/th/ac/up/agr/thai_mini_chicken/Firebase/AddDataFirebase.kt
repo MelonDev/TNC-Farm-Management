@@ -1,9 +1,10 @@
 package th.ac.up.agr.thai_mini_chicken.Firebase
 
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.content.ContextCompat
+
 import android.util.Log
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
@@ -359,28 +360,20 @@ class AddDataFirebase(val activity: FragmentActivity) {
     fun setErrorDialog() {
         CircleDialog.Builder(activity
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("เกิดข้อผิดพลาด")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(activity, R.color.colorText)
+                }.show()
 
 
     }
@@ -390,40 +383,28 @@ class AddDataFirebase(val activity: FragmentActivity) {
 
         CircleDialog.Builder(activity
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("บันทึกเรียบร้อย")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                     activity.finish()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(activity, R.color.colorText)
+                }.show()
 
 
     }
 
     fun setWaitDialog() {
         waitDialog = CircleDialog.Builder()
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setProgressText("กำลังบันทึก...")
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(activity.supportFragmentManager)

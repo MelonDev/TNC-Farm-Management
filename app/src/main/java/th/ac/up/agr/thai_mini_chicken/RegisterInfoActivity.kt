@@ -12,14 +12,13 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.DialogFragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -75,8 +74,8 @@ class RegisterInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_info)
 
-        val bundle = intent.extras
-        ID = bundle.getString("ID")
+        val bundle = intent.extras!!
+        ID = bundle.getString("ID")!!
 
         userInfo = Information()
 
@@ -121,11 +120,7 @@ class RegisterInfoActivity : AppCompatActivity() {
     fun showOptionDialog(arr: Array<String>) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.animStyle = R.style.dialogWindowAnim
-                    }
-                })
+                .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
                 .setItems(arr) { parent, view, position, id ->
 
                     when (position) {
@@ -151,12 +146,10 @@ class RegisterInfoActivity : AppCompatActivity() {
                     }
                 }
                 .setNegative("ยกเลิก", null)
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
-                    }
-                })
+                .configNegative { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
+                }
                 .show()
     }
 
@@ -278,11 +271,7 @@ class RegisterInfoActivity : AppCompatActivity() {
     fun setUploadDialog(string: String) {
         builder = CircleDialog.Builder()
         uploadDialog = builder
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setProgressText(string)
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(supportFragmentManager)
@@ -309,8 +298,8 @@ class RegisterInfoActivity : AppCompatActivity() {
         } else if (requestCode == REQUEST_PERMISSION_CAMERA && resultCode == RESULT_OK) {
             //Log.e("IMAGE", data.toString())
 
-            val extras = data!!.extras
-            val image = extras.get("data") as Bitmap?
+            val extras = data!!.extras!!
+            val image = extras.get("data") as Bitmap
 
             //val matrix = Matrix()
             //matrix.postScale(0.5f, 0.5f)
@@ -381,28 +370,19 @@ class RegisterInfoActivity : AppCompatActivity() {
     fun setQuestionDialog(ID: Int, title: String, sub: String, requestCode: Int, positive: String, negative: String) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText(sub)
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
-                        params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
-
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
+                    params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
+                }
                 .setTitle(title)
-                .configTitle(object : ConfigTitle() {
-                    override fun onConfig(params: TitleParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, MelonTheme.from(this@RegisterInfoActivity).getColor())
-                    }
-                })
-                .setPositive(positive, {
+                .configTitle { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, MelonTheme.from(this@RegisterInfoActivity).getColor())
+                }
+                .setPositive(positive) {
                     if (ID == 0) {
                         when (requestCode) {
                             REQUEST_PERMISSION_CAMERA -> {
@@ -422,23 +402,18 @@ class RegisterInfoActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
 
-                })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, MelonTheme.from(this@RegisterInfoActivity).getColor())
-                    }
-                })
+                }
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, MelonTheme.from(this@RegisterInfoActivity).getColor())
+                }
                 .setNegative(negative, {
                 })
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
+                .configNegative { params ->
+                    params.textSize = 50
 
-                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
-
-                    }
-                })
+                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
+                }
                 .show()
 
 
@@ -501,28 +476,20 @@ class RegisterInfoActivity : AppCompatActivity() {
     fun setErrorDialog(string: String) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText(string)
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, MelonTheme.from(this@RegisterInfoActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, MelonTheme.from(this@RegisterInfoActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
+                }.show()
 
 
     }
@@ -530,32 +497,24 @@ class RegisterInfoActivity : AppCompatActivity() {
     fun showConDialog() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("บันทึกเรียบร้อย")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, MelonTheme.from(this@RegisterInfoActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, MelonTheme.from(this@RegisterInfoActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                     offScreen = false
                     val intent = Intent(this@RegisterInfoActivity, ProgramMainActivity::class.java)
                     this@RegisterInfoActivity.startActivity(intent)
                     this@RegisterInfoActivity.finish()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
-                    }
-                })
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
+                }
 
                 .show()
 
@@ -571,11 +530,7 @@ class RegisterInfoActivity : AppCompatActivity() {
 
     fun setWaitDialog(string: String) {
         waitDialog = CircleDialog.Builder()
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setProgressText(string)
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(supportFragmentManager)

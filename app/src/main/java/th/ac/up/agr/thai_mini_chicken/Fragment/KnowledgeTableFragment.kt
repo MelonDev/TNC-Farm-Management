@@ -2,10 +2,10 @@ package th.ac.up.agr.thai_mini_chicken.Fragment
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_knowledge_table.*
 import kotlinx.android.synthetic.main.fragment_knowledge_table.view.*
 import th.ac.up.agr.thai_mini_chicken.Adapter.TableAdapter
@@ -38,7 +38,7 @@ class KnowledgeTableFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val ID = arguments!!.getString("ID")
+        val ID = arguments!!.getString("ID")!!
 
         val data = ArrayList<TableData>()
 

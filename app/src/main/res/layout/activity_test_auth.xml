@@ -74,7 +74,7 @@
 
             />
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/sign_in_btn"
             android:layout_gravity="center_horizontal"
             android:layout_width="300dp"
@@ -94,9 +94,9 @@
                 android:layout_gravity="center"
                 />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/sign_out_btn"
             android:layout_marginTop="16dp"
             android:layout_gravity="center_horizontal"
@@ -117,7 +117,7 @@
                 android:layout_gravity="center"
                 />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

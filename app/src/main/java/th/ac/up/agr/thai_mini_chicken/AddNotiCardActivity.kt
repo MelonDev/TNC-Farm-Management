@@ -2,18 +2,17 @@ package th.ac.up.agr.thai_mini_chicken
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialog
-import android.support.design.widget.Snackbar
-import android.support.v4.app.DialogFragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+
 import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.DialogFragment
 import com.aigestudio.wheelpicker.WheelPicker
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -63,14 +62,14 @@ class AddNotiCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_noti_card)
 
-        val bundle = intent.extras
-        ID = bundle.getString("ID")
+        val bundle = intent.extras!!
+        ID = bundle.getString("ID")!!
 
         if (ID.contentEquals("1")) {
-            notiKey = bundle.getString("NOTI_KEY")
+            notiKey = bundle.getString("NOTI_KEY")!!
 
-            card_key = bundle.getString("CARD_KEY")
-            user_ID = bundle.getString("USER_ID")
+            card_key = bundle.getString("CARD_KEY")!!
+            user_ID = bundle.getString("USER_ID")!!
 
             var firebase = Firebase.reference
             var database = firebase.child("ผู้ใช้").child(user_ID).child("รายการ").child("ใช้งาน").child(card_key).child("รายการที่ต้องทำ").child(notiKey)
@@ -103,12 +102,12 @@ class AddNotiCardActivity : AppCompatActivity() {
 
 
         } else if (ID.contentEquals("2")) {
-            card_key = bundle.getString("CARD_KEY")
-            user_ID = bundle.getString("USER_ID")
+            card_key = bundle.getString("CARD_KEY")!!
+            user_ID = bundle.getString("USER_ID")!!
         } else if (ID.contentEquals("3")) {
-            card_key = bundle.getString("CARD_KEY")
-            user_ID = bundle.getString("USER_ID")
-            notiKey = bundle.getString("NOTI_KEY")
+            card_key = bundle.getString("CARD_KEY")!!
+            user_ID = bundle.getString("USER_ID")!!
+            notiKey = bundle.getString("NOTI_KEY")!!
 
             val ref = Firebase.reference.child("ผู้ใช้").child(user_ID).child("รูปแบบ").child(card_key).child("รายการที่ต้องทำ").child(notiKey)
 
@@ -139,8 +138,8 @@ class AddNotiCardActivity : AppCompatActivity() {
             })
 
         } else {
-            card_key = bundle.getString("CARD_KEY")
-            user_ID = bundle.getString("USER_ID")
+            card_key = bundle.getString("CARD_KEY")!!
+            user_ID = bundle.getString("USER_ID")!!
         }
 
         bottomSheetView = layoutInflater.inflate(R.layout.input_dialog, null)
@@ -350,11 +349,7 @@ class AddNotiCardActivity : AppCompatActivity() {
     fun showDialog(title: String, arr: Array<String>) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.animStyle = R.style.dialogWindowAnim
-                    }
-                })
+                .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
                 .setTitle(title)
                 .setTitleColor(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
                 .setItems(arr) { parent, view, position, id ->
@@ -363,12 +358,10 @@ class AddNotiCardActivity : AppCompatActivity() {
                     objective = o
                 }
                 .setNegative("ยกเลิก", null)
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, R.color.colorText)
-                    }
-                })
+                .configNegative { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, R.color.colorText)
+                }
                 .show()
     }
 
@@ -414,28 +407,20 @@ class AddNotiCardActivity : AppCompatActivity() {
     fun setErrorDialog() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("เกิดข้อผิดพลาด")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, MelonTheme.from(this@AddNotiCardActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, MelonTheme.from(this@AddNotiCardActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, R.color.colorText)
+                }.show()
 
 
     }
@@ -443,28 +428,20 @@ class AddNotiCardActivity : AppCompatActivity() {
     fun setAlertDialog() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("กรุณาใส่ข้อมูลให้ครบ")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, MelonTheme.from(this@AddNotiCardActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, MelonTheme.from(this@AddNotiCardActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, R.color.colorText)
+                }.show()
 
 
     }
@@ -474,29 +451,21 @@ class AddNotiCardActivity : AppCompatActivity() {
 
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("บันทึกเรียบร้อย")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, MelonTheme.from(this@AddNotiCardActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
-                .setPositive("รับทราบ", {
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, MelonTheme.from(this@AddNotiCardActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
+                .setPositive("รับทราบ") {
                     this.finish()
-                })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, R.color.colorText)
-                    }
-                }).show()
+                }
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@AddNotiCardActivity, R.color.colorText)
+                }.show()
 
 
     }
@@ -504,11 +473,7 @@ class AddNotiCardActivity : AppCompatActivity() {
 
     fun setWaitDialog() {
         waitDialog = CircleDialog.Builder()
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setProgressText("กำลังบันทึก...")
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(this.supportFragmentManager)

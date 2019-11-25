@@ -3,16 +3,17 @@ package th.ac.up.agr.thai_mini_chicken.Fragment
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.RecyclerView
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.app_bar_program_main.*
@@ -109,7 +110,7 @@ class HistoryFragment : Fragment() {
                     progress.visibility = View.GONE
                     //emptyText.visibility = View.GONE
                     arrData.clear()
-                    recyclerView.adapter.notifyDataSetChanged()
+                    recyclerView.adapter!!.notifyDataSetChanged()
 
                     //Log.e("HISTORY","OUTFOR")
 
@@ -145,7 +146,7 @@ class HistoryFragment : Fragment() {
                                             }
                                             arrData.add(slot)
                                             arrData.add(a)
-                                            recyclerView.adapter.notifyDataSetChanged()
+                                            recyclerView.adapter!!.notifyDataSetChanged()
                                             this@HistoryFragment.mSwipeRefreshLayout.isRefreshing = false
                                         } else {
                                             val today = Calendar.getInstance()
@@ -204,7 +205,7 @@ class HistoryFragment : Fragment() {
 
                                             }
                                             //Log.e("PRO", "LOAD")
-                                            recyclerView.adapter.notifyDataSetChanged()
+                                            recyclerView.adapter!!.notifyDataSetChanged()
                                             this@HistoryFragment.mSwipeRefreshLayout.isRefreshing = false
                                         }
                                         //arrData.add(slot)

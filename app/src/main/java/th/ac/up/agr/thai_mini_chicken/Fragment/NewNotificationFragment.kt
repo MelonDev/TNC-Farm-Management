@@ -2,12 +2,13 @@ package th.ac.up.agr.thai_mini_chicken.Fragment
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -85,7 +86,7 @@ class NewNotificationFragment : Fragment() {
                     }
                 } else {
                     arr.clear()
-                    recyclerView.adapter.notifyDataSetChanged()
+                    recyclerView.adapter!!.notifyDataSetChanged()
                     v.new_notification_empty_area.visibility = View.VISIBLE
                     //Log.e("ARR_CANCEL",arr.size.toString())
                 }
@@ -214,7 +215,7 @@ class NewNotificationFragment : Fragment() {
                                                     c+=1
 
                                                     if(c == s){
-                                                        recyclerView.adapter.notifyDataSetChanged()
+                                                        recyclerView.adapter!!.notifyDataSetChanged()
                                                     }
 
                                                     countSize()
@@ -224,7 +225,7 @@ class NewNotificationFragment : Fragment() {
 
                                                 countSize()
 
-                                                recyclerView.adapter.notifyDataSetChanged()
+                                                recyclerView.adapter!!.notifyDataSetChanged()
                                             }
                                         }
                                     })
@@ -245,7 +246,7 @@ class NewNotificationFragment : Fragment() {
                                 v.new_notification_empty_area.visibility = View.GONE
                             }
 
-                            recyclerView.adapter.notifyDataSetChanged()
+                            recyclerView.adapter!!.notifyDataSetChanged()
                         }
 
 

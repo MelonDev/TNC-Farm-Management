@@ -2,12 +2,13 @@ package th.ac.up.agr.thai_mini_chicken.Fragment
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -69,7 +70,7 @@ class NewHistoryFragment : Fragment() {
         databaseReference.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 arrData.clear()
-                recyclerView.adapter.notifyDataSetChanged()
+                recyclerView.adapter!!.notifyDataSetChanged()
                 v.new_history_empty_area.visibility = View.VISIBLE
             }
 
@@ -82,7 +83,7 @@ class NewHistoryFragment : Fragment() {
                     }
                 } else {
                     arrData.clear()
-                    recyclerView.adapter.notifyDataSetChanged()
+                    recyclerView.adapter!!.notifyDataSetChanged()
                     v.new_history_empty_area.visibility = View.VISIBLE
                 }
             }
@@ -133,7 +134,7 @@ class NewHistoryFragment : Fragment() {
                                             }
                                             arrData.add(slot)
                                             arrData.add(a)
-                                            recyclerView.adapter.notifyDataSetChanged()
+                                            recyclerView.adapter!!.notifyDataSetChanged()
                                             check()
                                         } else {
                                             val today = Calendar.getInstance()
@@ -192,7 +193,7 @@ class NewHistoryFragment : Fragment() {
 
                                             }
                                             //Log.e("PRO", "LOAD")
-                                            recyclerView.adapter.notifyDataSetChanged()
+                                            recyclerView.adapter!!.notifyDataSetChanged()
                                             check()
                                         }
                                         //arrData.add(slot)
@@ -207,7 +208,7 @@ class NewHistoryFragment : Fragment() {
                         if(count == size){
                             process = false
 
-                            recyclerView.adapter.notifyDataSetChanged()
+                            recyclerView.adapter!!.notifyDataSetChanged()
                             check()
                         }
 

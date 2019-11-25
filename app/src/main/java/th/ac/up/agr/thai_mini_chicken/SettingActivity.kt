@@ -3,9 +3,9 @@ package th.ac.up.agr.thai_mini_chicken
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.mylhyl.circledialog.CircleDialog
 import com.mylhyl.circledialog.callback.ConfigButton
 import com.mylhyl.circledialog.callback.ConfigDialog
@@ -58,23 +58,17 @@ class SettingActivity : AppCompatActivity() {
     fun showDialog(ID: Int, title: String, arr: Array<String>) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.animStyle = R.style.dialogWindowAnim
-                    }
-                })
+                .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
                 .setTitle(title)
                 .setTitleColor(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
                 .setItems(arr) { parent, view, position, id ->
                     saveData(position)
                 }
                 .setNegative("ยกเลิก", null)
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@SettingActivity, R.color.colorText)
-                    }
-                })
+                .configNegative { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@SettingActivity, R.color.colorText)
+                }
                 .show()
     }
 

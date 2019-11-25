@@ -2,16 +2,15 @@ package th.ac.up.agr.thai_mini_chicken.Adapter
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.FragmentActivity
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.PopupMenu
-import android.support.v7.widget.RecyclerView
+
 import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.mylhyl.circledialog.CircleDialog
 import com.mylhyl.circledialog.callback.ConfigButton
 import com.mylhyl.circledialog.callback.ConfigDialog
@@ -75,11 +74,7 @@ class ProgramAdapter(var fragment: FragmentActivity, val ID: Int, val arr: Array
     fun showDialog(ID: Int, title: String, sub: String, arr: Array<String>) {
         CircleDialog.Builder(fragment
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.animStyle = R.style.dialogWindowAnim
-                    }
-                })
+                .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
                 //.setTitle(title)
                 //.setTitleColor(ContextCompat.getColor(fragment, R.color.colorPrimary))
                 //.setSubTitle(sub)
@@ -87,12 +82,10 @@ class ProgramAdapter(var fragment: FragmentActivity, val ID: Int, val arr: Array
 
                 }
                 .setNegative("ยกเลิก", null)
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(fragment, R.color.colorText)
-                    }
-                })
+                .configNegative { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(fragment, R.color.colorText)
+                }
                 .show()
     }
 

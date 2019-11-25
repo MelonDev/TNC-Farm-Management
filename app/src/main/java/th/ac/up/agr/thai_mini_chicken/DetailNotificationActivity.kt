@@ -3,9 +3,7 @@ package th.ac.up.agr.thai_mini_chicken
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+
 import android.util.Log
 
 import kotlinx.android.synthetic.main.activity_detail_notification.*
@@ -17,7 +15,6 @@ import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Tools.LoadTime
 import th.ac.up.agr.thai_mini_chicken.Tools.QuickRecyclerView
 import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardVHConfig
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.google.firebase.database.*
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
@@ -27,6 +24,9 @@ import kotlin.collections.ArrayList
 import android.R.attr.label
 import android.app.Activity
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import th.ac.up.agr.thai_mini_chicken.Data.CustomData
 import th.ac.up.agr.thai_mini_chicken.Tools.TimeManager
 
@@ -50,10 +50,10 @@ class DetailNotificationActivity : AppCompatActivity() {
 
         arrEvent = ArrayList()
 
-        val bundle = intent.extras
-        val card_key = bundle.getString("CARD_KEY")
-        val user_ID = bundle.getString("USER_ID")
-        type = bundle.getString("TYPE")
+        val bundle = intent.extras!!
+        val card_key = bundle.getString("CARD_KEY")!!
+        val user_ID = bundle.getString("USER_ID")!!
+        type = bundle.getString("TYPE")!!
 
         //val arr = LoadTime().getTable(type)
 
@@ -91,7 +91,7 @@ class DetailNotificationActivity : AppCompatActivity() {
             adapter = DetailNotificationAdapter(this, 3, arrEvent, arrPassed, card_key, user_ID)
             //notification_detail_fab_add.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, MelonTheme.from(this).getColor()));
             //notification_detail_fab_add.show()
-            notification_detail_fab_add.visibility = View.GONE
+            notification_detail_fab_add.hide()
         }
 
         recyclerView.adapter = adapter
@@ -134,7 +134,7 @@ class DetailNotificationActivity : AppCompatActivity() {
                                 if (p0.value != null) {
                                     getEvents(p0, slot)
 
-                                    recyclerView.adapter.notifyDataSetChanged()
+                                    recyclerView.adapter!!.notifyDataSetChanged()
                                     //recyclerView.layoutManager.smoothScrollToPosition(recyclerView, RecyclerView.State(), 0)
 
                                 }
@@ -208,7 +208,7 @@ class DetailNotificationActivity : AppCompatActivity() {
                                 }
                                 arrEvent.add(b)
                                 arrEvent.add(a)
-                                recyclerView.adapter.notifyDataSetChanged()
+                                recyclerView.adapter!!.notifyDataSetChanged()
                             } else {
                                 var last = arrEvent[arrEvent.lastIndex]
                                 if (last.totalDay != a.totalDay) {
@@ -224,17 +224,17 @@ class DetailNotificationActivity : AppCompatActivity() {
                                     }
                                     arrEvent.add(b)
                                     arrEvent.add(a)
-                                    recyclerView.adapter.notifyDataSetChanged()
+                                    recyclerView.adapter!!.notifyDataSetChanged()
                                 } else {
                                     arrEvent.add(a)
-                                    recyclerView.adapter.notifyDataSetChanged()
+                                    recyclerView.adapter!!.notifyDataSetChanged()
                                 }
                             }
 
                         }
                     } else {
                         arrEvent.clear()
-                        recyclerView.adapter.notifyDataSetChanged()
+                        recyclerView.adapter!!.notifyDataSetChanged()
                         //detail_noti_empty_text.visibility = View.VISIBLE
                         detail_noti_empty_area.visibility = View.VISIBLE
 
@@ -299,7 +299,7 @@ class DetailNotificationActivity : AppCompatActivity() {
                 }
                 arrEvent.add(b)
                 arrEvent.add(a)
-                recyclerView.adapter.notifyDataSetChanged()
+                recyclerView.adapter!!.notifyDataSetChanged()
             } else {
                 var last = arrEvent[arrEvent.lastIndex]
                 if (last.totalDay != a.totalDay) {
@@ -315,21 +315,21 @@ class DetailNotificationActivity : AppCompatActivity() {
                     }
                     arrEvent.add(b)
                     arrEvent.add(a)
-                    recyclerView.adapter.notifyDataSetChanged()
+                    recyclerView.adapter!!.notifyDataSetChanged()
                 } else {
                     arrEvent.add(a)
-                    recyclerView.adapter.notifyDataSetChanged()
+                    recyclerView.adapter!!.notifyDataSetChanged()
                 }
             }
         }
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
 
         if (resultCode == Activity.RESULT_OK && requestCode == 999) {
-            val objective = intent.getStringExtra("objective")
+            val objective = intent!!.getStringExtra("objective")
             val week = intent.getStringExtra("week")
             val day = intent.getStringExtra("day")
             val totalDay = intent.getStringExtra("totalDay")

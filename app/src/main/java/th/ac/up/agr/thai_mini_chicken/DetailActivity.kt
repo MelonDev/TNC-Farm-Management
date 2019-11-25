@@ -3,9 +3,7 @@ package th.ac.up.agr.thai_mini_chicken
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
@@ -29,6 +27,8 @@ import th.ac.up.agr.thai_mini_chicken.Tools.Animation
 import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
 import th.ac.up.agr.thai_mini_chicken.Data.Event
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
@@ -56,9 +56,9 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val bundle = intent.extras
-        card_key = bundle.getString("CARD_KEY")
-        user_ID = bundle.getString("USER_ID")
+        val bundle = intent.extras!!
+        card_key = bundle.getString("CARD_KEY")!!
+        user_ID = bundle.getString("USER_ID")!!
 
         //var count = 0
 
@@ -321,12 +321,10 @@ params.textSize = 10
 */
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.animStyle = R.style.dialogWindowAnim
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params ->
+                    params.animStyle = R.style.dialogWindowAnim
+                    params.canceledOnTouchOutside = false
+                }
                 .setTitle("คุณต้องการลบรายการนี้?")
                 .setTitleColor(ContextCompat.getColor(this, R.color.colorText))
                 .setItems(arr) { parent, view, position, id ->
@@ -334,48 +332,36 @@ params.textSize = 10
                     path.removeValue()
                     showConDialog()
                 }
-                .configItems(object : ConfigItems() {
-                    override fun onConfig(params: ItemsParams?) {
-                        params!!.textColor = ContextCompat.getColor(this@DetailActivity.applicationContext, R.color.colorRed)
-                        params.backgroundColorPress = ContextCompat.getColor(this@DetailActivity.applicationContext, R.color.colorRed)
-                    }
-                })
+                .configItems { params ->
+                    params!!.textColor = ContextCompat.getColor(this@DetailActivity.applicationContext, R.color.colorRed)
+                    params.backgroundColorPress = ContextCompat.getColor(this@DetailActivity.applicationContext, R.color.colorRed)
+                }
                 .setNegative("ยกเลิก", null)
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@DetailActivity.applicationContext, R.color.colorText)
-                    }
-                })
+                .configNegative { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@DetailActivity.applicationContext, R.color.colorText)
+                }
                 .show()
     }
 
     fun showConDialog() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("ลบเรียบร้อย")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@DetailActivity, MelonTheme.from(this@DetailActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@DetailActivity, MelonTheme.from(this@DetailActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                     this.finish()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@DetailActivity, R.color.colorText)
-                    }
-                })
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@DetailActivity, R.color.colorText)
+                }
 
                 .show()
 

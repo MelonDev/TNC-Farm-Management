@@ -2,7 +2,6 @@ package th.ac.up.agr.thai_mini_chicken.AddProgramActivity
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
@@ -14,7 +13,6 @@ import kotlinx.android.synthetic.main.activity_add_program.*
 import th.ac.up.agr.thai_mini_chicken.R
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
-import android.support.v7.app.AlertDialog
 import android.view.inputmethod.InputMethodManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -27,6 +25,7 @@ import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 import android.app.Activity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
 import th.ac.up.agr.thai_mini_chicken.Tools.LoadTime
 
@@ -63,8 +62,8 @@ class AddProgramActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_program)
 
 
-        val bundle = intent.extras
-        ID = bundle.getString("ID")
+        val bundle = intent.extras!!
+        ID = bundle.getString("ID")!!
 
         dataCard = CardData()
 
@@ -78,7 +77,7 @@ class AddProgramActivity : AppCompatActivity() {
             dialog.setOnStart()
             add_program_title_name.text = "เพิ่มรายการข้อมูล"
 
-            user_ID = bundle.getString("USER_ID")
+            user_ID = bundle.getString("USER_ID")!!
 
             manager_result = "ไก่พ่อ-แม่พันธุ์"
             manager_objective = "1"
@@ -88,8 +87,8 @@ class AddProgramActivity : AppCompatActivity() {
             add_program_manager_text.text = manager_result
 
         } else if (ID.contentEquals("1")) {
-            card_key = bundle.getString("CARD_KEY")
-            user_ID = bundle.getString("USER_ID")
+            card_key = bundle.getString("CARD_KEY")!!
+            user_ID = bundle.getString("USER_ID")!!
 
             add_program_title_name.text = "แก้ไขรายการข้อมูล"
 
@@ -202,11 +201,13 @@ class AddProgramActivity : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 999) {
             if (resultCode == Activity.RESULT_OK) {
-                val result = data.getStringExtra("RESULT")
+                val result = data!!.getStringExtra("RESULT")
                 val objective = data.getStringExtra("OBJECTIVE")
 
                 manager_result = result

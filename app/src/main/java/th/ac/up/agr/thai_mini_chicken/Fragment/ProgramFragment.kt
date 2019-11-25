@@ -4,9 +4,7 @@ package th.ac.up.agr.thai_mini_chicken.Fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
+
 import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
@@ -31,7 +29,9 @@ import th.ac.up.agr.thai_mini_chicken.Tools.QuickRecyclerView
 import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardVHConfig
 import java.util.*
 import kotlin.collections.ArrayList
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_program.*
 
@@ -97,7 +97,7 @@ class ProgramFragment : Fragment() {
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var currentScrollPosition = 0
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) {
                     //fab.hide()
                 } else {
@@ -275,7 +275,7 @@ class ProgramFragment : Fragment() {
                             if (swipe) {
                                 this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                             }
-                            recyclerView.adapter.notifyDataSetChanged()
+                            recyclerView.adapter!!.notifyDataSetChanged()
                         }
 
                     }
@@ -407,7 +407,7 @@ class ProgramFragment : Fragment() {
                             if (swipe) {
                                 this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                             }
-                            recyclerView.adapter.notifyDataSetChanged()
+                            recyclerView.adapter!!.notifyDataSetChanged()
                         }
 
                     }

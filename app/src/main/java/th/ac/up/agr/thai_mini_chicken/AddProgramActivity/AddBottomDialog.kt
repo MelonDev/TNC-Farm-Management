@@ -1,10 +1,8 @@
 package th.ac.up.agr.thai_mini_chicken.AddProgramActivity
 
 import th.ac.up.agr.thai_mini_chicken.MainActivity
-import android.support.design.widget.BottomSheetDialog
 import th.ac.up.agr.thai_mini_chicken.R
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.CoordinatorLayout
+
 import android.view.View
 import com.aigestudio.wheelpicker.WheelPicker
 import com.aigestudio.wheelpicker.widgets.WheelDayPicker
@@ -14,7 +12,6 @@ import kotlinx.android.synthetic.main.input_dialog.*
 import kotlinx.android.synthetic.main.input_dialog.view.*
 import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
 import android.graphics.Typeface
-import android.support.v4.content.res.ResourcesCompat
 import com.irozon.alertview.AlertActionStyle
 import com.irozon.alertview.AlertStyle
 import com.irozon.alertview.AlertView
@@ -23,13 +20,15 @@ import kotlinx.android.synthetic.main.activity_add_program.view.*
 import android.R.attr.textColor
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.CardView
+
 import android.text.InputType
 import android.util.Log
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.database.FirebaseDatabase
 import com.mylhyl.circledialog.params.ButtonParams
 import com.mylhyl.circledialog.callback.ConfigButton
@@ -457,11 +456,7 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
     fun showDialog(ID: Int, title: String, arr: Array<String>) {
         CircleDialog.Builder(activity
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.animStyle = R.style.dialogWindowAnim
-                    }
-                })
+                .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
                 .setTitle(title)
                 .setTitleColor(ContextCompat.getColor(activity, MelonTheme.from(activity).getColor()))
                 .setItems(arr) { parent, view, position, id ->
@@ -490,41 +485,31 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
                     }
                 }
                 .setNegative("ยกเลิก", null)
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                    }
-                })
+                .configNegative { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(activity, R.color.colorText)
+                }
                 .show()
     }
 
     fun showConDialog() {
         CircleDialog.Builder(activity
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("บันทึกเรียบร้อย")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                     activity.finish()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                    }
-                })
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(activity, R.color.colorText)
+                }
 
                 .show()
 
@@ -575,7 +560,7 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         abc.show()
 
         dialogView.dialog_add_cancel.setOnClickListener {
-            abc.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+            abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
             activity.hideKeyB()
             editText.clearFocus()
             abc.cancel()
@@ -590,7 +575,7 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
                 activity.add_program_breed_text.text = "ไม่ระบุ"
             }
 
-            abc.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+            abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
             activity.hideKeyB()
             abc.cancel()
         }
@@ -607,28 +592,20 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
     fun setAlertDialog() {
         CircleDialog.Builder(activity
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("กรุณาใส่ชื่อรายการ")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(activity, R.color.colorText)
+                }.show()
 
 
     }

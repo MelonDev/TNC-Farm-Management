@@ -1,11 +1,11 @@
 package th.ac.up.agr.thai_mini_chicken.Tools
 
 import android.os.Build
-import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 

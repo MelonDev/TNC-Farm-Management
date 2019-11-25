@@ -2,13 +2,13 @@ package th.ac.up.agr.thai_mini_chicken.ViewHolder
 
 import android.content.Context
 import android.content.res.Resources
-import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.FragmentActivity
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 
-class CardVHConfig(val fragment :FragmentActivity, val holder: CardViewHolder) {
+class CardVHConfig(val fragment: FragmentActivity, val holder: CardViewHolder) {
 
     /* วิธีใช้งาน
         CardVHConfig.load(this, CardViewHolder(View(this)))

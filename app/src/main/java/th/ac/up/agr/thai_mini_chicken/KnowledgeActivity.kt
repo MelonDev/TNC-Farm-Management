@@ -2,9 +2,9 @@ package th.ac.up.agr.thai_mini_chicken
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
+
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 
 import kotlinx.android.synthetic.main.activity_knowledge.*
 import th.ac.up.agr.thai_mini_chicken.Adapter.KnowledgeAdapter
@@ -14,7 +14,7 @@ import th.ac.up.agr.thai_mini_chicken.Tools.QuickRecyclerView
 
 class KnowledgeActivity : AppCompatActivity() {
 
-    private lateinit var recyclerView :RecyclerView
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -23,9 +23,9 @@ class KnowledgeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_knowledge)
 
-        val bundle = intent.extras
+        val bundle = intent.extras!!
         val title = bundle.getString("TITLE")
-        val ID = bundle.getString("ID")
+        val ID = bundle.getString("ID")!!
 
         knowledge_back_btn.setOnClickListener {
             finish()

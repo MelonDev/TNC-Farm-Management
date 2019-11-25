@@ -2,14 +2,14 @@ package th.ac.up.agr.thai_mini_chicken
 
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+
 import android.view.Window
 
 import kotlinx.android.synthetic.main.activity_splash.*
 import android.content.Intent
-import android.support.v4.app.DialogFragment
-import android.support.v4.content.ContextCompat
+
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -59,28 +59,20 @@ class SplashActivity : AppCompatActivity() {
     fun setErrorDialog(string: String) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText(string)
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@SplashActivity, MelonTheme.from(this@SplashActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@SplashActivity, MelonTheme.from(this@SplashActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@SplashActivity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@SplashActivity, R.color.colorText)
+                }.show()
 
 
     }
@@ -88,49 +80,35 @@ class SplashActivity : AppCompatActivity() {
     fun setQuestionDialog() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("บัญชีของคุณยังไม่ได้ใส่ข้อมูลพื้นฐานต่างๆ คุณต้องการไปใส่ข้อมูลตอนนี้เลยไหม?")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@SplashActivity, R.color.colorText)
-                        params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
-
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@SplashActivity, R.color.colorText)
+                    params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
+                }
                 .setTitle("คำอธิบาย")
-                .configTitle(object : ConfigTitle() {
-                    override fun onConfig(params: TitleParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@SplashActivity, MelonTheme.from(this@SplashActivity).getColor())
-                    }
-                })
+                .configTitle { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@SplashActivity, MelonTheme.from(this@SplashActivity).getColor())
+                }
                 .setPositive("ตกลง", {
                     newStartProcess()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@SplashActivity, MelonTheme.from(this@SplashActivity).getColor())
-                    }
-                })
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@SplashActivity, MelonTheme.from(this@SplashActivity).getColor())
+                }
                 .setNegative("ข้าม", {
                     val intent = Intent(this@SplashActivity, ProgramMainActivity::class.java)
                     startActivity(intent)
                     finish()
                 })
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
+                .configNegative { params ->
+                    params.textSize = 50
 
-                        params.textColor = ContextCompat.getColor(this@SplashActivity, R.color.colorText)
-
-                    }
-                })
+                    params.textColor = ContextCompat.getColor(this@SplashActivity, R.color.colorText)
+                }
                 .show()
 
 

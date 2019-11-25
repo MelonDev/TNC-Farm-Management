@@ -1,10 +1,11 @@
 package th.ac.up.agr.thai_mini_chicken.Adapter
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import th.ac.up.agr.thai_mini_chicken.ContainerActivity
 import th.ac.up.agr.thai_mini_chicken.Data.KnowledgeData

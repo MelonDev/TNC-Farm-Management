@@ -7,7 +7,7 @@
     android:background="#EDEDED"
     tools:context=".Fragment.KnowledgeTableFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:paddingTop="24dp"
         android:paddingBottom="0dp"
         android:clipToPadding="false"

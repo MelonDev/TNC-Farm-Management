@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -58,9 +58,9 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.recyclerview.widget.RecyclerView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -104,9 +104,9 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/knowledge_list_area_C"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="16dp"
@@ -150,7 +150,7 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 

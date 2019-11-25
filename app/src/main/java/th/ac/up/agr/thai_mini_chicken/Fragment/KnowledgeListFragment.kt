@@ -2,10 +2,10 @@ package th.ac.up.agr.thai_mini_chicken.Fragment
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_knowledge_list.view.*
 
 import th.ac.up.agr.thai_mini_chicken.R
@@ -46,7 +46,7 @@ class KnowledgeListFragment : Fragment() {
         val MB = arguments!!.getString("MB")
         val TC = arguments!!.getString("TC")
         val MC = arguments!!.getString("MC")
-        val SC = arguments!!.getString("SC").toBoolean()
+        val SC = arguments!!.getString("SC")!!.toBoolean()
 
 
         view.apply {

@@ -1,6 +1,6 @@
 package th.ac.up.agr.thai_mini_chicken.Firebase
 
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

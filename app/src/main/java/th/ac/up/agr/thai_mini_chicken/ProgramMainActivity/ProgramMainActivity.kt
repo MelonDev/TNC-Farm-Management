@@ -2,16 +2,15 @@ package th.ac.up.agr.thai_mini_chicken.ProgramMainActivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
-import android.support.design.widget.NavigationView
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.GravityCompat
-import android.support.v4.view.ViewPager
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
+
 import android.util.Log
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -114,48 +113,34 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     fun setQuestionDialog() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("คุณต้องการจะออกจากแอปหรือไม่?")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@ProgramMainActivity, R.color.colorText)
-                        params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
-
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@ProgramMainActivity, R.color.colorText)
+                    params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
+                }
                 .setTitle("คำเตือน")
-                .configTitle(object : ConfigTitle() {
-                    override fun onConfig(params: TitleParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@ProgramMainActivity, MelonTheme.from(this@ProgramMainActivity).getColor())
-                    }
-                })
+                .configTitle { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@ProgramMainActivity, MelonTheme.from(this@ProgramMainActivity).getColor())
+                }
                 .setPositive("ออก", {
                     //unit
                     close = true
                     this.onBackPressed()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@ProgramMainActivity, MelonTheme.from(this@ProgramMainActivity).getColor())
-                    }
-                })
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@ProgramMainActivity, MelonTheme.from(this@ProgramMainActivity).getColor())
+                }
                 .setNegative("ยกเลิก", {
                 })
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
+                .configNegative { params ->
+                    params.textSize = 50
 
-                        params.textColor = ContextCompat.getColor(this@ProgramMainActivity, R.color.colorText)
-
-                    }
-                })
+                    params.textColor = ContextCompat.getColor(this@ProgramMainActivity, R.color.colorText)
+                }
                 .show()
 
 

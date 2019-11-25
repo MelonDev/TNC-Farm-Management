@@ -1,15 +1,16 @@
 package th.ac.up.agr.thai_mini_chicken.Adapter
 
 import android.content.Intent
-import android.support.v4.app.DialogFragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
-import android.support.v7.widget.RecyclerView
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.mylhyl.circledialog.CircleDialog
@@ -103,29 +104,21 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
         waitDialog.dismiss()
         CircleDialog.Builder(activity
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("ลบเรียบร้อย")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                     //fragment.onLoad()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                    }
-                })
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(activity, R.color.colorText)
+                }
 
                 .show()
 
@@ -142,29 +135,21 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
         }
         CircleDialog.Builder(activity
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText(title)
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                     //fragment.onLoad()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                    }
-                })
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(activity, R.color.colorText)
+                }
 
                 .show()
 
@@ -176,12 +161,10 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
 
         CircleDialog.Builder(activity
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.animStyle = R.style.dialogWindowAnim
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params ->
+                    params.animStyle = R.style.dialogWindowAnim
+                    params.canceledOnTouchOutside = false
+                }
                 .setTitle("คุณต้องการลบรายการนี้?")
                 .setTitleColor(ContextCompat.getColor(activity, R.color.colorText))
                 .setItems(arr) { parent, view, position, id ->
@@ -197,30 +180,22 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
                     //this.notifyItemRemoved(positions)
                     //showConDialog()
                 }
-                .configItems(object : ConfigItems() {
-                    override fun onConfig(params: ItemsParams?) {
-                        params!!.textColor = ContextCompat.getColor(activity.applicationContext, R.color.colorRed)
-                        params.backgroundColorPress = ContextCompat.getColor(activity.applicationContext, R.color.colorRed)
-                    }
-                })
+                .configItems { params ->
+                    params!!.textColor = ContextCompat.getColor(activity.applicationContext, R.color.colorRed)
+                    params.backgroundColorPress = ContextCompat.getColor(activity.applicationContext, R.color.colorRed)
+                }
                 .setNegative("ยกเลิก", null)
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(activity.applicationContext, R.color.colorText)
-                    }
-                })
+                .configNegative { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(activity.applicationContext, R.color.colorText)
+                }
                 .show()
     }
 
     fun showDialog(arr: Array<String>, userID: String, pos: Int) {
         CircleDialog.Builder(activity
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.animStyle = R.style.dialogWindowAnim
-                    }
-                })
+                .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
                 //.setTitle(title)
                 //.setTitleColor(ContextCompat.getColor(fragment, R.color.colorPrimary))
                 //.setSubTitle(sub)
@@ -258,13 +233,10 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
                     }
                 }
                 .setNegative("ยกเลิก", null)
-                .configNegative(
-                        object : ConfigButton() {
-                            override fun onConfig(params: ButtonParams) {
-                                params.textSize = 50
-                                params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                            }
-                        })
+                .configNegative { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(activity, R.color.colorText)
+                }
                 .show()
     }
 
@@ -279,11 +251,7 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
 
     fun setWaitDialog(str: String) {
         waitDialog = CircleDialog.Builder()
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setProgressText(str)
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(activity.supportFragmentManager)
@@ -293,29 +261,21 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
         waitDialog.dismiss()
         CircleDialog.Builder(activity
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("เกิดข้อผิดพลาด")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(activity, MelonTheme.from(activity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                     //fragment.onLoad()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                    }
-                })
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(activity, R.color.colorText)
+                }
 
                 .show()
     }

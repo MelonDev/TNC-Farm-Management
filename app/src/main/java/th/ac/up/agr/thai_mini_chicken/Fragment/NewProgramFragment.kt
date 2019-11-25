@@ -2,12 +2,13 @@ package th.ac.up.agr.thai_mini_chicken.Fragment
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -97,7 +98,7 @@ class NewProgramFragment : Fragment() {
                 } else {
                     arrData.clear()
 
-                    recyclerView.adapter.notifyDataSetChanged()
+                    recyclerView.adapter!!.notifyDataSetChanged()
 
                     v.new_program_empty_area.visibility = View.VISIBLE
                 }
@@ -210,7 +211,7 @@ class NewProgramFragment : Fragment() {
                             //Log.e("STARTED", started.toString())
 
 
-                            recyclerView.adapter.notifyDataSetChanged()
+                            recyclerView.adapter!!.notifyDataSetChanged()
                             recyclerView.scrollToPosition(arrData.lastIndex)
 
                             //recyclerView.scrollToPosition(arrData.lastIndex)
@@ -329,7 +330,7 @@ class NewProgramFragment : Fragment() {
                             //Log.e("STARTED", started.toString())
 
 
-                            recyclerView.adapter.notifyDataSetChanged()
+                            recyclerView.adapter!!.notifyDataSetChanged()
                             recyclerView.scrollToPosition(arrData.lastIndex)
 
                             //recyclerView.scrollToPosition(arrData.lastIndex)

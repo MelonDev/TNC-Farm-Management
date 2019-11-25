@@ -2,8 +2,7 @@ package th.ac.up.agr.thai_mini_chicken
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -27,12 +26,13 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.DialogFragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
+
 import android.text.InputType
 import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -162,34 +162,24 @@ class LoginActivity : AppCompatActivity() {
     fun showColorDialog(ID: Int, title: String, arr: Array<String>) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.animStyle = R.style.dialogWindowAnim
-                    }
-                })
+                .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
                 .setTitle(title)
                 .setTitleColor(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
                 .setItems(arr) { parent, view, position, id ->
                     saveData(position)
                 }
                 .setNegative("ยกเลิก", null)
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                    }
-                })
+                .configNegative { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
+                }
                 .show()
     }
 
     fun showHelpDialog(ID: Int, title: String, arr: Array<String>) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.animStyle = R.style.dialogWindowAnim
-                    }
-                })
+                .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
                 .setTitle(title)
                 .setTitleColor(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
                 .setItems(arr) { parent, view, position, id ->
@@ -210,12 +200,10 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
                 .setNegative("ยกเลิก", null)
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                    }
-                })
+                .configNegative { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
+                }
                 .show()
     }
 
@@ -270,14 +258,14 @@ class LoginActivity : AppCompatActivity() {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         //Log.e("TEST", "TEST")
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                val account = task.getResult(ApiException::class.java)
+                val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
                 waitDialog.dismiss()
@@ -408,29 +396,21 @@ class LoginActivity : AppCompatActivity() {
     fun showConDialog() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("บันทึกเรียบร้อย")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                     //activity.finish()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                    }
-                })
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
+                }
 
                 .show()
 
@@ -440,28 +420,20 @@ class LoginActivity : AppCompatActivity() {
     fun setErrorDialog(string: String) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText(string)
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
+                }.show()
 
 
     }
@@ -469,20 +441,14 @@ class LoginActivity : AppCompatActivity() {
     fun setQuestionDialog(ID: Int, title: String, positive: String, positiveLight: Boolean, negative: String, negativeLight: Boolean) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText(title)
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive(positive) {
                     if (ID == 0) {
                         toRegister(login_sign_in_email_email.text.toString(), login_sign_in_email_password.text.toString())
@@ -492,31 +458,27 @@ class LoginActivity : AppCompatActivity() {
                         showEditDialog()
                     }
                 }
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        if (positiveLight) {
-                            params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
+                .configPositive { params ->
+                    params.textSize = 50
+                    if (positiveLight) {
+                        params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
 
-                        } else {
-                            params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                        }
+                    } else {
+                        params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
                     }
-                })
+                }
                 .setNegative(negative) {
 
                 }
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        if (negativeLight) {
-                            params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
+                .configNegative { params ->
+                    params.textSize = 50
+                    if (negativeLight) {
+                        params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
 
-                        } else {
-                            params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                        }
+                    } else {
+                        params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
                     }
-                })
+                }
                 .show()
 
 
@@ -557,49 +519,35 @@ class LoginActivity : AppCompatActivity() {
     fun setQuestionDialogss() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("บัญชีของคุณยังไม่ได้ใส่ข้อมูลพื้นฐานต่างๆ คุณต้องการไปใส่ข้อมูลตอนนี้เลยไหม?")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                        params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
-
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
+                    params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
+                }
                 .setTitle("คำอธิบาย")
-                .configTitle(object : ConfigTitle() {
-                    override fun onConfig(params: TitleParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-                    }
-                })
+                .configTitle { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
+                }
                 .setPositive("ตกลง", {
                     newStartProcess()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-                    }
-                })
-                .setNegative("ข้าม", {
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
+                }
+                .setNegative("ข้าม") {
                     val intent = Intent(this@LoginActivity, ProgramMainActivity::class.java)
                     startActivity(intent)
                     finish()
-                })
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
+                }
+                .configNegative { params ->
+                    params.textSize = 50
 
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-
-                    }
-                })
+                    params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
+                }
                 .show()
 
 
@@ -672,7 +620,7 @@ class LoginActivity : AppCompatActivity() {
         abc.show()
 
         dialogView.dialog_add_cancel.setOnClickListener {
-            abc.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+            abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
             editText.clearFocus()
             abc.cancel()
         }
@@ -694,11 +642,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun setWaitDialog(string: String) {
         waitDialog = CircleDialog.Builder()
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setProgressText(string)
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(supportFragmentManager)

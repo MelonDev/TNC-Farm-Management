@@ -1,8 +1,8 @@
 package th.ac.up.agr.thai_mini_chicken.Tools
 
-import android.support.v7.widget.CardView
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.cardview.widget.CardView
 import at.wirecube.additiveanimations.additive_animator.AdditiveAnimator
 import th.ac.up.agr.thai_mini_chicken.DetailActivity
 import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardViewHolder
@@ -42,7 +42,7 @@ class Animation {
                 .start()
     }
 
-    fun cardLoadAnimation(activity :DetailActivity,view :CardView){
+    fun cardLoadAnimation(activity: DetailActivity, view: CardView) {
         view.visibility = View.VISIBLE
         AdditiveAnimator.animate(view)
                 .setDuration(0)

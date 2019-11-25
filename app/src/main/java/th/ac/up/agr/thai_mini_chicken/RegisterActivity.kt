@@ -2,11 +2,11 @@ package th.ac.up.agr.thai_mini_chicken
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.DialogFragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -40,7 +40,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val bundle = intent.extras
+        val bundle = intent.extras!!
         val u = bundle.getString("USER")
         val p = bundle.getString("PASS")
 
@@ -131,49 +131,35 @@ class RegisterActivity : AppCompatActivity() {
     fun setQuestionDialogss() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("บัญชีของคุณยังไม่ได้ใส่ข้อมูลพื้นฐานต่างๆ คุณต้องการไปใส่ข้อมูลตอนนี้เลยไหม?")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
-                        params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
-
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
+                    params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
+                }
                 .setTitle("คำอธิบาย")
-                .configTitle(object : ConfigTitle() {
-                    override fun onConfig(params: TitleParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
-                    }
-                })
+                .configTitle { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
+                }
                 .setPositive("ตกลง", {
                     newStartProcess()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
-                    }
-                })
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
+                }
                 .setNegative("ข้าม", {
                     val intent = Intent(this@RegisterActivity, ProgramMainActivity::class.java)
                     startActivity(intent)
                     finish()
                 })
-                .configNegative(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
+                .configNegative { params ->
+                    params.textSize = 50
 
-                        params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
-
-                    }
-                })
+                    params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
+                }
                 .show()
 
 
@@ -240,28 +226,20 @@ class RegisterActivity : AppCompatActivity() {
     fun setErrorDialog(string: String) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText(string)
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
+                }.show()
 
 
     }
@@ -269,41 +247,29 @@ class RegisterActivity : AppCompatActivity() {
     fun setConDialog(string: String) {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText(string)
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@RegisterActivity, MelonTheme.from(this@RegisterActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("ต่อไป", {
                     setWaitDialog("กำลังดำเนินการต่อ")
                     startProcess()
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@RegisterActivity, R.color.colorText)
+                }.show()
 
 
     }
 
     fun setWaitDialog(string: String) {
         waitDialog = CircleDialog.Builder()
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setProgressText(string)
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(supportFragmentManager)

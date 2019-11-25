@@ -1,19 +1,19 @@
 package th.ac.up.agr.thai_mini_chicken.ViewHolder
 
-import android.support.v7.widget.CardView
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.data_card.view.*
 
-class CardViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
+class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
     val title_item :TextView = itemView.data_card_title_item
-    val card_item :CardView = itemView.data_card_card_item
+    val card_item: CardView = itemView.data_card_card_item
     val icon_area :CardView = itemView.data_card_card_icon_area
     val icon_image :ImageView = itemView.data_card_card_icon_image
     val card_title :TextView = itemView.data_card_title_text_view

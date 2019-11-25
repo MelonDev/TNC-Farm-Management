@@ -1,8 +1,8 @@
 package th.ac.up.agr.thai_mini_chicken
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+
+import androidx.appcompat.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.activity_noti_detail.*
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme

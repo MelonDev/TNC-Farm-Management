@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import th.ac.up.agr.thai_mini_chicken.R
 import android.content.ContentValues
 import android.database.Cursor
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
 
 
 class AppTheme(private var context: FragmentActivity) : SQLiteOpenHelper(context, Con.NAME, null, Con.VERSION) {

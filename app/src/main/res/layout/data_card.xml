@@ -22,7 +22,7 @@
         android:layout_marginBottom="3dp"
         />
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
 
         android:id="@+id/data_card_card_history_area"
         android:visibility="gone"
@@ -59,9 +59,9 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back_icon"
             android:tint="#898989" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/data_card_card_item"
         android:visibility="gone"
         android:clickable="false"
@@ -81,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:clickable="false"
                 android:layout_centerVertical="true"
                 android:id="@+id/data_card_card_icon_area"
@@ -102,9 +102,9 @@
                     android:layout_gravity="center"
                     />
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:visibility="visible"
                 android:clickable="false"
                 android:layout_centerVertical="true"
@@ -126,7 +126,7 @@
                     android:tint="#b4b4b4"
                     android:layout_gravity="center"
                     />
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <RelativeLayout
                 android:layout_marginTop="0dp"
@@ -295,7 +295,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/data_card_card_menu_dialog_card"
                 app:cardElevation="0dp"
                 android:layout_width="180dp"
@@ -348,11 +348,11 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

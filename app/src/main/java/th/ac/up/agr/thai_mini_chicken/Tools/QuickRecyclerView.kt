@@ -1,10 +1,11 @@
 package th.ac.up.agr.thai_mini_chicken.Tools
 
 import android.content.Context
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import th.ac.up.agr.thai_mini_chicken.Tools.PreCaching.PreCachingGridLayoutManager
 import th.ac.up.agr.thai_mini_chicken.Tools.PreCaching.PreCachingLinearLayoutManager
 

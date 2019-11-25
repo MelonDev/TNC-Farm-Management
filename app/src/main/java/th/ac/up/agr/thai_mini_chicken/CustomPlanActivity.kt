@@ -4,16 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.DialogFragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
+
 import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -68,10 +68,10 @@ class CustomPlanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_plan)
 
-        val bundle = intent.extras
+        val bundle = intent.extras!!
         //val card_key = bundle.getString("CARD_KEY")
         //val user_ID = bundle.getString("USER_ID")
-        type = bundle.getString("TYPE")
+        type = bundle.getString("TYPE")!!
 
         if (type.contentEquals("0")) {
 
@@ -103,7 +103,7 @@ class CustomPlanActivity : AppCompatActivity() {
         } else if (type.contentEquals("1")) {
             //custom_fab_btn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
 
-            custom_fab_btn.visibility = View.GONE
+            custom_fab_btn.hide()
 
             custom_back_btn.setOnClickListener {
                 var returnIntent = Intent()
@@ -160,7 +160,7 @@ class CustomPlanActivity : AppCompatActivity() {
                             add(CustomData().init("ไก่พ่อ-แม่พันธุ์", "example", ""))
                             add(CustomData().init("ไก่เนื้อ", "example", ""))
                         }
-                        recyclerView.adapter.notifyDataSetChanged()
+                        recyclerView.adapter!!.notifyDataSetChanged()
                     } else {
 
                         p0.children.forEach {
@@ -179,7 +179,7 @@ class CustomPlanActivity : AppCompatActivity() {
                                 }
 
                                 check = true
-                                recyclerView.adapter.notifyDataSetChanged()
+                                recyclerView.adapter!!.notifyDataSetChanged()
 
                             }
 
@@ -191,7 +191,7 @@ class CustomPlanActivity : AppCompatActivity() {
                                 override fun onDataChange(p0: DataSnapshot) {
                                     val a = p0.getValue(CustomData::class.java)!!
                                     arrCustom.add(a)
-                                    recyclerView.adapter.notifyDataSetChanged()
+                                    recyclerView.adapter!!.notifyDataSetChanged()
                                 }
                             })
 
@@ -208,7 +208,7 @@ class CustomPlanActivity : AppCompatActivity() {
                         add(CustomData().init("ไก่พ่อ-แม่พันธุ์", "example", ""))
                         add(CustomData().init("ไก่เนื้อ", "example", ""))
                     }
-                    recyclerView.adapter.notifyDataSetChanged()
+                    recyclerView.adapter!!.notifyDataSetChanged()
 
                 }
             }
@@ -245,7 +245,7 @@ class CustomPlanActivity : AppCompatActivity() {
         abc.show()
 
         dialogView.dialog_add_cancel.setOnClickListener {
-            abc.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+            abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
             this.hideKeyB()
             editText.clearFocus()
             abc.cancel()
@@ -289,7 +289,7 @@ class CustomPlanActivity : AppCompatActivity() {
                     }
                 }
 
-                abc.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+                abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
                 this.hideKeyB()
                 abc.cancel()
             } else {
@@ -303,39 +303,27 @@ class CustomPlanActivity : AppCompatActivity() {
     fun setAlertDialog() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("คุณไม่ได้ใส่ข้อมูล")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@CustomPlanActivity, MelonTheme.from(this@CustomPlanActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@CustomPlanActivity, MelonTheme.from(this@CustomPlanActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@CustomPlanActivity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@CustomPlanActivity, R.color.colorText)
+                }.show()
 
 
     }
 
     fun setWaitDialog() {
         waitDialog = CircleDialog.Builder()
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setProgressText("กำลังบันทึก...")
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(this.supportFragmentManager)
@@ -369,20 +357,14 @@ class CustomPlanActivity : AppCompatActivity() {
 
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("บันทึกเรียบร้อย")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@CustomPlanActivity, MelonTheme.from(this@CustomPlanActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@CustomPlanActivity, MelonTheme.from(this@CustomPlanActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                     //this.finish()
                     var intent = Intent(this, DetailNotificationActivity::class.java)
@@ -391,12 +373,10 @@ class CustomPlanActivity : AppCompatActivity() {
                     intent.putExtra("TYPE", "2")
                     startActivity(intent)
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@CustomPlanActivity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@CustomPlanActivity, R.color.colorText)
+                }.show()
 
 
     }
@@ -404,28 +384,20 @@ class CustomPlanActivity : AppCompatActivity() {
     fun setErrorDialog() {
         CircleDialog.Builder(this
         )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
+                .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("เกิดข้อผิดพลาด")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(this@CustomPlanActivity, MelonTheme.from(this@CustomPlanActivity).getColor())
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
+                .configText { params ->
+                    params!!.textSize = 60
+                    params.textColor = ContextCompat.getColor(this@CustomPlanActivity, MelonTheme.from(this@CustomPlanActivity).getColor())
+                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
+                    params.height = 250
+                }
                 .setPositive("รับทราบ", {
                 })
-                .configPositive(object : ConfigButton() {
-                    override fun onConfig(params: ButtonParams) {
-                        params.textSize = 50
-                        params.textColor = ContextCompat.getColor(this@CustomPlanActivity, R.color.colorText)
-                    }
-                }).show()
+                .configPositive { params ->
+                    params.textSize = 50
+                    params.textColor = ContextCompat.getColor(this@CustomPlanActivity, R.color.colorText)
+                }.show()
 
 
     }
