@@ -34,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
         handler = Handler()
 
         runnable = Runnable {
-            if(FirebaseAuth.getInstance().currentUser != null){
+            if (FirebaseAuth.getInstance().currentUser != null) {
                 checkProcess()
             } else {
                 val intent = Intent(this, LoginActivity::class.java)
@@ -47,40 +47,45 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun checkProcess() {
-        val user = FirebaseAuth.getInstance().currentUser!!
-        val firebase = Firebase.reference.child("ผู้ใช้").child(user.uid).child("รายละเอียด")
-        firebase.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
+        FirebaseAuth.getInstance().currentUser?.let { user ->
+            val firebase = Firebase.reference.child("ผู้ใช้").child(user.uid).child("รายละเอียด")
+            firebase.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
 
-                AlertsDialog(this@SplashActivity).setTitle(R.string.request_has_cancel).build().show()
-            }
+                    AlertsDialog(this@SplashActivity).setTitle(R.string.request_has_cancel).build().show()
+                }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.value != null) {
-                    val info = p0.getValue(Information::class.java)!!
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.value != null) {
+                        val info = p0.getValue(Information::class.java)
 
-                    if (info.farmName.isEmpty() || info.username.isEmpty() || info.phoneNumber.isEmpty() || info.farmAddress.isEmpty()) {
-                        ActionDialog(this@SplashActivity).setTitle(R.string.alert_message).setMessage(R.string.inital_information_question_message).positive(R.string.yes_message_response) {
-                            newStartProcess()
-                        }.negative(R.string.skip_message_response) {
-                            val intent = Intent(this@SplashActivity, ProgramMainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }.build().show()
+                        info?.let {
+                            if (info.farmName.isEmpty() || info.username.isEmpty() || info.phoneNumber.isEmpty() || info.farmAddress.isEmpty()) {
+                                ActionDialog(this@SplashActivity).setTitle(R.string.alert_message).setMessage(R.string.inital_information_question_message).positive(R.string.yes_message_response) {
+                                    newStartProcess()
+                                }.negative(R.string.skip_message_response) {
+                                    val intent = Intent(this@SplashActivity, ProgramMainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }.build().show()
+                            } else {
+                                val intent = Intent(this@SplashActivity, ProgramMainActivity::class.java)
+                                startActivity(intent)
+                                firebase.removeEventListener(this)
+                                finish()
+                            }
+                        }
+
+
                     } else {
-                        val intent = Intent(this@SplashActivity, ProgramMainActivity::class.java)
+                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                         startActivity(intent)
-                        firebase.removeEventListener(this)
                         finish()
                     }
-
-                } else {
-                    val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
                 }
-            }
-        })
+            })
+        }
+
     }
 
     private fun newStartProcess() {
