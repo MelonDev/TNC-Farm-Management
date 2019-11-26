@@ -78,6 +78,9 @@
 
     <string name="error_message">Error</string>
 
+    <string name="email_message">Email</string>
+    <string name="registed_email_message">Your email</string>
+
     <string name="forget_password_message">Forget</string>
     <string name="wrong_password_message">Password incorrect</string>
 

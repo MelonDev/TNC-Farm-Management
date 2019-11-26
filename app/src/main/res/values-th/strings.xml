@@ -79,6 +79,9 @@
     <string name="forget_password_message">ลืมรหัส</string>
     <string name="wrong_password_message">รหัสไม่ถูกต้อง</string>
 
+    <string name="email_message">อีเมล</string>
+    <string name="registed_email_message">ใส่อีเมลที่ลงทะเบียนไว้</string>
+
     <string name="saved_message">บันทึกเรียบร้อย</string>
     <string name="register_successful_message">ลงทะเบียนเรียบร้อย</string>
     <string name="sign_out_message">ลงชื่อออกแล้ว</string>

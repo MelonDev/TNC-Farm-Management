@@ -24,6 +24,9 @@ class SplashActivity : AppCompatActivity() {
     private var delayTime: Long = 0
     private var time: Long = 1000L
 
+    private lateinit var mFirebaseAuth: FirebaseAuth
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(MelonTheme.from(this).getStyle())
@@ -31,15 +34,16 @@ class SplashActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_splash)
 
+        mFirebaseAuth = FirebaseAuth.getInstance()
+
         handler = Handler()
 
         runnable = Runnable {
-            if (FirebaseAuth.getInstance().currentUser != null) {
+
+            mFirebaseAuth.currentUser?.let {
                 checkProcess()
-            } else {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
+            } ?: run {
+                goToLogin()
             }
 
         }
@@ -56,36 +60,38 @@ class SplashActivity : AppCompatActivity() {
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
-                    if (p0.value != null) {
-                        val info = p0.getValue(Information::class.java)
 
-                        info?.let {
-                            if (info.farmName.isEmpty() || info.username.isEmpty() || info.phoneNumber.isEmpty() || info.farmAddress.isEmpty()) {
-                                ActionDialog(this@SplashActivity).setTitle(R.string.alert_message).setMessage(R.string.inital_information_question_message).positive(R.string.yes_message_response) {
-                                    newStartProcess()
-                                }.negative(R.string.skip_message_response) {
-                                    val intent = Intent(this@SplashActivity, ProgramMainActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
-                                }.build().show()
-                            } else {
+                    p0.getValue(Information::class.java)?.let { info ->
+                        if (info.farmName.isEmpty() || info.username.isEmpty() || info.phoneNumber.isEmpty() || info.farmAddress.isEmpty()) {
+                            ActionDialog(this@SplashActivity).setTitle(R.string.alert_message).setMessage(R.string.inital_information_question_message).positive(R.string.yes_message_response) {
+                                newStartProcess()
+                            }.negative(R.string.skip_message_response) {
                                 val intent = Intent(this@SplashActivity, ProgramMainActivity::class.java)
                                 startActivity(intent)
-                                firebase.removeEventListener(this)
                                 finish()
-                            }
+                            }.build().show()
+                        } else {
+                            val intent = Intent(this@SplashActivity, ProgramMainActivity::class.java)
+                            startActivity(intent)
+                            firebase.removeEventListener(this)
+                            finish()
                         }
-
-
-                    } else {
-                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                    } ?: run {
+                        goToLogin()
                     }
+
                 }
             })
+        } ?: run {
+            goToLogin()
         }
 
+    }
+
+    private fun goToLogin() {
+        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun newStartProcess() {

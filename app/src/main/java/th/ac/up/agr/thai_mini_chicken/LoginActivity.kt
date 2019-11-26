@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
     private val RCSIGNIN = 56000
     private lateinit var mGoogleSigninCliend: GoogleSignInClient
-    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var mFirebaseAuth: FirebaseAuth
 
     lateinit var progressDialog: DialogFragment
 
@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
                 .build()
 
         mGoogleSigninCliend = GoogleSignIn.getClient(this, option)
-        firebaseAuth = FirebaseAuth.getInstance()
+        mFirebaseAuth = FirebaseAuth.getInstance()
 
 
         login_help_area.setOnClickListener {
@@ -79,12 +79,11 @@ class LoginActivity : AppCompatActivity() {
 
         login_sign_in_google_btn.setOnClickListener {
 
-            if (FirebaseAuth.getInstance().currentUser != null) {
+            mFirebaseAuth.currentUser?.let {
                 signOut()
-            } else {
+            } ?: run {
                 signIn()
             }
-
 
         }
 
@@ -221,8 +220,10 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == RCSIGNIN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                val account = task.getResult(ApiException::class.java)!!
-                firebaseAuthWithGoogle(account)
+                task.getResult(ApiException::class.java)?.let { account ->
+                    firebaseAuthWithGoogle(account)
+
+                }
             } catch (e: ApiException) {
                 progressDialog.dismiss()
                 showAlertDialog(R.string.request_has_cancel)
@@ -234,7 +235,7 @@ class LoginActivity : AppCompatActivity() {
     private fun firebaseAuthWithEmail(userName: String, password: String) {
         showProgressDialog()
 
-        firebaseAuth.signInWithEmailAndPassword(userName, password)
+        mFirebaseAuth.signInWithEmailAndPassword(userName, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         startProcess()
@@ -268,8 +269,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun sendEmail(email: String) {
         showProgressDialog()
-        FirebaseAuth.getInstance()
-                .sendPasswordResetEmail(email)
+        mFirebaseAuth.sendPasswordResetEmail(email)
                 .addOnSuccessListener {
                     progressDialog.dismiss()
                     showAlertDialog(R.string.reset_email_send_complete_message)
@@ -290,7 +290,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        firebaseAuth.signInWithCredential(credential)
+        mFirebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
 
@@ -305,12 +305,13 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun updateUI(user: FirebaseUser? = null) {
-        if (user != null) {
-            Toast.makeText(this, user.uid, Toast.LENGTH_SHORT).show()
 
-        } else {
+        user?.let {
+            Toast.makeText(this, user.uid, Toast.LENGTH_SHORT).show()
+        } ?: run {
             Toast.makeText(this, getString(R.string.sign_out_message), Toast.LENGTH_SHORT).show()
         }
+
     }
 
 
@@ -319,39 +320,40 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun startProcess() {
-        val user = FirebaseAuth.getInstance().currentUser!!
-        val firebase = Firebase.reference.child("ผู้ใช้").child(user.uid).child("รายละเอียด")
-        firebase.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                showAlertDialog(R.string.request_has_cancel)
-            }
+        mFirebaseAuth.currentUser?.let { user ->
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.value != null) {
-                    val info = p0.getValue(Information::class.java)!!
-
-                    if (info.farmName.isEmpty() || info.username.isEmpty() || info.phoneNumber.isEmpty() || info.farmAddress.isEmpty()) {
-
-                        ActionDialog(this@LoginActivity).setTitle(R.string.alert_message).setMessage(R.string.inital_information_question_message).positive(R.string.yes_message_response) {
-                            newStartProcess()
-                        }.negative(R.string.skip_message_response) {
-                            val intent = Intent(this@LoginActivity, ProgramMainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }.build().show()
-                    } else {
-                        val intent = Intent(this@LoginActivity, ProgramMainActivity::class.java)
-                        progressDialog.dismiss()
-                        startActivity(intent)
-                        firebase.removeEventListener(this)
-                        finish()
-                    }
-
-                } else {
-                    setInfo()
+            val firebase = Firebase.reference.child("ผู้ใช้").child(user.uid).child("รายละเอียด")
+            firebase.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    showAlertDialog(R.string.request_has_cancel)
                 }
-            }
-        })
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    p0.getValue(Information::class.java)?.let { info ->
+                        if (info.farmName.isEmpty() || info.username.isEmpty() || info.phoneNumber.isEmpty() || info.farmAddress.isEmpty()) {
+
+                            ActionDialog(this@LoginActivity).setTitle(R.string.alert_message).setMessage(R.string.inital_information_question_message).positive(R.string.yes_message_response) {
+                                newStartProcess()
+                            }.negative(R.string.skip_message_response) {
+                                val intent = Intent(this@LoginActivity, ProgramMainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }.build().show()
+                        } else {
+                            val intent = Intent(this@LoginActivity, ProgramMainActivity::class.java)
+                            progressDialog.dismiss()
+                            startActivity(intent)
+                            firebase.removeEventListener(this)
+                            finish()
+                        }
+                    } ?: run {
+                        setInfo()
+                    }
+                }
+            })
+
+        }
+
 
     }
 
@@ -365,30 +367,33 @@ class LoginActivity : AppCompatActivity() {
 
     fun setInfo() {
         val info = Information()
-        val user = FirebaseAuth.getInstance().currentUser!!
+        mFirebaseAuth.currentUser?.let { user ->
+            info.apply {
+                this.masterKey = user.uid
+                this.email = user.email.toString()
 
-        info.apply {
-            this.masterKey = user.uid
-            this.email = user.email.toString()
-
-            if (user.photoUrl.toString().isNotEmpty() && user.photoUrl != null) {
-                this.photoURL = user.photoUrl.toString()
+                if (user.photoUrl.toString().isNotEmpty() && user.photoUrl != null) {
+                    this.photoURL = user.photoUrl.toString()
+                }
+                if (user.displayName.toString().isNotEmpty() && user.displayName != null) {
+                    this.username = user.displayName.toString()
+                }
             }
-            if (user.displayName.toString().isNotEmpty() && user.displayName != null) {
-                this.username = user.displayName.toString()
+
+            val firebase = Firebase.reference.child("ผู้ใช้").child(info.masterKey).child("รายละเอียด")
+            firebase.setValue(info) { p0, _ ->
+
+                p0?.let {
+                    showAlertDialog(R.string.error_message)
+                } ?: run {
+                    progressDialog.dismiss()
+                    showAlertDialog(R.string.register_successful_message)
+                }
+
             }
         }
 
-        val firebase = Firebase.reference.child("ผู้ใช้").child(info.masterKey).child("รายละเอียด")
-        firebase.setValue(info) { p0, _ ->
-            if (p0 != null) {
-                showAlertDialog(R.string.error_message)
-            } else {
-                progressDialog.dismiss()
 
-                showAlertDialog(R.string.register_successful_message)
-            }
-        }
 
 
     }
@@ -400,24 +405,31 @@ class LoginActivity : AppCompatActivity() {
         val dialogView = inflater.inflate(R.layout.dialog_add, null)
 
         dialog.setView(dialogView)
-        dialogView.dialog_add_text.text = "ใส่อีเมลที่ลงทะเบียนไว้"
+        dialogView.dialog_add_text.text = getString(R.string.registed_email_message)
 
         val editText = dialogView.custom_dialog_edittext
-        editText.hint = "อีเมล"
+        editText.hint = getString(R.string.email_message)
         editText.setTextColor(ContextCompat.getColor(this, R.color.colorText))
         editText.requestFocus()
 
         editText.inputType = InputType.TYPE_CLASS_TEXT
 
         val abc = dialog.create()
-        abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+
+        abc.window?.let {
+            it.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        }
 
         abc.show()
 
         dialogView.dialog_add_cancel.setOnClickListener {
-            abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-            editText.clearFocus()
-            abc.cancel()
+
+            abc.window?.let {
+                it.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+                editText.clearFocus()
+                abc.cancel()
+            }
+
         }
 
         dialogView.dialog_add_confirm.setCardBackgroundColor(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
@@ -438,8 +450,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signOut() {
-        firebaseAuth.signOut()
+        mFirebaseAuth.signOut()
         mGoogleSigninCliend.signOut().addOnCompleteListener(this) { updateUI() }
     }
+
 
 }
