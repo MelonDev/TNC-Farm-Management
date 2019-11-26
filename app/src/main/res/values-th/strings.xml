@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">thai-mini-chicken</string>
     <string name="action_settings">Settings</string>
@@ -26,16 +27,16 @@
     <string name="title_activity_knowledge">KnowledgeActivity</string>
     <string name="title_activity_help">HelpActivity</string>
 
-    <string name="google_login_text">Login with Google</string>
 
-    <string name="login_activity_title">TNC Manager</string>
-    <string name="email_card_title">"With email"</string>
+    <string name="google_login_text">เข้าด้วยบัญชี Google</string>
+    <string name="login_activity_title">ระบบจัดการฟาร์ม</string>
+    <string name="email_card_title">"เข้าด้วยอีเมล"</string>
 
-    <string name="email_card_register_button">REGISTER</string>
-    <string name="email_card_email_edittext">Email</string>
-    <string name="email_card_password_edittext">Password</string>
-    <string name="email_card_signin_button">SIGH IN</string>
-    <string name="email_card_help_button">HELP</string>
+    <string name="email_card_register_button">ลงทะเบียน</string>
+    <string name="email_card_email_edittext">อีเมล</string>
+    <string name="email_card_password_edittext">รหัสผ่าน</string>
+    <string name="email_card_signin_button">เข้าสู่ระบบ</string>
+    <string name="email_card_help_button">ช่วยเหลือ</string>
 
 
 </resources>

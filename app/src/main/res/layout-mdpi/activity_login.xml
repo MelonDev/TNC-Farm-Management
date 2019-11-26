@@ -45,7 +45,7 @@
                android:layout_marginLeft="20dp"
                android:layout_marginTop="20dp"
                android:fontFamily="@font/sukhumvit_bold"
-               android:text="ลงชื่อเข้าใช้"
+               android:text="@string/login_activity_title"
                android:textColor="@color/colorWhite"
                android:textSize="24dp" />
 
@@ -121,7 +121,7 @@
                                    android:layout_height="wrap_content"
                                    android:layout_alignParentTop="true"
                                    android:fontFamily="@font/sukhumvit_bold"
-                                   android:text="เข้าด้วยอีเมล"
+                                   android:text="@string/email_card_title"
                                    android:textColor="?attr/colorPrimary"
                                    android:textSize="24dp" />
 
@@ -138,7 +138,7 @@
                                android:layout_marginLeft="20dp"
                                android:layout_marginTop="30dp"
                                android:fontFamily="@font/sukhumvit_bold"
-                               android:text="ลงทะเบียน"
+                               android:text="@string/email_card_register_button"
                                android:textColor="#c2c2c2"
                                android:textSize="20dp" />
 
@@ -162,7 +162,7 @@
                                android:layout_gravity="center"
                                android:background="@android:color/transparent"
                                android:gravity="center_vertical"
-                               android:hint="อีเมล"
+                               android:hint="@string/email_card_email_edittext"
                                android:inputType="textEmailAddress"
                                android:paddingLeft="20dp"
                                android:paddingRight="20dp"
@@ -190,7 +190,7 @@
                                android:layout_gravity="center"
                                android:background="@android:color/transparent"
                                android:gravity="center_vertical"
-                               android:hint="รหัสผ่าน"
+                               android:hint="@string/email_card_password_edittext"
                                android:inputType="textPassword"
                                android:paddingLeft="20dp"
                                android:paddingRight="20dp"
@@ -240,7 +240,7 @@
                                android:gravity="center"
                                android:inputType="textEmailAddress"
                                android:singleLine="true"
-                               android:text="เข้าสู่ระบบ"
+                               android:text="@string/email_card_signin_button"
                                android:textColor="@color/colorWhite"
                                android:textSize="20dp" />
 
@@ -277,7 +277,7 @@
                                android:layout_gravity="center"
                                android:layout_marginTop="0dp"
                                android:fontFamily="@font/sukhumvit_bold"
-                               android:text="ช่วยเหลือ"
+                               android:text="@string/email_card_help_button"
                                android:textColor="#a4a4a4"
                                android:textSize="20dp" />
                        </androidx.cardview.widget.CardView>
@@ -348,7 +348,7 @@
                 android:fontFamily="@font/sukhumvit_medium"
                 android:paddingLeft="40dp"
                 android:paddingRight="10dp"
-                android:text="เข้าด้วยบัญชี Google"
+                android:text="@string/google_login_text"
                 android:textColor="@color/colorText"
                 android:textSize="20dp" />
 

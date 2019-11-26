@@ -51,7 +51,7 @@ import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 class LoginActivity : AppCompatActivity() {
 
     private val RC_SIGN_IN = 56000
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var mGoogleSigninCliend: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
 
     lateinit var waitDialog: DialogFragment
@@ -68,7 +68,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        //window.statusBarColor = ContextCompat.getColor(this,R.color.colorStatusBarOverlay)
 
         login_overlay.setImageDrawable(ContextCompat.getDrawable(this,MelonTheme.from(this).getOverlay()))
 
@@ -76,8 +75,8 @@ class LoginActivity : AppCompatActivity() {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
-        //val client = GoogleApiClient.Builder(this).enableAutoManage(this,this).addApi()
-        googleSignInClient = GoogleSignIn.getClient(this, option)
+
+        mGoogleSigninCliend = GoogleSignIn.getClient(this, option)
         firebaseAuth = FirebaseAuth.getInstance()
 
         login_help_area.setOnClickListener {
@@ -85,29 +84,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         login_sign_in_google_btn.setOnClickListener {
-
-
-            /*val intent = Intent()
-            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-            intent.addCategory(Intent.CATEGORY_DEFAULT)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            val uri = Uri.fromParts ("package", packageName, null)
-            intent.data = uri
-            startActivity(intent)
-*/
-/*
-            Log.e("PER",ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE).toString())
-
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Log.e("PERMISION", "FAIL")
-            }
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION)
-            } else {
-                Log.e("PER", "0")
-            }
-*/
 
             if (FirebaseAuth.getInstance().currentUser != null) {
                 signOut()
@@ -144,15 +120,6 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-/*
-
-        login_sign_in_google_btn.setOnLongClickListener {
-            val intent = Intent(this, ProgramMainActivity::class.java)
-            startActivity(intent)
-            //finish()
-            return@setOnLongClickListener false
-        }
-*/
         login_register_btn.setOnClickListener {
             toRegister(login_sign_in_email_email.text.toString(), login_sign_in_email_password.text.toString())
         }
@@ -246,14 +213,13 @@ class LoginActivity : AppCompatActivity() {
                     val showRationale = shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE)
 
                     Log.e("SHOW", showRationale.toString())
-
                 }
             }
         }
     }
 
     private fun signIn() {
-        val signInIntent = googleSignInClient.signInIntent
+        val signInIntent = mGoogleSigninCliend.signInIntent
         setWaitDialog("กำลังดำเนินการ...")
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -394,6 +360,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun showConDialog() {
+
         CircleDialog.Builder(this
         )
                 .configDialog { params -> params.canceledOnTouchOutside = false }
@@ -650,8 +617,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun signOut() {
         firebaseAuth.signOut()
-        googleSignInClient.signOut().addOnCompleteListener(this,
-                OnCompleteListener<Void> { updateUI(null) })
+        mGoogleSigninCliend.signOut().addOnCompleteListener(this) { updateUI(null) }
     }
 
 }
