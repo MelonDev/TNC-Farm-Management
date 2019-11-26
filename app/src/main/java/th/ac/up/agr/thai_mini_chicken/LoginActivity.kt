@@ -51,7 +51,6 @@ class LoginActivity : AppCompatActivity() {
 
     lateinit var progressDialog: DialogFragment
 
-
     companion object {
         const val REQUEST_PERMISSION = 1
     }
