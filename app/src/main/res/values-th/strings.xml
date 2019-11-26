@@ -42,6 +42,34 @@
     <string name="dialog_title_text_default">หัวข้อ</string>
     <string name="dialog_negative_text_default">ยกเลิก</string>
     <string name="dialog_positive_text_default">โอเค</string>
+    <string name="dialog_progress_text_default">กำลังดำเนินการ..</string>
+
+
+    <string name="message_data_not_complete">ข้อมูลไม่ครบ</string>
+    <string name="ok_message_response">รับทราบ</string>
+    <string name="yes_message_response">ตกลง</string>
+    <string name="skip_message_response">ข้าม</string>
+    <string name="cancel_message_response">ยกเลิก</string>
+    <string name="close_message_response">ปิด</string>
+
+    <string name="password_lower_message">รหัสอย่างน้อย 6 ตัว</string>
+
+    <string name="request_has_cancel">คำขอถูกยกเลิก</string>
+    <string name="email_not_found_message">รูปแบบอีเมลไม่ถูกต้อง</string>
+    <string name="internet_not_found_message">กรุณาเช็คการเชื่อมต่่ออินเทอร์เน็ต</string>
+
+    <string name="reset_email_send_complete_message">อีเมลขั้นตอนการรีเซ็ตได้ถูกส่งไปให้คุณเรียบร้อย</string>
+    <string name="email_cant_register_message">ลีเมลนี้ยังไม่มีการลงทะเบียน</string>
+    <string name="error_message">เกิดข้อผิดพลาด</string>
+
+    <string name="forget_password_message">ลืมรหัส</string>
+    <string name="wrong_password_message">รหัสไม่ถูกต้อง</string>
+
+    <string name="register_message">ลงทะเบียน</string>
+
+    <string name="alert_message">แจ้งเตือน</string>
+
+    <string name="inital_information_question_message">บัญชีของคุณยังไม่ได้ใส่ข้อมูลพื้นฐานต่างๆ คุณต้องการไปใส่ข้อมูลตอนนี้เลยไหม?</string>
 
 
 </resources>

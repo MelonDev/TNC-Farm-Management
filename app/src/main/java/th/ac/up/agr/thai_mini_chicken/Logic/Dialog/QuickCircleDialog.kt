@@ -3,6 +3,7 @@ package th.ac.up.agr.thai_mini_chicken.Logic.Dialog
 
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.mylhyl.circledialog.CircleDialog
 import th.ac.up.agr.thai_mini_chicken.R
@@ -21,17 +22,40 @@ open class QuickCircleDialog(private val mFragmentActivity: FragmentActivity) {
     var NEGATIVE: Int = R.string.dialog_negative_text_default
     var POSITIVE: Int = R.string.dialog_positive_text_default
 
+    var WAIT: Int = R.string.dialog_progress_text_default
 
     var positiveAction: () -> Unit = {}
     var negativeAction: (() -> Unit) = {}
 
+    init {
+        mDialog = CircleDialog.Builder().configDialog { params ->
+            params.canceledOnTouchOutside = false
+        }
+    }
 
-    fun positive(lambda: () -> Unit): QuickCircleDialog {
-        positiveAction = lambda
+    fun positive(posText: Int = R.string.dialog_positive_text_default, lambda: () -> Unit = {}): QuickCircleDialog {
+        this.POSITIVE = posText
+        this.positiveAction = lambda
         return this
     }
 
-    fun negative(lambda: () -> Unit): QuickCircleDialog {
+    fun setMessage(message: Int): QuickCircleDialog {
+        this.MESSAGE = message
+        return this
+    }
+
+    open fun setTitle(message: Int): QuickCircleDialog {
+        this.TITLE = message
+        return this
+    }
+
+    fun setProgressText(message: Int = R.string.dialog_progress_text_default): QuickCircleDialog {
+        WAIT = message
+        return this
+    }
+
+    fun negative(negText: Int = R.string.dialog_negative_text_default, lambda: () -> Unit = {}): QuickCircleDialog {
+        this.NEGATIVE = negText
         negativeAction = lambda
         return this
     }
@@ -42,21 +66,14 @@ open class QuickCircleDialog(private val mFragmentActivity: FragmentActivity) {
     }
 
 
-    init {
-        mDialog = CircleDialog.Builder().configDialog { params ->
-            params.canceledOnTouchOutside = false
-        }.setTitle(mFragmentActivity.getString(TITLE)).configTitle { params ->
-            params!!.textSize = 60
-            params.textColor = ContextCompat.getColor(mFragmentActivity.applicationContext, TITLE_TEXT_COLOR)
-        }
-    }
+
 
     open fun build(): QuickCircleDialog {
         return this
     }
 
-    fun show() {
-        mDialog.show(mFragmentActivity.supportFragmentManager)
+    fun show(): DialogFragment {
+        return mDialog.show(mFragmentActivity.supportFragmentManager)
     }
 
 }

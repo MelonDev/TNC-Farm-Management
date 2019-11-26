@@ -29,7 +29,7 @@
     <string name="google_login_text">Login with Google</string>
 
     <string name="login_activity_title">TNC Manager</string>
-    <string name="email_card_title">"With email"</string>
+    <string name="email_card_title">"By email"</string>
 
     <string name="email_card_register_button">REGISTER</string>
     <string name="email_card_email_edittext">Email</string>
@@ -41,6 +41,37 @@
     <string name="dialog_title_text_default">Title</string>
     <string name="dialog_negative_text_default">Cancel</string>
     <string name="dialog_positive_text_default">OK</string>
+
+    <string name="dialog_progress_text_default">Please wait..</string>
+
+
+    <string name="message_data_not_complete">Field is empty</string>
+    <string name="ok_message_response">OK</string>
+    <string name="yes_message_response">Yes</string>
+    <string name="skip_message_response">Skip</string>
+
+    <string name="cancel_message_response">Cancel</string>
+    <string name="close_message_response">Close</string>
+
+    <string name="password_lower_message">Password lower 6 character</string>
+
+    <string name="request_has_cancel">Request has cancel</string>
+
+    <string name="email_not_found_message">Email not found</string>
+    <string name="internet_not_found_message">Please connect internet</string>
+
+    <string name="reset_email_send_complete_message">Reset email send complete</string>
+    <string name="email_cant_register_message">Email can not register</string>
+
+    <string name="error_message">Error</string>
+
+    <string name="forget_password_message">Forget</string>
+    <string name="wrong_password_message">Password incorrect</string>
+
+    <string name="register_message">Register</string>
+
+    <string name="alert_message">Alert</string>
+    <string name="inital_information_question_message">Your account is not initial information, Do you want insert?</string>
 
 
 </resources>

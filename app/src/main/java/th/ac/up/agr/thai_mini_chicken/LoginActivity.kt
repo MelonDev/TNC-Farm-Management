@@ -10,8 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -19,16 +18,13 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 import th.ac.up.agr.thai_mini_chicken.ProgramMainActivity.ProgramMainActivity
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
-import com.google.android.gms.tasks.Task
-import android.R.attr.password
-import android.R.attr.password
+
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
-import android.provider.Settings
 
 import android.text.InputType
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -37,17 +33,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.callback.ConfigTitle
+
 import com.mylhyl.circledialog.params.*
 import kotlinx.android.synthetic.main.dialog_add.view.*
 import th.ac.up.agr.thai_mini_chicken.Data.Information
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.ActionDialog
 import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.AlertsDialog
-import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.QuickCircleDialog
+import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.QuickProgressDialog
 import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 
 
@@ -57,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mGoogleSigninCliend: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
 
-    lateinit var waitDialog: DialogFragment
+    lateinit var progressDialog: DialogFragment
 
 
     companion object {
@@ -71,8 +64,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-
-        login_overlay.setImageDrawable(ContextCompat.getDrawable(this, MelonTheme.from(this).getOverlay()))
+        findViewById<ImageView>(R.id.login_overlay).setImageDrawable(ContextCompat.getDrawable(this, MelonTheme.from(this).getOverlay()))
 
         val option = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -103,7 +95,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         login_forget_btn.setOnClickListener {
-            //setQuestionDialog(2,"คุณต้องการรีเซ็ตรหัสผ่าน?","ใช่",true,"ไม่",false)
             showEditDialog()
         }
 
@@ -115,9 +106,9 @@ class LoginActivity : AppCompatActivity() {
                 firebaseAuthWithEmail(username, password)
             } else {
                 if (username.isEmpty() || password.isEmpty()) {
-                    setErrorDialog("ข้อมูลไม่ครบ")
+                    showAlertDialog(R.string.message_data_not_complete)
                 } else if (password.length < 6) {
-                    setErrorDialog("รหัสอย่างน้อย 6 ตัว")
+                    showAlertDialog(R.string.password_lower_message)
                 }
             }
 
@@ -155,13 +146,9 @@ class LoginActivity : AppCompatActivity() {
                 .setTitleColor(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
                 .setItems(arr) { parent, view, position, id ->
 
-                    //saveData(position)
                     when (position) {
                         0 -> {
                             toRegister(login_sign_in_email_email.text.toString(), login_sign_in_email_password.text.toString())
-                        }
-                        1 -> {
-                            Log.e("", "")
                         }
                         2 -> {
                             showEditDialog()
@@ -225,97 +212,80 @@ class LoginActivity : AppCompatActivity() {
 
     private fun signIn() {
         val signInIntent = mGoogleSigninCliend.signInIntent
-        setWaitDialog("กำลังดำเนินการ...")
+        showProgressDialog()
+
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        //Log.e("TEST", "TEST")
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
-                waitDialog.dismiss()
-                setErrorDialog("คำขอถูกยกเลิก")
-                Log.e("TEST-1", e.localizedMessage.toString())
-                //Toast.makeText(this, "Google sign in failed", Toast.LENGTH_SHORT).show()
-                //updateUI(null)
+                progressDialog.dismiss()
+                showAlertDialog(R.string.request_has_cancel)
+
             }
         }
     }
 
     private fun firebaseAuthWithEmail(userName: String, password: String) {
-        setWaitDialog("กำลังดำเนินการ...")
+        showProgressDialog()
 
         firebaseAuth.signInWithEmailAndPassword(userName, password)
-                .addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
+                .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        //waitDialog.dismiss()
                         startProcess()
-                        //val user = firebaseAuth.getCurrentUser()
-                        //updateUI(user)
-                        //Log.w(FragmentActivity.TAG, "signInWithEmail", task.exception!!.message)
-                        //Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+
                     } else {
-                        val error = task.exception!!.localizedMessage.toString()
-
-                        //val a = setErrorDialog("s")
-
-                        waitDialog.dismiss()
-                        if (error.indexOf("invalid") > -1) {
-                            setQuestionDialog(1, "รหัสผ่านไม่ถูกต้อง", "ลืมรหัส", true, "ปิด", false)
-                        } else if (error.indexOf("badly formatted") > -1) {
-                            setErrorDialog("รูปแบบอีเมลไม่ถูกต้อง")
-                        } else if (error.indexOf("no user") > -1) {
-                            setQuestionDialog(0, "ลีเมลนี้ยังไม่มีการลงทะเบียน", "ลงทะเบียน", true, "ปิด", false)
-                        } else if (error.indexOf("network error") > -1) {
-                            setErrorDialog("กรุณาเช็คการเชื่อมต่่ออินเทอร์เน็ต")
+                        task.exception?.localizedMessage?.let { error ->
+                            progressDialog.dismiss()
+                            when {
+                                error.indexOf("invalid") > -1 -> ActionDialog(this).setTitle(R.string.alert_message).setMessage(R.string.wrong_password_message).positive(R.string.forget_password_message) {
+                                    sendEmail(login_sign_in_email_email.text.toString())
+                                }.negative(R.string.close_message_response).build().show()
+                                error.indexOf("badly formatted") > -1 -> showAlertDialog(R.string.email_not_found_message)
+                                error.indexOf("no user") > -1 -> ActionDialog(this).setTitle(R.string.alert_message).setMessage(R.string.email_cant_register_message).positive(R.string.register_message) { toRegister(login_sign_in_email_email.text.toString(), login_sign_in_email_password.text.toString()) }.negative(R.string.close_message_response).build().show()
+                                error.indexOf("network error") > -1 -> showAlertDialog(R.string.internet_not_found_message)
+                                else -> showAlertDialog(R.string.error_message)
+                            }
                         }
-                        //setErrorDialog("ลีเมลนี้ยังไม่มีการลงทะเบียน")
-                        //Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show()
-                        //updateUI(null)
+
+
                     }
-                })
+                }
     }
 
-    fun toRegister(userName: String, password: String) {
+    private fun toRegister(userName: String, password: String) {
         val intent = Intent(this, RegisterActivity::class.java)
         intent.putExtra("USER", userName)
         intent.putExtra("PASS", password)
         startActivity(intent)
     }
 
-    fun toForget() {
-        Log.e("TEST", "FORGET")
-        sendEmail(login_sign_in_email_email.text.toString())
-    }
-
 
     fun sendEmail(email: String) {
-        setWaitDialog("กำลังดำเนินการ")
+        showProgressDialog()
         FirebaseAuth.getInstance()
                 .sendPasswordResetEmail(email)
                 .addOnSuccessListener {
-                    waitDialog.dismiss()
-                    setErrorDialog("อีเมลขั้นตอนการรีเซ็ตได้ถูกส่งไปให้คุณเรียบร้อย")
+                    progressDialog.dismiss()
+                    showAlertDialog(R.string.reset_email_send_complete_message)
                 }.addOnFailureListener {
-                    //Log.e("LOG",it.localizedMessage.toString())
-                    waitDialog.dismiss()
-                    val error = it.localizedMessage.toString()
-
-                    if (error.indexOf("badly formatted") > -1) {
-                        setErrorDialog("รูปแบบอีเมลไม่ถูกต้อง")
-                    } else if (error.indexOf("no user") > -1) {
-                        setErrorDialog("ลีเมลนี้ยังไม่มีการลงทะเบียน")
-                    } else if (error.indexOf("network error") > -1) {
-                        setErrorDialog("กรุณาเช็คการเชื่อมต่่ออินเทอร์เน็ต")
-                    } else {
-                        setErrorDialog("เกิดข้อผิดพลาด")
+                    progressDialog.dismiss()
+                    it.localizedMessage?.let { error ->
+                        when {
+                            error.indexOf("badly formatted") > -1 -> showAlertDialog(R.string.email_not_found_message)
+                            error.indexOf("no user") > -1 -> showAlertDialog(R.string.email_cant_register_message)
+                            error.indexOf("network error") > -1 -> showAlertDialog(R.string.internet_not_found_message)
+                            else -> showAlertDialog(R.string.error_message)
+                        }
                     }
+
                 }
 
     }
@@ -323,44 +293,26 @@ class LoginActivity : AppCompatActivity() {
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
+                .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        //waitDialog.dismiss()
 
                         startProcess()
 
-                        //Log.e("PROVIDER",firebaseAuth.currentUser!!.providerId)
-                        //Log.e("PROVIDER",firebaseAuth.currentUser!!.uid)
-
-                        //val user = firebaseAuth.getCurrentUser()
-                        //updateUI(user)
                     } else {
-                        waitDialog.dismiss()
+                        progressDialog.dismiss()
                         setErrorDialog("เกิดข้อผิดพลาด")
                         //updateUI(null)
                     }
-                })
+                }
     }
 
 
-    private fun updateUI(user: FirebaseUser?) {
+    private fun updateUI(user: FirebaseUser? = null) {
         if (user != null) {
             Toast.makeText(this, user.uid, Toast.LENGTH_SHORT).show()
-            /*   testLogin_profile_area.visibility = View.VISIBLE
-               testLogin_profile_name.text = user.displayName
-               testLogin_profile_email.text = user.email
-               testLogin_profile_phone.text = user.phoneNumber
-               sign_in_btn.visibility = View.GONE
-               sign_out_btn.visibility = View.VISIBLE
-               Picasso.get().load(user.photoUrl).into(testLogin_profile_image)
-               */
+
         } else {
             Toast.makeText(this, "SIGNOUT", Toast.LENGTH_SHORT).show()
-            /*
-            sign_in_btn.visibility = View.VISIBLE
-            sign_out_btn.visibility = View.GONE
-            testLogin_profile_area.visibility = View.GONE
-            */
         }
     }
 
@@ -410,53 +362,11 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun setQuestionDialog(ID: Int, title: String, positive: String, positiveLight: Boolean, negative: String, negativeLight: Boolean) {
-        CircleDialog.Builder(this
-        )
-                .configDialog { params -> params.canceledOnTouchOutside = false }
-                .setText(title)
-                .configText { params ->
-                    params!!.textSize = 60
-                    params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                    params.height = 250
-                }
-                .setPositive(positive) {
-                    if (ID == 0) {
-                        toRegister(login_sign_in_email_email.text.toString(), login_sign_in_email_password.text.toString())
-                    } else if (ID == 1) {
-                        sendEmail(login_sign_in_email_email.text.toString())
-                    } else if (ID == 2) {
-                        showEditDialog()
-                    }
-                }
-                .configPositive { params ->
-                    params.textSize = 50
-                    if (positiveLight) {
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-
-                    } else {
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                    }
-                }
-                .setNegative(negative) {
-
-                }
-                .configNegative { params ->
-                    params.textSize = 50
-                    if (negativeLight) {
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-
-                    } else {
-                        params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                    }
-                }
-                .show()
-
-
+    fun showAlertDialog(resource: Int) {
+        AlertsDialog(this).setTitle(resource).positive(R.string.ok_message_response).build().show()
     }
 
-    fun startProcess() {
+    private fun startProcess() {
         val user = FirebaseAuth.getInstance().currentUser!!
         val firebase = Firebase.reference.child("ผู้ใช้").child(user.uid).child("รายละเอียด")
         firebase.addValueEventListener(object : ValueEventListener {
@@ -470,10 +380,17 @@ class LoginActivity : AppCompatActivity() {
                     val info = p0.getValue(Information::class.java)!!
 
                     if (info.farmName.isEmpty() || info.username.isEmpty() || info.phoneNumber.isEmpty() || info.farmAddress.isEmpty()) {
-                        setQuestionDialogss()
+
+                        ActionDialog(this@LoginActivity).setTitle(R.string.alert_message).setMessage(R.string.inital_information_question_message).positive(R.string.yes_message_response) {
+                            newStartProcess()
+                        }.negative(R.string.skip_message_response) {
+                            val intent = Intent(this@LoginActivity, ProgramMainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }.build().show()
                     } else {
                         val intent = Intent(this@LoginActivity, ProgramMainActivity::class.java)
-                        waitDialog.dismiss()
+                        progressDialog.dismiss()
                         //setInfo()
                         startActivity(intent)
                         firebase.removeEventListener(this)
@@ -488,44 +405,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun setQuestionDialogss() {
-        CircleDialog.Builder(this
-        )
-                .configDialog { params -> params.canceledOnTouchOutside = false }
-                .setText("บัญชีของคุณยังไม่ได้ใส่ข้อมูลพื้นฐานต่างๆ คุณต้องการไปใส่ข้อมูลตอนนี้เลยไหม?")
-                .configText { params ->
-                    params!!.textSize = 50
-                    params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                    params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
-                }
-                .setTitle("คำอธิบาย")
-                .configTitle { params ->
-                    params!!.textSize = 60
-                    params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-                }
-                .setPositive("ตกลง") {
-                    newStartProcess()
-                }
-                .configPositive { params ->
-                    params.textSize = 50
-                    params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-                }
-                .setNegative("ข้าม") {
-                    val intent = Intent(this@LoginActivity, ProgramMainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                .configNegative { params ->
-                    params.textSize = 50
-
-                    params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                }
-                .show()
-
-
-    }
-
-    fun newStartProcess() {
+    private fun newStartProcess() {
         val intent = Intent(this, RegisterInfoActivity::class.java)
         finish()
         intent.putExtra("ID", "0")
@@ -554,7 +434,7 @@ class LoginActivity : AppCompatActivity() {
             if (p0 != null) {
                 setErrorDialog("เกิดข้อผิดพลาด")
             } else {
-                waitDialog.dismiss()
+                progressDialog.dismiss()
 
                 setErrorDialog("ลงทะเบียนเรียบร้อย")
             }
@@ -563,7 +443,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun showEditDialog() {
+    private fun showEditDialog() {
         val dialog = AlertDialog.Builder(this)
 
 
@@ -578,15 +458,9 @@ class LoginActivity : AppCompatActivity() {
         editText.setTextColor(ContextCompat.getColor(this, R.color.colorText))
         editText.requestFocus()
 
-        /*
-        if (this.dataCard.breed.isNotEmpty()) {
-            editText.setText(activity.dataCard.breed)
-        }
-*/
         editText.inputType = InputType.TYPE_CLASS_TEXT
 
         val abc = dialog.create()
-        //abc.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
         abc.show()
@@ -605,24 +479,19 @@ class LoginActivity : AppCompatActivity() {
                 sendEmail(x)
                 abc.cancel()
             } else {
-                setErrorDialog("คุณไม่ได้กรอกอีเมล")
+                //setErrorDialog("คุณไม่ได้กรอกอีเมล")
                 abc.cancel()
             }
         }
     }
 
-
-    fun setWaitDialog(string: String) {
-        waitDialog = CircleDialog.Builder()
-                .configDialog { params -> params.canceledOnTouchOutside = false }
-                .setProgressText(string)
-                .setProgressStyle(ProgressParams.STYLE_SPINNER)
-                .show(supportFragmentManager)
+    fun showProgressDialog() {
+        progressDialog = QuickProgressDialog(this).build().show()
     }
 
     private fun signOut() {
         firebaseAuth.signOut()
-        mGoogleSigninCliend.signOut().addOnCompleteListener(this) { updateUI(null) }
+        mGoogleSigninCliend.signOut().addOnCompleteListener(this) { updateUI() }
     }
 
 }
