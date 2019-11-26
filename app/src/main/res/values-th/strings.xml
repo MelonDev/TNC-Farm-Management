@@ -38,5 +38,10 @@
     <string name="email_card_signin_button">เข้าสู่ระบบ</string>
     <string name="email_card_help_button">ช่วยเหลือ</string>
 
+    <string name="dialog_message_text_default">ข้อความ</string>
+    <string name="dialog_title_text_default">หัวข้อ</string>
+    <string name="dialog_negative_text_default">ยกเลิก</string>
+    <string name="dialog_positive_text_default">โอเค</string>
+
 
 </resources>

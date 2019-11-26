@@ -45,6 +45,9 @@ import com.mylhyl.circledialog.params.*
 import kotlinx.android.synthetic.main.dialog_add.view.*
 import th.ac.up.agr.thai_mini_chicken.Data.Information
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
+import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.ActionDialog
+import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.AlertsDialog
+import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.QuickCircleDialog
 import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 
 
@@ -69,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
 
-        login_overlay.setImageDrawable(ContextCompat.getDrawable(this,MelonTheme.from(this).getOverlay()))
+        login_overlay.setImageDrawable(ContextCompat.getDrawable(this, MelonTheme.from(this).getOverlay()))
 
         val option = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -79,8 +82,9 @@ class LoginActivity : AppCompatActivity() {
         mGoogleSigninCliend = GoogleSignIn.getClient(this, option)
         firebaseAuth = FirebaseAuth.getInstance()
 
+
         login_help_area.setOnClickListener {
-            showHelpDialog(0,"เมนูช่วยเหลือ", arrayOf("ลงทะเบียน", "คู่มือการใช้งาน", "ลืมรหัส", "ติดต่อผู้ดูแล"))
+            showHelpDialog(0, "เมนูช่วยเหลือ", arrayOf("ลงทะเบียน", "คู่มือการใช้งาน", "ลืมรหัส", "ติดต่อผู้ดูแล"))
         }
 
         login_sign_in_google_btn.setOnClickListener {
@@ -150,19 +154,20 @@ class LoginActivity : AppCompatActivity() {
                 .setTitle(title)
                 .setTitleColor(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
                 .setItems(arr) { parent, view, position, id ->
+
                     //saveData(position)
-                    when(position){
+                    when (position) {
                         0 -> {
                             toRegister(login_sign_in_email_email.text.toString(), login_sign_in_email_password.text.toString())
                         }
                         1 -> {
-                            Log.e("","")
+                            Log.e("", "")
                         }
                         2 -> {
                             showEditDialog()
                         }
                         3 -> {
-                            this@LoginActivity.startActivity(Intent(this@LoginActivity,HelpActivity::class.java))
+                            this@LoginActivity.startActivity(Intent(this@LoginActivity, HelpActivity::class.java))
                         }
                     }
                 }
@@ -236,7 +241,7 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 waitDialog.dismiss()
                 setErrorDialog("คำขอถูกยกเลิก")
-                Log.e("TEST-1",e.localizedMessage.toString())
+                Log.e("TEST-1", e.localizedMessage.toString())
                 //Toast.makeText(this, "Google sign in failed", Toast.LENGTH_SHORT).show()
                 //updateUI(null)
             }
@@ -371,9 +376,9 @@ class LoginActivity : AppCompatActivity() {
                     params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
                     params.height = 250
                 }
-                .setPositive("รับทราบ", {
+                .setPositive("รับทราบ") {
                     //activity.finish()
-                })
+                }
                 .configPositive { params ->
                     params.textSize = 50
                     params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
@@ -457,7 +462,7 @@ class LoginActivity : AppCompatActivity() {
         firebase.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 setErrorDialog("คำขอถูกยกเลิก")
-                Log.e("TEST-2","CANCEL")
+                Log.e("TEST-2", "CANCEL")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -498,9 +503,9 @@ class LoginActivity : AppCompatActivity() {
                     params!!.textSize = 60
                     params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
                 }
-                .setPositive("ตกลง", {
+                .setPositive("ตกลง") {
                     newStartProcess()
-                })
+                }
                 .configPositive { params ->
                     params.textSize = 50
                     params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())

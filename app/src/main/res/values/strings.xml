@@ -37,5 +37,10 @@
     <string name="email_card_signin_button">SIGH IN</string>
     <string name="email_card_help_button">HELP</string>
 
+    <string name="dialog_message_text_default">Messages</string>
+    <string name="dialog_title_text_default">Title</string>
+    <string name="dialog_negative_text_default">Cancel</string>
+    <string name="dialog_positive_text_default">OK</string>
+
 
 </resources>
