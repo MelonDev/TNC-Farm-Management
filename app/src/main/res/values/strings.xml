@@ -26,6 +26,19 @@
     <string name="title_activity_knowledge">KnowledgeActivity</string>
     <string name="title_activity_help">HelpActivity</string>
 
+    <string name="help_menu_title">Help menu</string>
+    <string name="help_menu_register">Register</string>
+    <string name="help_menu_manual">Manual</string>
+    <string name="help_menu_forget_password">Forget password</string>
+    <string name="help_menu_contact_admin">Contact admin</string>
+
+    <string name="color_menu_title">Choose theme color</string>
+    <string name="color_menu_amber">amber (Default)</string>
+    <string name="color_menu_red">Red</string>
+    <string name="color_menu_light_green">Light green</string>
+    <string name="color_menu_light_blue">Light blue</string>
+    <string name="color_munu_purple">Purple</string>
+
     <string name="google_login_text">Login with Google</string>
 
     <string name="login_activity_title">TNC Manager</string>
@@ -68,7 +81,13 @@
     <string name="forget_password_message">Forget</string>
     <string name="wrong_password_message">Password incorrect</string>
 
+    <string name="saved_message">Save successful</string>
+    <string name="register_successful_message">Register successful</string>
+
+
     <string name="register_message">Register</string>
+    <string name="sign_out_message">Sign out successful</string>
+
 
     <string name="alert_message">Alert</string>
     <string name="inital_information_question_message">Your account is not initial information, Do you want insert?</string>

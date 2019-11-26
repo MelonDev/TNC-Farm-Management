@@ -34,7 +34,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mylhyl.circledialog.CircleDialog
 
-import com.mylhyl.circledialog.params.*
 import kotlinx.android.synthetic.main.dialog_add.view.*
 import th.ac.up.agr.thai_mini_chicken.Data.Information
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
@@ -46,7 +45,7 @@ import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 
 class LoginActivity : AppCompatActivity() {
 
-    private val RC_SIGN_IN = 56000
+    private val RCSIGNIN = 56000
     private lateinit var mGoogleSigninCliend: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -76,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         login_help_area.setOnClickListener {
-            showHelpDialog(0, "เมนูช่วยเหลือ", arrayOf("ลงทะเบียน", "คู่มือการใช้งาน", "ลืมรหัส", "ติดต่อผู้ดูแล"))
+            showHelpDialog(getString(R.string.help_menu_title), arrayOf(R.string.help_menu_register, R.string.help_menu_manual, R.string.help_menu_forget_password, R.string.help_menu_contact_admin).map { getString(it) }.toTypedArray())
         }
 
         login_sign_in_google_btn.setOnClickListener {
@@ -91,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         login_logo_image.setOnClickListener {
-            showColorDialog(0, "เลือกสีของแอป", arrayOf("เหลือง (ค่าเริ่มต้น)", "แดง", "เขียวอ่อน", "ฟ้าอ่อน", "ม่วง"))
+            showColorDialog(arrayOf(R.string.color_menu_amber, R.string.color_menu_red, R.string.color_menu_light_green, R.string.color_menu_light_blue, R.string.color_munu_purple).map { getString(it) }.toTypedArray())
         }
 
         login_forget_btn.setOnClickListener {
@@ -121,30 +120,30 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun showColorDialog(ID: Int, title: String, arr: Array<String>) {
-        CircleDialog.Builder(this
+    private fun showColorDialog(arr: Array<String>) {
+        CircleDialog.Builder(
         )
                 .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
-                .setTitle(title)
+                .setTitle(getString(R.string.color_menu_title))
                 .setTitleColor(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
-                .setItems(arr) { parent, view, position, id ->
+                .setItems(arr) { _, _, position, _ ->
                     saveData(position)
                 }
-                .setNegative("ยกเลิก", null)
+                .setNegative(getString(R.string.cancel_message_response), null)
                 .configNegative { params ->
                     params.textSize = 50
                     params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
                 }
-                .show()
+                .show(supportFragmentManager)
     }
 
-    fun showHelpDialog(ID: Int, title: String, arr: Array<String>) {
-        CircleDialog.Builder(this
+    private fun showHelpDialog(title: String, arr: Array<String>) {
+        CircleDialog.Builder(
         )
                 .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
                 .setTitle(title)
                 .setTitleColor(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
-                .setItems(arr) { parent, view, position, id ->
+                .setItems(arr) { _, _, position, _ ->
 
                     when (position) {
                         0 -> {
@@ -158,12 +157,12 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 }
-                .setNegative("ยกเลิก", null)
+                .setNegative(getString(R.string.cancel_message_response), null)
                 .configNegative { params ->
                     params.textSize = 50
                     params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
                 }
-                .show()
+                .show(supportFragmentManager)
     }
 
     private fun saveData(position: Int) {
@@ -214,13 +213,13 @@ class LoginActivity : AppCompatActivity() {
         val signInIntent = mGoogleSigninCliend.signInIntent
         showProgressDialog()
 
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        startActivityForResult(signInIntent, RCSIGNIN)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RCSIGNIN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
@@ -268,7 +267,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    fun sendEmail(email: String) {
+    private fun sendEmail(email: String) {
         showProgressDialog()
         FirebaseAuth.getInstance()
                 .sendPasswordResetEmail(email)
@@ -300,8 +299,7 @@ class LoginActivity : AppCompatActivity() {
 
                     } else {
                         progressDialog.dismiss()
-                        setErrorDialog("เกิดข้อผิดพลาด")
-                        //updateUI(null)
+                        showAlertDialog(R.string.error_message)
                     }
                 }
     }
@@ -312,57 +310,12 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, user.uid, Toast.LENGTH_SHORT).show()
 
         } else {
-            Toast.makeText(this, "SIGNOUT", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.sign_out_message), Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun showConDialog() {
 
-        CircleDialog.Builder(this
-        )
-                .configDialog { params -> params.canceledOnTouchOutside = false }
-                .setText("บันทึกเรียบร้อย")
-                .configText { params ->
-                    params!!.textSize = 60
-                    params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                    params.height = 250
-                }
-                .setPositive("รับทราบ") {
-                    //activity.finish()
-                }
-                .configPositive { params ->
-                    params.textSize = 50
-                    params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                }
-
-                .show()
-
-
-    }
-
-    fun setErrorDialog(string: String) {
-        CircleDialog.Builder(this
-        )
-                .configDialog { params -> params.canceledOnTouchOutside = false }
-                .setText(string)
-                .configText { params ->
-                    params!!.textSize = 60
-                    params.textColor = ContextCompat.getColor(this@LoginActivity, MelonTheme.from(this@LoginActivity).getColor())
-                    params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                    params.height = 250
-                }
-                .setPositive("รับทราบ", {
-                })
-                .configPositive { params ->
-                    params.textSize = 50
-                    params.textColor = ContextCompat.getColor(this@LoginActivity, R.color.colorText)
-                }.show()
-
-
-    }
-
-    fun showAlertDialog(resource: Int) {
+    private fun showAlertDialog(resource: Int) {
         AlertsDialog(this).setTitle(resource).positive(R.string.ok_message_response).build().show()
     }
 
@@ -371,8 +324,7 @@ class LoginActivity : AppCompatActivity() {
         val firebase = Firebase.reference.child("ผู้ใช้").child(user.uid).child("รายละเอียด")
         firebase.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                setErrorDialog("คำขอถูกยกเลิก")
-                Log.e("TEST-2", "CANCEL")
+                showAlertDialog(R.string.request_has_cancel)
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -391,7 +343,6 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         val intent = Intent(this@LoginActivity, ProgramMainActivity::class.java)
                         progressDialog.dismiss()
-                        //setInfo()
                         startActivity(intent)
                         firebase.removeEventListener(this)
                         finish()
@@ -418,7 +369,7 @@ class LoginActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser!!
 
         info.apply {
-            this.masterKey = user.uid.toString()
+            this.masterKey = user.uid
             this.email = user.email.toString()
 
             if (user.photoUrl.toString().isNotEmpty() && user.photoUrl != null) {
@@ -430,13 +381,13 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val firebase = Firebase.reference.child("ผู้ใช้").child(info.masterKey).child("รายละเอียด")
-        firebase.setValue(info) { p0, p1 ->
+        firebase.setValue(info) { p0, _ ->
             if (p0 != null) {
-                setErrorDialog("เกิดข้อผิดพลาด")
+                showAlertDialog(R.string.error_message)
             } else {
                 progressDialog.dismiss()
 
-                setErrorDialog("ลงทะเบียนเรียบร้อย")
+                showAlertDialog(R.string.register_successful_message)
             }
         }
 
@@ -446,13 +397,12 @@ class LoginActivity : AppCompatActivity() {
     private fun showEditDialog() {
         val dialog = AlertDialog.Builder(this)
 
-
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_add, null)
+
         dialog.setView(dialogView)
         dialogView.dialog_add_text.text = "ใส่อีเมลที่ลงทะเบียนไว้"
-        //dialog.setTitle(Title);
-        //dialog.setMessage(Message);
+
         val editText = dialogView.custom_dialog_edittext
         editText.hint = "อีเมล"
         editText.setTextColor(ContextCompat.getColor(this, R.color.colorText))
@@ -479,13 +429,12 @@ class LoginActivity : AppCompatActivity() {
                 sendEmail(x)
                 abc.cancel()
             } else {
-                //setErrorDialog("คุณไม่ได้กรอกอีเมล")
                 abc.cancel()
             }
         }
     }
 
-    fun showProgressDialog() {
+    private fun showProgressDialog() {
         progressDialog = QuickProgressDialog(this).build().show()
     }
 

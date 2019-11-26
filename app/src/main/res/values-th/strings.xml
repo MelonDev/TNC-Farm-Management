@@ -28,6 +28,20 @@
     <string name="title_activity_help">HelpActivity</string>
 
 
+    <string name="help_menu_title">เมนูช่วยเหลือ</string>
+    <string name="help_menu_register">ลงทะเบียน</string>
+    <string name="help_menu_manual">คู่มือการใช้งาน</string>
+    <string name="help_menu_forget_password">ลืมรหัส</string>
+    <string name="help_menu_contact_admin">ติดต่อผู้ดูแล</string>
+
+    <string name="color_menu_title">เลือกสีของแอป</string>
+    <string name="color_menu_amber">เหลือง (ค่าเริ่มต้น)</string>
+    <string name="color_menu_red">แดง</string>
+    <string name="color_menu_light_green">เขียวอ่อน</string>
+    <string name="color_menu_light_blue">ฟ้าอ่อน</string>
+    <string name="color_munu_purple">ม่วง</string>
+
+
     <string name="google_login_text">เข้าด้วยบัญชี Google</string>
     <string name="login_activity_title">ระบบจัดการฟาร์ม</string>
     <string name="email_card_title">"เข้าด้วยอีเมล"</string>
@@ -64,6 +78,10 @@
 
     <string name="forget_password_message">ลืมรหัส</string>
     <string name="wrong_password_message">รหัสไม่ถูกต้อง</string>
+
+    <string name="saved_message">บันทึกเรียบร้อย</string>
+    <string name="register_successful_message">ลงทะเบียนเรียบร้อย</string>
+    <string name="sign_out_message">ลงชื่อออกแล้ว</string>
 
     <string name="register_message">ลงทะเบียน</string>
 
