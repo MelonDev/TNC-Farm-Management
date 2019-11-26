@@ -34,8 +34,6 @@ class SettingActivity : AppCompatActivity() {
         database = AppTheme(this)
         sqLiteDatabase = database.writableDatabase
 
-        //database.update(sqLiteDatabase,R.style.MelonTheme_DeepPurple_Material)
-
         setting_back_btn.setOnClickListener {
             val intent = Intent(this, ProgramMainActivity::class.java)
             startActivity(intent)
@@ -44,7 +42,7 @@ class SettingActivity : AppCompatActivity() {
 
 
         setting_theme_color_area.setOnClickListener {
-            showDialog(0, "เลือกสีของแอป", arrayOf("เหลือง (ค่าเริ่มต้น)", "แดง", "เขียวอ่อน", "ฟ้าอ่อน", "ม่วง"))
+            showDialog()
         }
 
         setting_theme_color_switch.setOnCheckedChangeListener { view, isChecked ->
@@ -55,21 +53,20 @@ class SettingActivity : AppCompatActivity() {
 
     }
 
-    fun showDialog(ID: Int, title: String, arr: Array<String>) {
-        CircleDialog.Builder(this
-        )
+    fun showDialog() {
+        CircleDialog.Builder()
                 .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
-                .setTitle(title)
+                .setTitle(getString(R.string.color_menu_title))
                 .setTitleColor(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
-                .setItems(arr) { parent, view, position, id ->
+                .setItems(arrayOf(R.string.color_menu_amber, R.string.color_menu_red, R.string.color_menu_light_green, R.string.color_menu_light_blue, R.string.color_munu_purple).map { getString(it) }.toTypedArray()) { parent, view, position, id ->
                     saveData(position)
                 }
-                .setNegative("ยกเลิก", null)
+                .setNegative(getString(R.string.cancel_message_response), null)
                 .configNegative { params ->
                     params.textSize = 50
                     params.textColor = ContextCompat.getColor(this@SettingActivity, R.color.colorText)
                 }
-                .show()
+                .show(supportFragmentManager)
     }
 
     override fun onBackPressed() {
@@ -79,7 +76,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun checkColor(style: Int) {
-        val arr = arrayOf("เหลือง (ค่าเริ่มต้น)", "แดง", "เขียวอ่อน", "ฟ้าอ่อน", "ม่วง")
+        val arr = arrayOf(R.string.color_menu_amber, R.string.color_menu_red, R.string.color_menu_light_green, R.string.color_menu_light_blue, R.string.color_munu_purple).map { getString(it) }.toTypedArray()
         when (style) {
             R.style.MelonTheme_Amber_Material -> {
                 setting_theme_color_text.text = arr[0]
@@ -168,7 +165,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun saveData(position :Int) {
-        val arr = arrayOf("เหลือง (ค่าเริ่มต้น)", "แดง", "เขียวอ่อน", "ฟ้าอ่อน", "ม่วง")
+        val arr = arrayOf(R.string.color_menu_amber, R.string.color_menu_red, R.string.color_menu_light_green, R.string.color_menu_light_blue, R.string.color_munu_purple).map { getString(it) }.toTypedArray()
         saveColor(arr[position])
         if (material) {
             when (position) {
