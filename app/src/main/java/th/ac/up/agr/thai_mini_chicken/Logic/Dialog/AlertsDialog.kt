@@ -16,16 +16,25 @@ class AlertsDialog(val mFragmentActivity: FragmentActivity) : QuickCircleDialog(
         super.MESSSAGE_TEXT_COLOR = R.color.colorPrimary
         super.POSITIVE_TEXT_COLOR = R.color.colorText
 
+        val resource = mFragmentActivity.resources
+
 
         super.mDialog.setText(mFragmentActivity.getString(MESSAGE)).configText { params ->
-            params!!.textSize = 60
-            params.textColor = ContextCompat.getColor(mFragmentActivity.applicationContext, MESSSAGE_TEXT_COLOR)
-            params.padding = intArrayOf(0, 0, 0, 0) //(Left,TOP,Right,Bottom)
+            params?.let {
+                it.textSize = resource.getInteger(R.integer.dialog_message_text)
+                it.textColor = ContextCompat.getColor(mFragmentActivity.applicationContext, MESSSAGE_TEXT_COLOR)
+                it.padding = intArrayOf(0, 0, 0, 0) //(Left,TOP,Right,Bottom)
+            }
+
         }.setPositive(mFragmentActivity.getString(POSITIVE)) {
             super.positiveAction()
         }.configPositive { params ->
-            params.textSize = 50
-            params.textColor = ContextCompat.getColor(mFragmentActivity.applicationContext, POSITIVE_TEXT_COLOR)
+            params?.let {
+                it.height = resource.getInteger(R.integer.dialog_positive_button_height)
+                it.textSize = resource.getInteger(R.integer.dialog_message_text)
+                it.textColor = ContextCompat.getColor(mFragmentActivity.applicationContext, POSITIVE_TEXT_COLOR)
+            }
+
         }
 
         return this
