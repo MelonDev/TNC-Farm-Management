@@ -1,6 +1,7 @@
 package th.ac.up.agr.thai_mini_chicken
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 
@@ -14,13 +15,10 @@ import com.mylhyl.circledialog.params.DialogParams
 
 import kotlinx.android.synthetic.main.activity_setting.*
 import th.ac.up.agr.thai_mini_chicken.ProgramMainActivity.ProgramMainActivity
-import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 
 class SettingActivity : AppCompatActivity() {
 
-    private lateinit var database: AppTheme
-    private lateinit var sqLiteDatabase: SQLiteDatabase
     private var material = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +29,6 @@ class SettingActivity : AppCompatActivity() {
 
         checkColor(MelonTheme.from(this).getStyle())
 
-        database = AppTheme(this)
-        sqLiteDatabase = database.writableDatabase
 
         setting_back_btn.setOnClickListener {
             val intent = Intent(this, ProgramMainActivity::class.java)
@@ -51,6 +47,11 @@ class SettingActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun savingStyle(style: Int) {
+        val sharedPref: SharedPreferences = getSharedPreferences("MELON_THEME", 0)
+        sharedPref.edit().putInt("STYLE", style).apply()
     }
 
     fun showDialog() {
@@ -167,43 +168,51 @@ class SettingActivity : AppCompatActivity() {
     private fun saveData(position :Int) {
         val arr = arrayOf(R.string.color_menu_amber, R.string.color_menu_red, R.string.color_menu_light_green, R.string.color_menu_light_blue, R.string.color_munu_purple).map { getString(it) }.toTypedArray()
         saveColor(arr[position])
+
+        var style: Int = -1
+
         if (material) {
-            when (position) {
+            style = when (position) {
                 0 -> {
-                    database.update(sqLiteDatabase, R.style.MelonTheme_Amber_Material)
+                    R.style.MelonTheme_Amber_Material
                 }
                 1 -> {
-                    database.update(sqLiteDatabase, R.style.MelonTheme_Red_Material)
+                    R.style.MelonTheme_Red_Material
                 }
                 2 -> {
-                    database.update(sqLiteDatabase, R.style.MelonTheme_LightGreen_Material)
+                    R.style.MelonTheme_LightGreen_Material
                 }
                 3 -> {
-                    database.update(sqLiteDatabase, R.style.MelonTheme_LightBlue_Material)
+                    R.style.MelonTheme_LightBlue_Material
                 }
                 4 -> {
-                    database.update(sqLiteDatabase, R.style.MelonTheme_DeepPurple_Material)
+                    R.style.MelonTheme_DeepPurple_Material
                 }
+                else -> -1
             }
         } else {
-            when (position) {
+            style = when (position) {
                 0 -> {
-                    database.update(sqLiteDatabase, R.style.MelonTheme_Amber_Flat)
+                    R.style.MelonTheme_Amber_Flat
                 }
                 1 -> {
-                    database.update(sqLiteDatabase, R.style.MelonTheme_Red_Flat)
+                    R.style.MelonTheme_Red_Flat
                 }
                 2 -> {
-                    database.update(sqLiteDatabase, R.style.MelonTheme_LightGreen_Flat)
+                    R.style.MelonTheme_LightGreen_Flat
                 }
                 3 -> {
-                    database.update(sqLiteDatabase, R.style.MelonTheme_LightBlue_Flat)
+                    R.style.MelonTheme_LightBlue_Flat
                 }
                 4 -> {
-                    database.update(sqLiteDatabase, R.style.MelonTheme_DeepPurple_Flat)
+                    R.style.MelonTheme_DeepPurple_Flat
                 }
+                else -> -1
             }
         }
+
+        savingStyle(style)
+
         startActivity(Intent(this,SettingActivity::class.java))
         finish()
     }

@@ -1,5 +1,6 @@
 package th.ac.up.agr.thai_mini_chicken.Tools
 
+import android.content.SharedPreferences
 import android.os.Build
 import android.util.Log
 import android.view.ContextThemeWrapper
@@ -7,7 +8,6 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import th.ac.up.agr.thai_mini_chicken.R
-import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 
 class MelonTheme(private val activity: FragmentActivity) {
 
@@ -16,8 +16,14 @@ class MelonTheme(private val activity: FragmentActivity) {
     }
 
     fun getStyle(): Int {
-        //return R.style.MelonTheme_DeepPurple_Material
-        return AppTheme(activity).read()
+
+        val sharedPref: SharedPreferences = activity.getSharedPreferences("MELON_THEME", 0)
+        val style = sharedPref.getInt("STYLE", -1)
+
+        return when (style) {
+            -1 -> R.style.MelonTheme_Amber_Material
+            else -> style
+        }
     }
 
     fun getStyleForFragment(activity: FragmentActivity?, inflater: LayoutInflater): LayoutInflater {

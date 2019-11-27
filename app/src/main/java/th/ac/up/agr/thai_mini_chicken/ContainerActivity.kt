@@ -11,7 +11,6 @@ import th.ac.up.agr.thai_mini_chicken.Fragment.KnowledgeListFragment
 import th.ac.up.agr.thai_mini_chicken.Fragment.KnowledgeTableFragment
 import th.ac.up.agr.thai_mini_chicken.Fragment.KnowledgeWebFragment
 import th.ac.up.agr.thai_mini_chicken.ProgramMainActivity.ProgramMainActivity
-import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 
 class ContainerActivity : AppCompatActivity() {

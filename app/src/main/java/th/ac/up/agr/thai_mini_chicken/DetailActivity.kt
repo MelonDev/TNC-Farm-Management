@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_detail.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Data.CardDate
-import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 import th.ac.up.agr.thai_mini_chicken.Tools.Animation
 import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme

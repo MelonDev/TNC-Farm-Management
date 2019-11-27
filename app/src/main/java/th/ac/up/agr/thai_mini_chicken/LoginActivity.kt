@@ -1,6 +1,7 @@
 package th.ac.up.agr.thai_mini_chicken
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 
 import android.util.Log
@@ -40,7 +41,6 @@ import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.ActionDialog
 import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.AlertsDialog
 import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.QuickProgressDialog
-import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 
 
 class LoginActivity : AppCompatActivity() {
@@ -164,28 +164,38 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveData(position: Int) {
-        val database = AppTheme(this)
-        val sqLiteDatabase = database.writableDatabase
-        when (position) {
+
+
+        val style = when (position) {
             0 -> {
-                database.update(sqLiteDatabase, R.style.MelonTheme_Amber_Material)
+                R.style.MelonTheme_Amber_Material
             }
             1 -> {
-                database.update(sqLiteDatabase, R.style.MelonTheme_Red_Material)
+                R.style.MelonTheme_Red_Material
             }
             2 -> {
-                database.update(sqLiteDatabase, R.style.MelonTheme_LightGreen_Material)
+                R.style.MelonTheme_LightGreen_Material
             }
             3 -> {
-                database.update(sqLiteDatabase, R.style.MelonTheme_LightBlue_Material)
+                R.style.MelonTheme_LightBlue_Material
             }
             4 -> {
-                database.update(sqLiteDatabase, R.style.MelonTheme_DeepPurple_Material)
+                R.style.MelonTheme_DeepPurple_Material
+            }
+            else -> {
+                -1
             }
         }
 
+        savingStyle(style)
+
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
+    }
+
+    private fun savingStyle(style: Int) {
+        val sharedPref: SharedPreferences = getSharedPreferences("MELON_THEME", 0)
+        sharedPref.edit().putInt("STYLE", style).apply()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -392,8 +402,6 @@ class LoginActivity : AppCompatActivity() {
 
             }
         }
-
-
 
 
     }

@@ -44,7 +44,6 @@ import kotlinx.android.synthetic.main.dialog_add.view.*
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Firebase.AddDataFirebase
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
-import th.ac.up.agr.thai_mini_chicken.SQLite.AppTheme
 import th.ac.up.agr.thai_mini_chicken.Tools.Date
 import th.ac.up.agr.thai_mini_chicken.Tools.LoadTime
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
