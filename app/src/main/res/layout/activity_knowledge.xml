@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".KnowledgeActivity"
     android:background="#EDEDED"
+    android:fitsSystemWindows="true"
     >
 
     <com.google.android.material.appbar.AppBarLayout

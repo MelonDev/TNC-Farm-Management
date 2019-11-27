@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".LoginActivity">
 
     <RelativeLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -21,6 +22,7 @@
             android:adjustViewBounds="true"
             />
         <ImageView
+            android:id="@+id/login_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/wallpaper_overlay"
@@ -45,7 +47,7 @@
                android:fontFamily="@font/sukhumvit_bold"
                android:text="@string/login_activity_title"
                android:textColor="@color/colorWhite"
-               android:textSize="36dp" />
+               android:textSize="32dp" />
 
            <RelativeLayout
                android:id="@+id/login_logo_image"
@@ -73,7 +75,9 @@
            android:visibility="visible">
 
            <androidx.cardview.widget.CardView
-               android:layout_width="match_parent"
+               android:layout_centerHorizontal="true"
+
+               android:layout_width="@dimen/login_card_width"
                android:layout_height="wrap_content"
                android:layout_gravity="bottom"
                android:layout_marginBottom="0dp"
@@ -310,9 +314,9 @@
    </LinearLayout>
 
     <androidx.cardview.widget.CardView
-        android:layout_gravity="bottom"
+        android:layout_width="@dimen/login_google_width"
+        android:layout_centerHorizontal="true"
         android:id="@+id/login_sign_in_google_btn"
-        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"

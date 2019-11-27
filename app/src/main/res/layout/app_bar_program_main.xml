@@ -42,9 +42,10 @@
         </RelativeLayout>
 
         <com.google.android.material.tabs.TabLayout
+            android:layout_gravity="center_horizontal"
             app:layout_scrollFlags="enterAlways"
             android:id="@+id/program_main_activity_tabbar"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/noti_card_width"
             android:layout_height="wrap_content"
             app:tabTextColor="@color/colorTabInActiveText"
             app:tabBackground="?attr/colorPrimary"
@@ -53,6 +54,7 @@
             app:tabIndicatorHeight="4dp"
             app:tabTextAppearance="@style/TabLayoutStyle"
             app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
             app:tabMode="fixed"
             />
 

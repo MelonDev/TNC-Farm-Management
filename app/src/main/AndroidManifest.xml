@@ -25,37 +25,30 @@
         <activity
             android:name=".ProgramMainActivity.ProgramMainActivity"
             android:label="@string/title_activity_program_main"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddProgramActivity.AddProgramActivity"
             android:label="@string/title_activity_add_program"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ContainerActivity"
             android:label="@string/title_activity_container"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
-            android:screenOrientation="portrait"
             android:theme="@style/DetailTheme" />
         <activity
             android:name=".DetailNotificationActivity"
             android:label="@string/title_activity_detail_notification"
-            android:screenOrientation="portrait"
             android:theme="@style/DetailTheme" />
         <activity
             android:name=".SettingActivity"
             android:label="@string/title_activity_setting"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashActivity"
             android:label="TNC Farm Manager"
-            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,37 +59,30 @@
         <activity
             android:name=".TestAuthActivity"
             android:label="@string/title_activity_test_auth"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddNotiCardActivity"
             android:label="@string/title_activity_add_noti_card"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".NotiDetailActivity"
             android:label="@string/title_activity_noti_detail"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CustomPlanActivity"
             android:label="@string/title_activity_custom_plan"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
             android:label="TNC Farm Manager"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterInfoActivity"
             android:label="@string/title_activity_register_info"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".KnowledgeActivity"
@@ -105,7 +91,7 @@
         <activity
             android:name=".HelpActivity"
             android:label="@string/title_activity_help"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

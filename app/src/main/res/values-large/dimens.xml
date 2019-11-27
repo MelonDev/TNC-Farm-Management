@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+
+    <integer name="dialog_positive_text_button">30</integer>
+    <integer name="dialog_positive_button_height">100</integer>
+
+    <integer name="dialog_message_text">40</integer>
+    <integer name="dialog_message_height">150</integer>
+
+    <dimen name="login_card_width">500dp</dimen>
+    <dimen name="login_google_width">500dp</dimen>
+
+    <dimen name="noti_card_width">500dp</dimen>
+    <dimen name="noti_date_width">500dp</dimen>
+
+
+</resources>

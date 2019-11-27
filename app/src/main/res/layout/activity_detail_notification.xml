@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".DetailNotificationActivity"
     android:background="#EDEDED"
+    android:fitsSystemWindows="true"
+
     >
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
