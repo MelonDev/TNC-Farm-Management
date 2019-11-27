@@ -11,6 +11,7 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="ProgressTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -43,6 +44,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:fontFamily">@font/sukhumvit_text</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <!-- MelonTheme -->
