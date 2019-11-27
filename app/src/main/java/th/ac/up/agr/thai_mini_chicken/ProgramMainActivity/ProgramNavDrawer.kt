@@ -57,7 +57,6 @@ class ProgramNavDrawer(private val activity: ProgramMainActivity) {
 
     private fun onClick() {
         navView.nav_profile_area.setOnClickListener {
-            //initIntent(ContainerActivity()).put("TITLE", "โปรไฟล์").start()
             val intent = Intent(activity, TestAuthActivity::class.java)
             activity.startActivity(intent)
         }

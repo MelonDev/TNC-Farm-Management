@@ -2,7 +2,6 @@ package th.ac.up.agr.thai_mini_chicken.Adapter
 
 import android.content.Intent
 
-import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,22 +14,16 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigItems
-import com.mylhyl.circledialog.callback.ConfigText
+
 import com.mylhyl.circledialog.params.*
 import com.squareup.picasso.Picasso
 import th.ac.up.agr.thai_mini_chicken.AddNotiCardActivity
-import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
-import th.ac.up.agr.thai_mini_chicken.Data.CardDate
 import th.ac.up.agr.thai_mini_chicken.Data.Event
 import th.ac.up.agr.thai_mini_chicken.DetailNotificationActivity
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.*
-import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardNotificationViewHolder
 import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardViewHolder
 import java.util.*
 
@@ -38,7 +31,6 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
 
     var arr = ArrayList<Event>()
 
-    var positions: Int = -1
 
     lateinit var waitDialog: DialogFragment
 
@@ -54,30 +46,11 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
         } else {
             unData.size
         }
-        //return data.size
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
 
-        //Log.e("${data.size}", "${unData.size}")
 
-        /*
-        if (position == 0 && id == 0) {
-            holder.title_item.visibility = View.GONE
-            holder.card_item.visibility = View.GONE
-            holder.message_area.visibility = View.GONE
-            holder.info_area.visibility = View.GONE
-            holder.histort_area.visibility = View.VISIBLE
-
-            holder.histort_area.setOnClickListener {
-                val intent = Intent(activity, DetailNotificationActivity::class.java)
-                intent.putExtra("USER_ID", userID)
-                intent.putExtra("CARD_KEY", cardKey)
-                intent.putExtra("TYPE", "1")
-                activity.startActivity(intent)
-            }
-
-        } else {*/
         var slot = Event()
         if (ID == 0 && data.size > 0) {
             slot = data[position]
@@ -127,9 +100,7 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
         CircleDialog.Builder(activity
         )
                 .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
-                //.setTitle(title)
-                //.setTitleColor(ContextCompat.getColor(fragment, R.color.colorPrimary))
-                //.setSubTitle(sub)
+
                 .setItems(arr) { parent, view, position, id ->
                     var ref = Firebase.reference
                     var refDelete = Firebase.reference
@@ -145,7 +116,6 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
 
                         status = unData[pos].status
                     } else if (ID == 2) {
-                        //ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายการที่ต้องทำ").child(data[pos].cardID).child("status")
                         ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รูปแบบ").child(cardKey).child("รายการที่ต้องทำ").child(data[pos].cardID)
                         status = data[pos].status
                     }
@@ -268,9 +238,7 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
                             showConDialog()
                         }
                     }
-                    //ToolReference().checkPosition(cardKey, ref)
-                    //this.notifyItemRemoved(positions)
-                    //showConDialog()
+
                 }
                 .configItems { params ->
                     params!!.textColor = ContextCompat.getColor(activity.applicationContext, R.color.colorRed)
@@ -415,8 +383,7 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
 
                         calendar.add(Calendar.WEEK_OF_YEAR, slot.week - card.ageWeek.toInt())
                         calendar.add(Calendar.DAY_OF_YEAR, slot.day - card.ageDay.toInt())
-                        //calendar.set(Calendar.WEEK_OF_YEAR,slot.week)
-                        //calendar.set(Calendar.DAY_OF_YEAR,slot.day)
+
 
                         val today = Calendar.getInstance()
 
@@ -432,7 +399,6 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
 
                         }
 
-                        //holder.title_item.text = "${calendar.get(Calendar.DAY_OF_MONTH).toString()} ${ConvertCard().getMonth((calendar.get(Calendar.MONTH) + 1).toString())} ${calendar.get(Calendar.YEAR) + 543}"
 
 
                     }
@@ -442,41 +408,7 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
             holder.title_item.text = "${slot.week} สัปดาห์ ${slot.day} วัน"
         }
 
-        //val week = slot.week
-        //val day = slot.day
 
-
-        /*val databaseReferences = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน").child(key)
-
-        databaseReferences.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.value != null) {
-                    val slot = p0.getValue(CardDate::class.java)
-                    val date = Date().reDateNull(slot!!.dateTime)
-                    if (Date().getMonth().contentEquals(DateFormat.format("MM", date).toString()) && Date().getYear().contentEquals(DateFormat.format("yyyy", date).toString())) {
-                        val x = Date().getDay().toInt()
-                        val y = DateFormat.format("dd", date).toString().toInt()
-                        if (x == y) {
-                            holder.title_item.text = "วันนี้"
-                        } else if ((x - 1) == y) {
-                            holder.title_item.text = "เมื่อวานนี้"
-                        } else if ((x + 1) == y) {
-                            holder.title_item.text = "วันพรุ่งนี้"
-                        } else {
-                            holder.title_item.text = "${DateFormat.format("dd", date)} ${ConvertCard().getMonth(DateFormat.format("MM", date).toString())} ${ConvertCard().getYear(DateFormat.format("yyyy", date).toString())}"
-                        }
-                    } else {
-                        holder.title_item.text = "${DateFormat.format("dd", date)} ${ConvertCard().getMonth(DateFormat.format("MM", date).toString())} ${ConvertCard().getYear(DateFormat.format("yyyy", date).toString())}"
-                    }
-                }
-            }
-        })
-        //val date = Date().reDate()
-        */
     }
 
     fun getValue(position: Int, holder: CardViewHolder) {
@@ -547,17 +479,12 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
             card_title.text = slot.title
 
 
-            //card_title.setTextColor(color)
-            //card_item.setCardBackgroundColor(color)
-            //icon_image.setImageDrawable(activity.resources.getDrawable(R.drawable.ic_parasite_icon))
-
         }
 
     }
 
     private fun setIcon(objective: String, imageView: ImageView, area: CardView, textView: TextView) {
-        //area.setCardBackgroundColor(ContextCompat.getColor(activity, MelonTheme.from(activity).getColor()))
-        //textView.setTextColor(ContextCompat.getColor(activity, MelonTheme.from(activity).getColor()))
+
         when (objective) {
             "ฉีดวัคซีน" -> {
                 Picasso.get().load(R.drawable.ic_inject_icon).into(imageView)
@@ -589,17 +516,9 @@ class DetailNotificationAdapter(val activity: DetailNotificationActivity, val ID
 
 
     private fun unpass(position: Int, objective: String, holder: CardViewHolder) {
-        /* if(positions == -1){
-             positions = position
-         }
-         if(position == data.lastIndex && positions != -1){
-             activity.recyclerView.scrollToPosition(positions)
-         }*/
-        val color = MelonTheme.from(activity).getColor()
-        //Picasso.get().load(R.drawable.ic_parasite_icon).into(holder.icon_image)
+
         setIcon(objective, holder.icon_image, holder.icon_area, holder.card_title)
-        //holder.card_title.setTextColor(ContextCompat.getColor(activity, color))
-        //holder.icon_area.setCardBackgroundColor(ContextCompat.getColor(activity, color))
+
     }
 
     private fun passed(holder: CardViewHolder, status: String) {

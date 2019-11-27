@@ -15,22 +15,16 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.app_bar_program_main.*
-import kotlinx.android.synthetic.main.fragment_history.view.*
 import kotlinx.android.synthetic.main.fragment_notification.view.*
-import kotlinx.android.synthetic.main.fragment_program.view.*
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
+
 import th.ac.up.agr.thai_mini_chicken.Adapter.PageNotificationAdapter
-import th.ac.up.agr.thai_mini_chicken.Adapter.ProgramAdapter
-import th.ac.up.agr.thai_mini_chicken.Data.ArraySlot
+
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Data.CardSlot
 import th.ac.up.agr.thai_mini_chicken.Data.Event
-import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.QuickRecyclerView
-import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardVHConfig
 import java.util.*
 
 
@@ -60,9 +54,6 @@ class NotificationFragment : Fragment() {
 
         var count: Int = 0
 
-        //val fab = activity!!.program_main_activity_fab
-        //fab.hide()
-
         recyclerView = QuickRecyclerView(context!!
                 , view.notification_recycler_view
                 , "linear"
@@ -83,16 +74,11 @@ class NotificationFragment : Fragment() {
                 mSwipeRefreshLayout.isRefreshing = true
 
                 onLoad()
-                // Fetching data from server
-                //loadRecyclerViewData()
+
             }
-            //Log.e("LOAD","sdaksd")
         }
 
         run = true
-
-
-        //OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
 
 
         return view
@@ -114,7 +100,6 @@ class NotificationFragment : Fragment() {
                 if (p0.value != null) {
                     arr.clear()
                     p0.children.forEach {
-                        //val ky = it.key.toString()
                         val y = database.child(it.key.toString()).child("รายการที่ต้องทำ")
                         val n = database.child(it.key.toString()).child("รายละเอียด")
 
@@ -225,13 +210,6 @@ class NotificationFragment : Fragment() {
                 }
             }
         })
-    }
-
-    fun reset() {
-        if (run) {
-            //adapter.resetMenu()
-        }
-
     }
 
     override fun onStart() {

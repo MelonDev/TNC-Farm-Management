@@ -39,7 +39,6 @@ class KnowledgeAdapter(val activity: KnowledgeActivity,val ID :String, val data:
             }else {
                 initIntent(ContainerActivity()).put("TITLE", slot.name).start()
             }
-            //initIntent(ContainerActivity()).put("TITLE", slot.name).start()
 
         }
 

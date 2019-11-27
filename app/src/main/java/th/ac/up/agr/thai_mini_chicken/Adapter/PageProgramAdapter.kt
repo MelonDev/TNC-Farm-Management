@@ -2,38 +2,26 @@ package th.ac.up.agr.thai_mini_chicken.Adapter
 
 import android.content.Intent
 
-import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigItems
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.params.ItemsParams
-import com.mylhyl.circledialog.params.TextParams
+
 import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
-import th.ac.up.agr.thai_mini_chicken.Data.CardDate
 import th.ac.up.agr.thai_mini_chicken.DetailActivity
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
 import th.ac.up.agr.thai_mini_chicken.Tools.Date
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
-import th.ac.up.agr.thai_mini_chicken.Tools.ToolReference
 import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardViewHolder
 import java.util.*
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
-import com.google.firebase.FirebaseError
-import com.google.firebase.database.DatabaseReference.CompletionListener
+
 import th.ac.up.agr.thai_mini_chicken.Data.Event
 import th.ac.up.agr.thai_mini_chicken.Fragment.ProgramFragment
 
@@ -53,15 +41,7 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-/*
-        if (data[position].indexOf("-99-99-99") > -1) {
-            setTitle(data[position], holder)
-        } else {
-            getValue(data[position], holder)
-        }
 
-
-*/
 
         val card_key = data[position].cardID
 
@@ -73,7 +53,6 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
         if (data[position].cardID.contentEquals("null")) {
             setTitle(data[position], holder)
         } else {
-            //Log.e("asda",data[position].createDate)
             getValue(data[position], ref, holder)
         }
 
@@ -93,9 +72,6 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
         CircleDialog.Builder(activity
         )
                 .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
-                //.setTitle(title)
-                //.setTitleColor(ContextCompat.getColor(fragment, R.color.colorPrimary))
-                //.setSubTitle(sub)
                 .setItems(arr) { parent, view, position, id ->
                     when (position) {
                         0 -> {
@@ -107,7 +83,6 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
                         }
                         1 -> {
                             val ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายละเอียด").child("status")
-                            //val pathTo = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ประวัติ").child(cardKey)
 
                             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onCancelled(p0: DatabaseError) {
@@ -142,7 +117,6 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
     }
 
     fun setTitle(card: CardData, holder: CardViewHolder) {
-        //val databaseReferences = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน").child(key)
         holder.title_item.visibility = View.VISIBLE
         holder.card_item.visibility = View.GONE
         holder.message_area.visibility = View.GONE
@@ -162,57 +136,22 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
             set(Calendar.DAY_OF_MONTH, part.get(Calendar.DAY_OF_MONTH))
         }
 
-        //calendar.set(card.dateYear.toInt(), card.dateMonth.toInt() - 1, card.dateDay.toInt())
 
-        //Log.e(today.get(Calendar.DAY_OF_MONTH).toString(),calendar.get(Calendar.DAY_OF_MONTH).toString())
-        //Log.e(card.cardID,card.createDate)
 
         val difference = today.timeInMillis - calendar.timeInMillis
         val days = (difference / (1000 * 60 * 60 * 24)).toInt()
         if (days == 0) {
             holder.title_item.text = "วันนี้"
-            //Log.e((difference/ (1000 * 60 * 60)).toString(),days.toString())
         } else if (days == 1) {
             holder.title_item.text = "เมื่อวานนี้"
-            //Log.e(card.cardID,days.toString())
         } else {
             holder.title_item.text = "${calendar.get(Calendar.DAY_OF_MONTH).toString()} ${ConvertCard().getMonth((calendar.get(Calendar.MONTH) + 1).toString())} ${calendar.get(Calendar.YEAR) + 543}"
-            //Log.e(card.cardID,days.toString())
         }
 
-        /*databaseReferences.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.value != null) {
-                    val slot = p0.getValue(CardDate::class.java)
-                    val date = Date().reDateNull(slot!!.dateTime)
-                    if (Date().getMonth().contentEquals(DateFormat.format("MM", date).toString()) && Date().getYear().contentEquals(DateFormat.format("yyyy", date).toString())) {
-                        val x = Date().getDay().toInt()
-                        val y = DateFormat.format("dd", date).toString().toInt()
-                        if (x == y) {
-                            holder.title_item.text = "วันนี้"
-                        } else if ((x - 1) == y) {
-                            holder.title_item.text = "เมื่อวานนี้"
-                        } else if ((x + 1) == y) {
-                            holder.title_item.text = "วันพรุ่งนี้"
-                        } else {
-                            holder.title_item.text = "${DateFormat.format("dd", date)} ${ConvertCard().getMonth(DateFormat.format("MM", date).toString())} ${ConvertCard().getYear(DateFormat.format("yyyy", date).toString())}"
-                        }
-                    } else {
-                        holder.title_item.text = "${DateFormat.format("dd", date)} ${ConvertCard().getMonth(DateFormat.format("MM", date).toString())} ${ConvertCard().getYear(DateFormat.format("yyyy", date).toString())}"
-                    }
-                }
-            }
-        })*/
-        //val date = Date().reDate()
     }
 
     fun getValue(card: CardData, ref: DatabaseReference, holder: CardViewHolder) {
-        //val databaseReferences = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน")
-        //val y = databaseReferences.child(key).child("รายละเอียด")
+
 
         holder.title_item.visibility = View.GONE
         holder.card_item.visibility = View.VISIBLE
@@ -221,25 +160,6 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
         holder.histort_area.visibility = View.GONE
 
         setData(holder, ref, card)
-
-/*
-        y.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.value != null) {
-                    val slot = p0.getValue(CardData::class.java)!!
-                    if (slot.cardID.isEmpty()) {
-                        slot.cardID = key
-                        y.setValue(slot)
-                    }
-                    setData(holder, slot)
-                }
-            }
-        })
-*/
 
     }
 
@@ -314,11 +234,9 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
         val arrEvent = ArrayList<Event>()
         arrEvent.clear()
 
-        //activity_detail_indicator_text.text = arrEvent.size.toString()
         holder.card_des.text = plusDes(arrEvent.size.toString())
 
         dataSnapshot!!.children.forEach {
-            //Log.e("KEY",it.key.toString())
 
             val slot = it.getValue(Event::class.java)!!
 
@@ -330,7 +248,6 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
             val difference = x.timeInMillis - today.timeInMillis
             val days = (difference / (1000 * 60 * 60 * 24)).toInt()
 
-            //Log.e("DAY", days.toString())
 
 
             if (days >= 0 && slot.status.contentEquals("ACTIVE")) {
@@ -339,7 +256,6 @@ class PageProgramAdapter(val fragment: ProgramFragment, val ID: String, val data
 
 
             holder.card_des.text = plusDes(arrEvent.size.toString())
-            //Log.e("arr",arrEvent.size.toString())
 
 
         }

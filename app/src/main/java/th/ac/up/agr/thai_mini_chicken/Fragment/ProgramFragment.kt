@@ -38,11 +38,9 @@ import kotlinx.android.synthetic.main.fragment_program.*
 
 class ProgramFragment : Fragment() {
 
-    //lateinit var fab: FloatingActionButton
     private var run: Boolean = false
     lateinit var adapter: PageProgramAdapter
 
-    //private var arrData = ArrayList<CardData>()
 
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
@@ -61,12 +59,9 @@ class ProgramFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        //val themeWrapper = ContextThemeWrapper(activity,R.style.MelonTheme_Amber_Material)
-        //val layoutInflater = inflater.cloneInContext(themeWrapper)
-        //val view = layoutInflater.inflate(R.layout.fragment_program, container, false)
+
         val view = MelonTheme.from(activity!!).getStyleForFragment(activity, inflater).inflate(R.layout.fragment_program, container, false)
 
-        //fab.show()
 
         mSwipeRefreshLayout = view.swipe_program_container
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
@@ -88,12 +83,8 @@ class ProgramFragment : Fragment() {
         recyclerView.adapter = adapter
 
 
-//loadData()
-
-
         run = true
 
-//OverScrollDecoratorHelper.setUpOverScroll(recyclerView,OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var currentScrollPosition = 0
@@ -113,10 +104,8 @@ class ProgramFragment : Fragment() {
                 mSwipeRefreshLayout.isRefreshing = true
 
                 loadData()
-                // Fetching data from server
-                //loadRecyclerViewData()
+
             }
-            //Log.e("LOAD","sdaksd")
         }
 
 
@@ -139,21 +128,9 @@ class ProgramFragment : Fragment() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.value != null) {
-                    //getKey(p0)
-
-                    //Log.e("PROGRAM","OUTFOR")
 
                     arrData.clear()
-                    //Log.e("PRO","CLEAR")
-/*
-                    if (dataSnapshot == null && !dataSnapshot.toString().contentEquals(p0.toString())) {
-                        dataSnapshot = p0
-                        loadAndSetData(p0,swipe)
-                    }else {
-                        this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
-                    }
-*/
-                    //loadAndSetData(p0,swipe)
+
                     newLoadAndSetData(p0,swipe)
 
                 } else {
@@ -182,7 +159,6 @@ class ProgramFragment : Fragment() {
                 override fun onDataChange(p0: DataSnapshot) {
                     if (p0.value != null) {
                         val slot = p0.getValue(CardData::class.java)!!
-                        //Log.e("ID", slot.createDate.toString())
 
                         if (slot.status.contentEquals("ACTIVE")) {
 
@@ -198,9 +174,7 @@ class ProgramFragment : Fragment() {
                                 arrData.add(a)
                                 arrData.add(slot)
 
-                                //Log.e("SIZE",size.toString())
-                                //recyclerView.adapter.notifyDataSetChanged()
-                                //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
+
                             } else {
                                 val today = Calendar.getInstance()
 
@@ -230,24 +204,16 @@ class ProgramFragment : Fragment() {
                                     set(Calendar.DAY_OF_MONTH, b.get(Calendar.DAY_OF_MONTH))
                                 }
 
-                                //Log.e("C",calendar.get(Calendar.DAY_OF_MONTH).toString())
-                                //Log.e("L",last.get(Calendar.DAY_OF_MONTH).toString())
 
-                                //calendar.set(slot.dateYear.toInt(), slot.dateMonth.toInt() - 1, slot.dateDay.toInt())
-                                //last.set(lSlot.dateYear.toInt(), lSlot.dateMonth.toInt() - 1, lSlot.dateDay.toInt())
                                 val difference = calendar.timeInMillis - last.timeInMillis
                                 val days = (difference / (1000 * 60 * 60 * 24)).toInt()
 
-                                //Log.e(slot.createDate,days.toString())
 
                                 if (days == 0) {
-                                    //val a = arrData[arrData.lastIndex]
-                                    //arrData.removeAt(arrData.lastIndex)
+
                                     arrData.add(slot)
-                                    //arrData.add(a)
-                                    //Log.e("P","A")
+
                                 } else {
-                                    //Log.e("P","B")
                                     val a = CardData()
                                     a.apply {
                                         cardID = "null"
@@ -258,20 +224,12 @@ class ProgramFragment : Fragment() {
 
 
                                 }
-                                //Log.e("PRO", "LOAD")
-                                //Log.e("SIZE",size.toString())
 
-                                //recyclerView.adapter.notifyDataSetChanged()
-                                //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                             }
 
 
-                            //arrData.add(slot)
-                        } else {
-                            //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                         }
                         if (count == size) {
-                            //Log.e("SWIPE",swipe.toString())
                             if (swipe) {
                                 this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                             }
@@ -282,8 +240,7 @@ class ProgramFragment : Fragment() {
                 }
             })
         }
-        //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
-        //recyclerView.adapter.notifyDataSetChanged()
+
 
     }
 
@@ -331,9 +288,7 @@ class ProgramFragment : Fragment() {
                                 arrData.add(slot)
                                 arrData.add(a)
 
-                                //Log.e("SIZE",size.toString())
-                                //recyclerView.adapter.notifyDataSetChanged()
-                                //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
+
                             } else {
                                 val today = Calendar.getInstance()
 
@@ -363,15 +318,10 @@ class ProgramFragment : Fragment() {
                                     set(Calendar.DAY_OF_MONTH, b.get(Calendar.DAY_OF_MONTH))
                                 }
 
-                                //Log.e("C",calendar.get(Calendar.DAY_OF_MONTH).toString())
-                                //Log.e("L",last.get(Calendar.DAY_OF_MONTH).toString())
 
-                                //calendar.set(slot.dateYear.toInt(), slot.dateMonth.toInt() - 1, slot.dateDay.toInt())
-                                //last.set(lSlot.dateYear.toInt(), lSlot.dateMonth.toInt() - 1, lSlot.dateDay.toInt())
                                 val difference = calendar.timeInMillis - last.timeInMillis
                                 val days = (difference / (1000 * 60 * 60 * 24)).toInt()
 
-                                //Log.e(slot.createDate,days.toString())
 
                                 if (days == 0) {
                                     val a = arrData[arrData.lastIndex]
@@ -390,20 +340,12 @@ class ProgramFragment : Fragment() {
                                     arrData.add(a)
 
                                 }
-                                //Log.e("PRO", "LOAD")
-                                //Log.e("SIZE",size.toString())
 
-                                //recyclerView.adapter.notifyDataSetChanged()
-                                //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                             }
 
 
-                            //arrData.add(slot)
-                        } else {
-                            //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                         }
                         if (count == size) {
-                            //Log.e("SWIPE",swipe.toString())
                             if (swipe) {
                                 this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                             }
@@ -414,8 +356,7 @@ class ProgramFragment : Fragment() {
                 }
             })
         }
-        //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
-        //recyclerView.adapter.notifyDataSetChanged()
+
 
     }
 

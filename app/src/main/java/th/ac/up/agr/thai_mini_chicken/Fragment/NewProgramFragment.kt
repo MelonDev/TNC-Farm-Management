@@ -10,11 +10,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.fragment_new_program.*
 import kotlinx.android.synthetic.main.fragment_new_program.view.*
 import th.ac.up.agr.thai_mini_chicken.Adapter.NewProgramAdapter
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
@@ -193,11 +191,8 @@ class NewProgramFragment : Fragment() {
                                 }
                             }
 
-                        } else {
-                            //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                         }
 
-                        //Log.e("start",count.toString())
 
                         if (count == size) {
                             process = false
@@ -208,13 +203,11 @@ class NewProgramFragment : Fragment() {
                                 v.new_program_empty_area.visibility = View.GONE
                             }
 
-                            //Log.e("STARTED", started.toString())
 
 
                             recyclerView.adapter!!.notifyDataSetChanged()
                             recyclerView.scrollToPosition(arrData.lastIndex)
 
-                            //recyclerView.scrollToPosition(arrData.lastIndex)
                         }
 
                     }
@@ -242,7 +235,6 @@ class NewProgramFragment : Fragment() {
                 override fun onDataChange(p0: DataSnapshot) {
                     if (p0.value != null) {
                         val slot = p0.getValue(CardData::class.java)!!
-                        //Log.e("ID", slot.createDate.toString())
 
                         if (slot.cardID.isEmpty()) {
                             slot.cardID = key
@@ -294,16 +286,13 @@ class NewProgramFragment : Fragment() {
                                 val difference = calendar.timeInMillis - last.timeInMillis
                                 val days = (difference / (1000 * 60 * 60 * 24)).toInt()
                                 if (days == 0) {
-                                    //val a = arrData[arrData.lastIndex]
-                                    //arrData.removeAt(arrData.lastIndex)
+
                                     arrData.add(slot)
-                                    //arrData.add(a)
                                 } else {
                                     val a = CardData()
                                     a.apply {
                                         cardID = "null"
                                         createDate = slot.createDate
-                                        //createDate = arrData[arrData.lastIndex].createDate
                                     }
                                     arrData.add(a)
                                     arrData.add(slot)
@@ -312,11 +301,8 @@ class NewProgramFragment : Fragment() {
                                 }
                             }
 
-                        } else {
-                            //this@ProgramFragment.mSwipeRefreshLayout.isRefreshing = false
                         }
 
-                        //Log.e("start",count.toString())
 
                         if (count == size) {
                             process = false
@@ -327,13 +313,11 @@ class NewProgramFragment : Fragment() {
                                 v.new_program_empty_area.visibility = View.GONE
                             }
 
-                            //Log.e("STARTED", started.toString())
 
 
                             recyclerView.adapter!!.notifyDataSetChanged()
                             recyclerView.scrollToPosition(arrData.lastIndex)
 
-                            //recyclerView.scrollToPosition(arrData.lastIndex)
                         }
 
                     }

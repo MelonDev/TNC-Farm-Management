@@ -19,17 +19,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigItems
-import com.mylhyl.circledialog.callback.ConfigText
+
 import com.mylhyl.circledialog.params.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.dialog_add.view.*
 import th.ac.up.agr.thai_mini_chicken.CustomPlanActivity
 import th.ac.up.agr.thai_mini_chicken.Data.CustomData
 import th.ac.up.agr.thai_mini_chicken.Data.Event
-import th.ac.up.agr.thai_mini_chicken.Data.Time
 import th.ac.up.agr.thai_mini_chicken.DetailNotificationActivity
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.R
@@ -150,7 +146,6 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                         activity.setResult(Activity.RESULT_OK, returnIntent)
                         activity.finish()
                     }
-                    //returnIntent.putExtra("RESULT", result)
 
                 }
 
@@ -168,9 +163,7 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
         CircleDialog.Builder(activity
         )
                 .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
-                //.setTitle(title)
-                //.setTitleColor(ContextCompat.getColor(fragment, R.color.colorPrimary))
-                //.setSubTitle(sub)
+
                 .setItems(arr) { parent, view, position, id ->
                     var ref = Firebase.reference
 
@@ -184,127 +177,12 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                         } else if (position == 1) {
                             showEditDialog(pos, 0)
                         } else if (position == 2) {
-                            //setWaitDialog()
                             showDeleteDialog(ref)
-                            /*
-                            ref.removeValue { databaseError, databaseReference ->
-                                if (databaseError != null) {
-                                    waitDialog.dismiss()
-                                    setErrorDialog()
-                                } else {
-                                    waitDialog.dismiss()
 
-                                }
-                            }*/
                         }
                     }
 
 
-                    /*
-                    var status = ""
-                    if (ID == 0) {
-                        ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายการที่ต้องทำ").child(data[pos].cardID).child("status")
-                        status = data[pos].status
-                    } else if (ID == 1) {
-                        ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายการที่ต้องทำ").child(unData[pos].cardID).child("status")
-                        status = unData[pos].status
-                    } else if (ID == 2) {
-                        //ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายการที่ต้องทำ").child(data[pos].cardID).child("status")
-                        ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รูปแบบ").child(cardKey).child(data[pos].cardID).child("status")
-                        status = data[pos].status
-                    }
-
-                    if (status.contentEquals("ACTIVE")) {
-                        if (ID == 2) {
-                            when (position) {
-                                0 -> {
-                                    goToEdit(data[pos].cardID)
-                                }
-                                1 -> {
-                                    showDeleteDialog(ref)
-                                }
-                            }
-                        } else {
-                            when (position) {
-                                0 -> {
-                                    goToEdit(data[pos].cardID)
-                                }
-                                1 -> {
-                                    setWaitDialog("กำลังบันทึก...")
-                                    ref.setValue("PASSED") { p0, _ ->
-                                        if (p0 != null) {
-                                            showErrorDialog()
-                                        } else {
-                                            showMoveDialog(0)
-                                        }
-                                    }
-                                }
-                                2 -> {
-                                    setWaitDialog("กำลังบันทึก...")
-                                    ref.setValue("CANCEL") { p0, _ ->
-                                        if (p0 != null) {
-                                            showErrorDialog()
-                                        } else {
-                                            showMoveDialog(0)
-                                        }
-                                    }
-                                }
-                                3 -> {
-                                    showDeleteDialog(ref)
-                                }
-                            }
-                        }
-                    } else if (status.contentEquals("PASSED")) {
-                        when (position) {
-                            0 -> {
-                                goToEdit(unData[pos].cardID)
-                            }
-                            1 -> {
-                                setWaitDialog("กำลังบันทึก...")
-                                ref.setValue("ACTIVE") { p0, _ ->
-                                    if (p0 != null) {
-                                        showErrorDialog()
-                                    } else {
-                                        showMoveDialog(1)
-                                    }
-                                }
-                            }
-                            2 -> {
-                                showDeleteDialog(ref)
-                            }
-                        }
-                    } else if (status.contentEquals("CANCEL")) {
-                        when (position) {
-                            0 -> {
-                                goToEdit(unData[pos].cardID)
-                            }
-                            1 -> {
-                                setWaitDialog("กำลังบันทึก...")
-                                ref.setValue("PASSED") { p0, _ ->
-                                    if (p0 != null) {
-                                        showErrorDialog()
-                                    } else {
-                                        showMoveDialog(0)
-                                    }
-                                }
-                            }
-                            2 -> {
-                                setWaitDialog("กำลังบันทึก...")
-                                ref.setValue("ACTIVE") { p0, _ ->
-                                    if (p0 != null) {
-                                        showErrorDialog()
-                                    } else {
-                                        showMoveDialog(1)
-                                    }
-                                }
-                            }
-                            3 -> {
-                                showDeleteDialog(ref)
-                            }
-                        }
-
-                    }
-                    */
                 }
                 .setNegative("ยกเลิก", null)
                 .configNegative { params ->
@@ -322,20 +200,13 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
         val dialogView = inflater.inflate(R.layout.dialog_add, null)
         dialog.setView(dialogView)
         dialogView.dialog_add_text.text = "ตั้งชื่อรูปแบบ"
-        //dialog.setTitle(Title);
-        //dialog.setMessage(Message);
+
         val editText = dialogView.custom_dialog_edittext
         editText.requestFocus()
 
-        /*
-        if (this.dataCard.breed.isNotEmpty()) {
-            editText.setText(activity.dataCard.breed)
-        }
-*/
         editText.inputType = InputType.TYPE_CLASS_TEXT
 
         val abc = dialog.create()
-        //abc.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
         abc.show()
@@ -358,20 +229,13 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
 
         dialogView.dialog_add_confirm.setOnClickListener {
             val x = editText.text.toString()
-            /*if (x.isNotEmpty()) {
-                activity.add_program_breed_text.text = x
-                activity.dataCard.breed = x
-            } else {
-                activity.add_program_breed_text.text = "ไม่ระบุ"
-            }
-*/
+
             if (x.isNotEmpty()) {
 
                 var firebase = Firebase.reference
                 var database = firebase.child("ผู้ใช้").child(FirebaseAuth.getInstance().currentUser!!.uid).child("รูปแบบ")
 
                 var key = ""
-                //var key = database.push().key.toString()
                 if (obj == 0) {
                     key = database.push().key.toString()
                 } else if (obj == 1) {
@@ -403,7 +267,6 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                     val childMap = HashMap<String, Any>()
 
                     val abs = database.child(this@NewCustomPlanAdapter.data[position].key).child("รายการที่ต้องทำ")
-                    //val key: String = database.push().key.toString()
                     val refA = database.child(key)
                     val pathA = "/รายละเอียด/"
                     childMap.put(pathA, data)
@@ -573,7 +436,6 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                     params.height = 250
                 }
                 .setPositive("รับทราบ", {
-                    //activity.finish()
                 })
                 .configPositive { params ->
                     params.textSize = 50
@@ -597,7 +459,6 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                     params.height = 250
                 }
                 .setPositive("รับทราบ", {
-                    //activity.finish()
                 })
                 .configPositive { params ->
                     params.textSize = 50
@@ -623,17 +484,13 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
                     ref.removeValue { p3, _ ->
                         if (p3 != null) {
                             waitDialog.dismiss()
-                            //showErrorDialog()
                             setErrorDialog()
                         } else {
                             waitDialog.dismiss()
                             setConDeleteDialog()
-                            //showConDialog()
                         }
                     }
-                    //ToolReference().checkPosition(cardKey, ref)
-                    //this.notifyItemRemoved(positions)
-                    //showConDialog()
+
                 }
                 .configItems { params ->
                     params!!.textColor = ContextCompat.getColor(activity.applicationContext, R.color.colorRed)
@@ -650,32 +507,10 @@ class NewCustomPlanAdapter(val activity: CustomPlanActivity, val data: ArrayList
     fun setWaitDialog(str: String) {
         waitDialog = CircleDialog.Builder()
                 .configDialog { params -> params.canceledOnTouchOutside = false }
-                //.setProgressText("กำลังบันทึก...")
                 .setProgressText(str)
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(activity.supportFragmentManager)
-        //waitDialog.dismiss()
-        //                        .setProgressDrawable(R.drawable.bg_progress_s)
-        /*waitDialog = CircleDialog.Builder(activity
-        )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
-                .setProgressText("登录中...")
-                .setProgressStyle(ProgressParams.STYLE_SPINNER)
-                .setText("กำลังบันทึก")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
 
-*/
     }
 
 }

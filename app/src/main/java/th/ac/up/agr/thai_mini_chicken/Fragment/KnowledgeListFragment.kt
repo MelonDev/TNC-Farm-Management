@@ -16,7 +16,6 @@ class KnowledgeListFragment : Fragment() {
     companion object {
         fun newInstance(titleA: String,messageA: String,titleB: String,messageB: String,titleC: String,messageC: String,showC :Boolean): KnowledgeListFragment {
             val args = Bundle()
-            //args.putString("TITLE", title)
             args.putString("TA", titleA)
             args.putString("MA", messageA)
             args.putString("TB", titleB)
@@ -33,7 +32,6 @@ class KnowledgeListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_knowledge_list, container, false)
     }
 

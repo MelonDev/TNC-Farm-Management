@@ -13,14 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigItems
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.params.ItemsParams
-import com.mylhyl.circledialog.params.TextParams
+
 import com.squareup.picasso.Picasso
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.DetailActivity
@@ -69,7 +62,6 @@ class NewHistoryAdapter(val fragment: NewHistoryFragment, val ID: String, val da
             intent.putExtra("CARD_KEY", data[position].cardID)
             intent.putExtra("USER_ID", ID)
             activity.startActivity(intent)
-            //Log.e("ACTION", "CLICKED")
         }
 
 
@@ -105,7 +97,6 @@ class NewHistoryAdapter(val fragment: NewHistoryFragment, val ID: String, val da
         val days = (difference / (1000 * 60 * 60 * 24)).toInt()
         if (days == 0) {
             holder.title_item.text = "วันนี้"
-            //Log.e((difference/ (1000 * 60 * 60)).toString(),days.toString())
         } else if (days == 1) {
             holder.title_item.text = "เมื่อวานนี้"
         } else {
@@ -256,7 +247,6 @@ class NewHistoryAdapter(val fragment: NewHistoryFragment, val ID: String, val da
                     params.height = 250
                 }
                 .setPositive("รับทราบ", {
-                    //activity.onLoad()
                 })
                 .configPositive { params ->
                     params.textSize = 50
@@ -280,7 +270,6 @@ class NewHistoryAdapter(val fragment: NewHistoryFragment, val ID: String, val da
                     params.height = 250
                 }
                 .setPositive("รับทราบ", {
-                    //activity.onLoad()
                 })
                 .configPositive { params ->
                     params.textSize = 50

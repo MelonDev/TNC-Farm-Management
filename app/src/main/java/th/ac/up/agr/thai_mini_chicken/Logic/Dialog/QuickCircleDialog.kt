@@ -1,8 +1,5 @@
 package th.ac.up.agr.thai_mini_chicken.Logic.Dialog
 
-
-import android.widget.AdapterView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.mylhyl.circledialog.CircleDialog

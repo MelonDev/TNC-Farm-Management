@@ -1,6 +1,5 @@
 package th.ac.up.agr.thai_mini_chicken.AddProgramActivity
 
-import th.ac.up.agr.thai_mini_chicken.MainActivity
 import th.ac.up.agr.thai_mini_chicken.R
 
 import android.view.View
@@ -8,44 +7,25 @@ import com.aigestudio.wheelpicker.WheelPicker
 import com.aigestudio.wheelpicker.widgets.WheelDayPicker
 import com.aigestudio.wheelpicker.widgets.WheelMonthPicker
 import com.aigestudio.wheelpicker.widgets.WheelYearPicker
-import kotlinx.android.synthetic.main.input_dialog.*
 import kotlinx.android.synthetic.main.input_dialog.view.*
 import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
-import android.graphics.Typeface
-import com.irozon.alertview.AlertActionStyle
-import com.irozon.alertview.AlertStyle
-import com.irozon.alertview.AlertView
-import com.irozon.alertview.objects.AlertAction
-import kotlinx.android.synthetic.main.activity_add_program.view.*
-import android.R.attr.textColor
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+
 
 import android.text.InputType
-import android.util.Log
 import android.view.WindowManager
-import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.database.FirebaseDatabase
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.callback.ConfigDialog
+
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.callback.ConfigTitle
-import com.mylhyl.circledialog.params.TextParams
-import com.mylhyl.circledialog.params.TitleParams
+
 import kotlinx.android.synthetic.main.activity_add_program.*
 import kotlinx.android.synthetic.main.dialog_add.view.*
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Firebase.AddDataFirebase
-import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Tools.Date
-import th.ac.up.agr.thai_mini_chicken.Tools.LoadTime
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 
 
@@ -53,7 +33,6 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
 
     private val bottomSheetView: View = activity.layoutInflater.inflate(R.layout.input_dialog, null)
     private val bottomSheetDialog = BottomSheetDialog(activity)
-    //private var bottomSheetBehavior = BottomSheetBehavior.from<CoordinatorLayout>(activity.input_bottom_sheet)
 
     private var yearWheel: WheelYearPicker
     private var monthWheel: WheelMonthPicker
@@ -69,7 +48,6 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
 
     var monthS: String = "0"
     var yearS: String = "0"
-    var dayS: String = "0"
 
 
     init {
@@ -107,7 +85,6 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
 
         val typeface = ResourcesCompat.getFont(activity, R.font.sukhumvit_light)
 
-        //bottomSheetView.add_program_objective_wheel.typeface = typeface
         bottomSheetView.add_program_old_day_wheel.typeface = typeface
         bottomSheetView.add_program_old_week_wheel.typeface = typeface
         bottomSheetView.add_program_year_wheel_s.typeface = typeface
@@ -116,7 +93,6 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         bottomSheetView.add_program_count_female_wheel.typeface = typeface
         dayWheel.typeface = typeface
 
-        //bottomSheetView.add_program_objective_wheel.setOnItemSelectedListener(this)
         bottomSheetView.add_program_count_male_wheel.setOnItemSelectedListener(this)
         bottomSheetView.add_program_count_female_wheel.setOnItemSelectedListener(this)
         bottomSheetView.add_program_old_day_wheel.setOnItemSelectedListener(this)
@@ -160,7 +136,6 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         bottomSheetView.add_program_old_day_wheel.data = a
         bottomSheetView.add_program_old_week_wheel.data = a
 
-        //bottomSheetView.add_program_objective_wheel.data = ConvertCard().getObjective()
 
         bottomSheetView.add_program_month_wheel_s.data = ConvertCard().getArrMonth()
         bottomSheetView.add_program_year_wheel_s.data = b
@@ -170,7 +145,6 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
 
 
         yearWheel.setOnItemSelectedListener { picker, data, position ->
-            //updateDay(monthWheel.currentMonth,yearWheel.currentYear)
             updateDay(monthS.toInt(), yearWheel.currentYear)
         }
 
@@ -199,9 +173,7 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
             when (activity.position) {
                 0 -> {
                     activity.dateTV.text = "${bottomSheetView.add_program_day_wheel.currentDay.toString()} ${ConvertCard().getArrMonth()[monthS.toInt() - 1]} ${yearS.toInt() + 543}"
-                    //activity.monthS = monthS
-                    //activity.yearS = yearS
-                    //activity.dayS = bottomSheetView.add_program_day_wheel.currentDay.toString()
+
                     activity.dataCard.dateDay = bottomSheetView.add_program_day_wheel.currentDay.toString()
                     activity.dataCard.dateMonth = monthS
                     activity.dataCard.dateYear = yearS
@@ -390,11 +362,6 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
             bottomSheetView.add_program_year_wheel_s.selectedItemPosition = yearWheel.selectedYear - 1987
         }
 
-//        yearWheel.selectedItemPosition = activity.dataCard.dateYear.toInt() - 1900
-        //      monthWheel.selectedItemPosition = activity.dataCard.dateMonth.toInt() - 1
-        //    dayWheel.setYearAndMonth(activity.dataCard.dateYear.toInt(),activity.dataCard.dateMonth.toInt())
-        //  dayWheel.selectedItemPosition = activity.dataCard.dateDay.toInt() - 1
-
         return TakeAction(bottomSheetDialog)
     }
 
@@ -447,9 +414,6 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         val item = ConvertCard().getObjective()
         showDialog(0, "วัตถุประสงค์การเลี้ยง", arrayOf(item[0], item[1], item[2], item[3], item[4]))
 
-        //hideAll()
-        //bottomSheetView.input_dialog_objective_area.visibility = View.VISIBLE
-        //return TakeAction(bottomSheetDialog)
     }
 
     fun showDialog(ID: Int, title: String, arr: Array<String>) {
@@ -541,8 +505,7 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         val inflater = activity.layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_add, null)
         dialog.setView(dialogView)
-        //dialog.setTitle(Title);
-        //dialog.setMessage(Message);
+
         val editText = dialogView.custom_dialog_edittext
         editText.requestFocus()
 
@@ -553,7 +516,6 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         editText.inputType = InputType.TYPE_CLASS_TEXT
 
         val abc = dialog.create()
-        //abc.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
         abc.show()
@@ -610,17 +572,6 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
     }
 
     private fun saveData() {
-        /*val cardData = CardData()
-        cardData.apply {
-            cardName = activity.add_program_edittext.text.toString()
-            dateDay = bottomSheetView.add_program_day_wheel.currentDay.toString()
-        }
-*/
-
-
-
-
-        //b.setValue()
         if (!activity.disible) {
             val cardData = activity.dataCard
 

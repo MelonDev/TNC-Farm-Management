@@ -3,7 +3,6 @@ package th.ac.up.agr.thai_mini_chicken.ProgramMainActivity
 import android.content.Intent
 import android.os.Bundle
 
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,17 +11,9 @@ import androidx.core.view.GravityCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.callback.ConfigTitle
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.params.TextParams
-import com.mylhyl.circledialog.params.TitleParams
+
 import kotlinx.android.synthetic.main.activity_program_main.*
 import kotlinx.android.synthetic.main.app_bar_program_main.*
 import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
@@ -74,10 +65,6 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
 
     private fun setNavigationDrawer() {
         setSupportActionBar(toolbar)
@@ -118,7 +105,6 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                     params.textColor = ContextCompat.getColor(this@ProgramMainActivity, MelonTheme.from(this@ProgramMainActivity).getColor())
                 }
                 .setPositive("ออก", {
-                    //unit
                     close = true
                     this.onBackPressed()
                 })
@@ -139,27 +125,6 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
-            }
-            R.id.nav_gallery -> {
-
-            }
-            R.id.nav_slideshow -> {
-
-            }
-            R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
-            }
-        }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true

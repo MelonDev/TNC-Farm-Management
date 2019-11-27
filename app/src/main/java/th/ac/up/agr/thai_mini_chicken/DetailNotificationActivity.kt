@@ -336,72 +336,9 @@ class DetailNotificationActivity : AppCompatActivity() {
             val message = intent.getStringExtra("message")
 
 
-/*
-            val event = Event()
-            event.apply {
-                this.title = objective
-                this.week = week.toInt()
-                this.totalDay = totalDay.toInt()
-                this.message = message
-                this.day = day.toInt()
-            }
-*/
-            //arrEvent.add(event)
-
-            //Log.e("ARR",arrEvent.size.toString())
-            //recyclerView.adapter.notifyDataSetChanged()
-            //Log.e("OBJ",objective)
-            //Log.e("WEEK",week)
-            //Log.e("DAY",day)
-            //Log.e("TOTAL",totalDay)
-            //Log.e("MESSAGE",message)
-
-            //val label = this.findViewById(R.id.label) as TextView
-
-            //label.text = color
         }
     }
 
-    /*
-        var i = 0
-
-        while (i < data.size) {
-            if (arr.size == 0) {
-                val a = data[0]
-                val b = Event()
-                b.apply {
-                    title = "null"
-                    day = a.day
-                    week = a.week
-                    message = "null"
-                }
-                arr.add(b)
-                arr.add(data[i])
-                Log.e("1",i.toString())
-            } else if(i == data.size - 1) {
-                arr.add(data[i])
-                Log.e("2",i.toString())
-            } else {
-                if((data[i].week != arr[arr.lastIndex].week) && (data[i].day != arr[arr.lastIndex].day)){
-                    val a = data[i]
-                    val b = Event()
-                    b.apply {
-                        title = "null"
-                        day = a.day
-                        week = a.week
-                        message = "null"
-                    }
-                    arr.add(b)
-                    arr.add(data[i])
-                    Log.e("3",i.toString())
-                }else {
-                    arr.add(data[i])
-                    Log.e("4",i.toString())
-                }
-            }
-            i+=1
-        }
-    */
 
     fun getEvent(dataSnapshot: DataSnapshot?) {
         arrEvent.clear()

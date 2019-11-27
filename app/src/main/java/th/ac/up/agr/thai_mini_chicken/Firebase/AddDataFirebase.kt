@@ -7,14 +7,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.gson.Gson
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.params.TextParams
+
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.LoadTime
@@ -47,11 +41,6 @@ class AddDataFirebase(val activity: FragmentActivity) {
     }
 
     fun setDataToActive(dataCard: CardData, objective: String, result: String, change: Boolean) {
-        //val d = CardDate()
-        //d.dateTime = Date().getDateNull()
-        //d.IDCard = Date().getDateFakeID()
-        //val refs = container.child("ใช้งาน").child(d.IDCard)
-        //refs.setValue(d)
 
         val database = FirebaseDatabase.getInstance().reference
 
@@ -60,11 +49,6 @@ class AddDataFirebase(val activity: FragmentActivity) {
         val b = man.child("รายการที่ต้องทำ")
         val c = man.child("รายละเอียด").child("userObjective")
         val ref = man.child("รายละเอียด")
-
-        //val mainJson = JSONObject()
-        //val manJson = JSONObject()
-
-        //val m = HashMap<>
 
         b.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -75,30 +59,9 @@ class AddDataFirebase(val activity: FragmentActivity) {
                 setWaitDialog()
                 if (p0.value == null) {
 
-                    //val childMap = HashMap<String, Any>()
 
                     setData(objective, result, dataCard, man)
 
-                    //val arr = LoadTime().getTable(dataCard.userObjective)
-
-                    //val objectiveJson = Gson()
-
-                    //val salaries = HashMap<>()
-                    //salaries.put("salary", salary(10, 20))
-                    //val s = Gson().toJson(salaries)
-
-                    //val w = HashMap<String,CardData>()
-
-
-                    //val reminderMap = HashMap<String, AddSlot>()
-
-
-                    //objectiveJson.toJson(arr)
-                    //ref.setValue(dataCard)
-                    //val a = Gson()
-                    //a.toJson(dataCard)
-                    //a.toJson(objectiveJson)
-                    //man.setValue(a)
                 } else {
 
                     Log.e("CHANGE",change.toString())
@@ -106,37 +69,7 @@ class AddDataFirebase(val activity: FragmentActivity) {
                         b.removeValue()
                         setData(objective, result, dataCard, man)
 
-                        /*
-                        val arr = LoadTime().getTable(dataCard.userObjective)
-                        b.removeValue()
-                        val childMap = HashMap<String, Any>()
-                        for (i in arr) {
-                            val key: String = man.push().key.toString()
 
-                            val pathA = "/รายการที่ต้องทำ/$key"
-                            i.cardID = key
-                            i.fromID = dataCard.cardID
-                            if (i.status.isEmpty()) {
-                                i.status = "ACTIVE"
-                            }
-                            childMap.put(pathA, i)
-                            //b.push().setValue(i)
-                            //Log.e("ADD","TEST")
-                        }
-                        childMap.put("/รายละเอียด/", dataCard)
-                        man.updateChildren(childMap) { p0, _ ->
-                            if (p0 != null) {
-                                waitDialog.dismiss()
-                                setErrorDialog()
-                                //showErrorDialog()
-                            } else {
-                                waitDialog.dismiss()
-                                setConDialog()
-                                //showConDialog()
-                            }
-                        }
-                        */
-                        //ref.setValue(dataCard)
                     } else {
                         val childMap = HashMap<String, Any>()
                         childMap.put("/รายละเอียด/", dataCard)
@@ -151,67 +84,8 @@ class AddDataFirebase(val activity: FragmentActivity) {
                                 //showConDialog()
                             }
                         }
-                        //ref.setValue(dataCard)
                     }
-                    /*
 
-                    c.addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onCancelled(p0: DatabaseError) {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                        }
-
-                        override fun onDataChange(p0: DataSnapshot) {
-                            if (p0.value != null) {
-                                val z = p0.value.toString()
-                                if (!z.contentEquals(dataCard.userObjective)) {
-                                    val arr = LoadTime().getTable(dataCard.userObjective)
-                                    b.removeValue()
-                                    val childMap = HashMap<String, Any>()
-                                    for (i in arr) {
-                                        val key: String = man.push().key.toString()
-
-                                        val pathA = "/รายการที่ต้องทำ/$key"
-                                        i.cardID = key
-                                        i.fromID = dataCard.cardID
-                                        if (i.status.isEmpty()) {
-                                            i.status = "ACTIVE"
-                                        }
-                                        childMap.put(pathA, i)
-                                        //b.push().setValue(i)
-                                        //Log.e("ADD","TEST")
-                                    }
-                                    childMap.put("/รายละเอียด/", dataCard)
-                                    man.updateChildren(childMap) { p0, _ ->
-                                        if (p0 != null) {
-                                            waitDialog.dismiss()
-                                            setErrorDialog()
-                                            //showErrorDialog()
-                                        } else {
-                                            waitDialog.dismiss()
-                                            setConDialog()
-                                            //showConDialog()
-                                        }
-                                    }
-                                    //ref.setValue(dataCard)
-                                } else {
-                                    val childMap = HashMap<String, Any>()
-                                    childMap.put("/รายละเอียด/", dataCard)
-                                    man.updateChildren(childMap) { p0, _ ->
-                                        if (p0 != null) {
-                                            waitDialog.dismiss()
-                                            setErrorDialog()
-                                            //showErrorDialog()
-                                        } else {
-                                            waitDialog.dismiss()
-                                            setConDialog()
-                                            //showConDialog()
-                                        }
-                                    }
-                                    //ref.setValue(dataCard)
-                                }
-                            }
-                        }
-                    })*/
                 }
             }
         })
@@ -220,8 +94,6 @@ class AddDataFirebase(val activity: FragmentActivity) {
 
     fun setData(objective: String, result: String, dataCard: CardData, man: DatabaseReference) {
         val childMap = HashMap<String, Any>()
-
-        //Log.e("$objective","$result")
 
         if(objective.contentEquals("1") && result.contentEquals("ว่างเปล่า")){
             dataCard.managerName = result
@@ -232,11 +104,9 @@ class AddDataFirebase(val activity: FragmentActivity) {
                 if (p0 != null) {
                     waitDialog.dismiss()
                     setErrorDialog()
-                    //showErrorDialog()
                 } else {
                     waitDialog.dismiss()
                     setConDialog()
-                    //showConDialog()
                 }
             }
         } else if (objective.contentEquals("1")) {
@@ -256,16 +126,9 @@ class AddDataFirebase(val activity: FragmentActivity) {
                     i.status = "ACTIVE"
                 }
 
-                //val a = AddSlot(i,null)
 
                 childMap.put(pathA, i)
 
-                //w.put()
-
-                //Log.e("ADD","TEST")
-                //b.push().setValue(i)
-                //val oj = Gson()
-                //oj.toJson(i)
             }
 
             //val wer = AddSlot(null,dataCard)
@@ -326,11 +189,9 @@ class AddDataFirebase(val activity: FragmentActivity) {
                                     if (p0 != null) {
                                         waitDialog.dismiss()
                                         setErrorDialog()
-                                        //showErrorDialog()
                                     } else {
                                         waitDialog.dismiss()
                                         setConDialog()
-                                        //showConDialog()
                                     }
                                 }
                             }
@@ -341,11 +202,9 @@ class AddDataFirebase(val activity: FragmentActivity) {
                             if (p0 != null) {
                                 waitDialog.dismiss()
                                 setErrorDialog()
-                                //showErrorDialog()
                             } else {
                                 waitDialog.dismiss()
                                 setConDialog()
-                                //showConDialog()
                             }
                         }
                     }
@@ -408,28 +267,7 @@ class AddDataFirebase(val activity: FragmentActivity) {
                 .setProgressText("กำลังบันทึก...")
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(activity.supportFragmentManager)
-        //waitDialog.dismiss()
-        //                        .setProgressDrawable(R.drawable.bg_progress_s)
-        /*waitDialog = CircleDialog.Builder(activity
-        )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
-                .setProgressText("登录中...")
-                .setProgressStyle(ProgressParams.STYLE_SPINNER)
-                .setText("กำลังบันทึก")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
 
-*/
     }
 
     fun setDataToInactive(dataCard: CardData) {
@@ -438,14 +276,9 @@ class AddDataFirebase(val activity: FragmentActivity) {
     }
 
     fun setData(key: String, dataCard: CardData) {
-        //var ref = container.child(key)
-        //var ref = container.push()
+
         val ref = container.push().child("ข้อมูล").child("ใช้งาน")
         ref.child("Information").setValue(dataCard)
-    }
-
-    fun testGet() {
-
     }
 
 }

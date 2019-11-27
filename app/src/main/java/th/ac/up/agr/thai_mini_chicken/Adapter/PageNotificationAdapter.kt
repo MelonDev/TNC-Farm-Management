@@ -2,7 +2,6 @@ package th.ac.up.agr.thai_mini_chicken.Adapter
 
 import android.content.Intent
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,16 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigItems
-import com.mylhyl.circledialog.callback.ConfigText
+
 import com.mylhyl.circledialog.params.*
 import com.squareup.picasso.Picasso
 import th.ac.up.agr.thai_mini_chicken.AddNotiCardActivity
-import th.ac.up.agr.thai_mini_chicken.Data.ArraySlot
 import th.ac.up.agr.thai_mini_chicken.Data.CardSlot
-import th.ac.up.agr.thai_mini_chicken.Data.Event
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Fragment.NotificationFragment
 import th.ac.up.agr.thai_mini_chicken.R
@@ -69,7 +63,6 @@ class PageNotificationAdapter(val fragment: NotificationFragment, val data: Arra
                 info_area.visibility = View.GONE
                 holder.histort_area.visibility = View.GONE
 
-                //card_des.text = "อายุ ${data[position].week} สัปดาห์ ${data[position].day} วัน"
 
                 if(card.cardName.isEmpty()){
                     card_des.text = "ชื่อรายการ"
@@ -82,9 +75,6 @@ class PageNotificationAdapter(val fragment: NotificationFragment, val data: Arra
 
                 setIcon(slot.title,holder.icon_image,icon_area,card_title)
 
-                //card_title.setTextColor(color)
-                //card_item.setCardBackgroundColor(color)
-                //icon_image.setImageDrawable(activity.resources.getDrawable(R.drawable.ic_parasite_icon))
 
             }
         }else {
@@ -196,9 +186,7 @@ class PageNotificationAdapter(val fragment: NotificationFragment, val data: Arra
                             showConDialog()
                         }
                     }
-                    //ToolReference().checkPosition(cardKey, ref)
-                    //this.notifyItemRemoved(positions)
-                    //showConDialog()
+
                 }
                 .configItems { params ->
                     params!!.textColor = ContextCompat.getColor(activity.applicationContext, R.color.colorRed)
@@ -216,13 +204,10 @@ class PageNotificationAdapter(val fragment: NotificationFragment, val data: Arra
         CircleDialog.Builder(activity
         )
                 .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
-                //.setTitle(title)
-                //.setTitleColor(ContextCompat.getColor(fragment, R.color.colorPrimary))
-                //.setSubTitle(sub)
+
                 .setItems(arr) { parent, view, position, id ->
                     var ref = Firebase.reference
                     ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(data[pos].event.fromID).child("รายการที่ต้องทำ").child(data[pos].event.cardID).child("status")
-                    //status = data[pos].status
                     when (position) {
                         0 -> {
                             goToEdit(data[pos].event.cardID,pos)
@@ -304,8 +289,6 @@ class PageNotificationAdapter(val fragment: NotificationFragment, val data: Arra
 
 
     private fun setIcon(objective: String, imageView: ImageView, area: CardView, textView: TextView) {
-        //area.setCardBackgroundColor(ContextCompat.getColor(activity, MelonTheme.from(activity).getColor()))
-        //textView.setTextColor(ContextCompat.getColor(activity, MelonTheme.from(activity).getColor()))
         when (objective) {
             "ฉีดวัคซีน" -> {
                 Picasso.get().load(R.drawable.ic_inject_icon).into(imageView)

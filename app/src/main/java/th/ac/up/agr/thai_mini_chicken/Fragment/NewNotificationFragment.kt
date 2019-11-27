@@ -15,7 +15,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_new_notification.view.*
-import kotlinx.android.synthetic.main.fragment_new_program.view.*
 import th.ac.up.agr.thai_mini_chicken.Adapter.NewNotificationAdapter
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Data.CardSlot
@@ -72,7 +71,6 @@ class NewNotificationFragment : Fragment() {
         database.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 v.new_notification_empty_area.visibility = View.VISIBLE
-                //Log.e("ARR","CANCEL")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -80,7 +78,6 @@ class NewNotificationFragment : Fragment() {
                     if (!process) {
                         process = true
 
-                        //Log.e("SIZE",p0.children.count().toString())
 
                         onRun()
                     }
@@ -88,7 +85,6 @@ class NewNotificationFragment : Fragment() {
                     arr.clear()
                     recyclerView.adapter!!.notifyDataSetChanged()
                     v.new_notification_empty_area.visibility = View.VISIBLE
-                    //Log.e("ARR_CANCEL",arr.size.toString())
                 }
             }
         })
@@ -116,7 +112,6 @@ class NewNotificationFragment : Fragment() {
                     var count = 0
 
                     for (it in p0.children){
-                        //Log.e("KEY", it.key.toString())
 
                         val y = database.child(it.key.toString()).child("รายการที่ต้องทำ")
                         val n = database.child(it.key.toString()).child("รายละเอียด")
@@ -143,7 +138,6 @@ class NewNotificationFragment : Fragment() {
                                         override fun onDataChange(p2: DataSnapshot) {
                                             if (p2.value != null) {
 
-                                                //Log.e("C", p2.children.count().toString())
 
                                                 var s = p2.children.count()
                                                 var c = 0
@@ -152,8 +146,6 @@ class NewNotificationFragment : Fragment() {
 
                                                     val slot = it.getValue(Event::class.java)!!
 
-                                                    //Log.e("Z",cardData.cardID)
-                                                    //Log.e("Y",arr.size.toString())
 
                                                     val z = calendar.clone() as Calendar
 

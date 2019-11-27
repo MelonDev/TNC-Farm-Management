@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigItems
-import com.mylhyl.circledialog.callback.ConfigText
+
 import com.mylhyl.circledialog.params.*
 import com.squareup.picasso.Picasso
 import th.ac.up.agr.thai_mini_chicken.AddNotiCardActivity
@@ -113,7 +110,6 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
                     params.height = 250
                 }
                 .setPositive("รับทราบ", {
-                    //fragment.onLoad()
                 })
                 .configPositive { params ->
                     params.textSize = 50
@@ -144,7 +140,6 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
                     params.height = 250
                 }
                 .setPositive("รับทราบ", {
-                    //fragment.onLoad()
                 })
                 .configPositive { params ->
                     params.textSize = 50
@@ -176,9 +171,7 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
                             showConDialog()
                         }
                     }
-                    //ToolReference().checkPosition(cardKey, ref)
-                    //this.notifyItemRemoved(positions)
-                    //showConDialog()
+
                 }
                 .configItems { params ->
                     params!!.textColor = ContextCompat.getColor(activity.applicationContext, R.color.colorRed)
@@ -196,13 +189,10 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
         CircleDialog.Builder(activity
         )
                 .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
-                //.setTitle(title)
-                //.setTitleColor(ContextCompat.getColor(fragment, R.color.colorPrimary))
-                //.setSubTitle(sub)
+
                 .setItems(arr) { parent, view, position, id ->
                     var ref = Firebase.reference
                     ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(data[pos].event.fromID).child("รายการที่ต้องทำ").child(data[pos].event.cardID).child("status")
-                    //status = data[pos].status
                     when (position) {
                         0 -> {
                             goToEdit(data[pos].event.cardID,pos)
@@ -270,7 +260,6 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
                     params.height = 250
                 }
                 .setPositive("รับทราบ", {
-                    //fragment.onLoad()
                 })
                 .configPositive { params ->
                     params.textSize = 50
@@ -282,8 +271,7 @@ class NewNotificationAdapter (val fragment: NewNotificationFragment,val data :Ar
 
 
     private fun setIcon(objective: String, imageView: ImageView, area: CardView, textView: TextView) {
-        //area.setCardBackgroundColor(ContextCompat.getColor(activity, MelonTheme.from(activity).getColor()))
-        //textView.setTextColor(ContextCompat.getColor(activity, MelonTheme.from(activity).getColor()))
+
         when (objective) {
             "ฉีดวัคซีน" -> {
                 Picasso.get().load(R.drawable.ic_inject_icon).into(imageView)

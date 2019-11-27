@@ -18,7 +18,6 @@ class KnowledgeWebFragment : Fragment() {
 
         fun newInstance(url: String): KnowledgeWebFragment {
             val args = Bundle()
-            //args.putString("TITLE", title)
             args.putString("URL", url)
             val fragment = KnowledgeWebFragment()
             fragment.arguments = args
@@ -28,14 +27,12 @@ class KnowledgeWebFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_knowledge_web, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val title = arguments!!.getString("TITLE")
         val url = arguments!!.getString("URL")
 
         val webview = view.knowledge_web_webView

@@ -3,8 +3,6 @@ package th.ac.up.agr.thai_mini_chicken.Adapter
 import android.content.Context
 import android.content.Intent
 
-import android.util.Log
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,20 +10,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
-import com.skydoves.powermenu.MenuAnimation
-import com.skydoves.powermenu.PowerMenu
-import com.skydoves.powermenu.PowerMenuItem
-import kotlinx.android.synthetic.main.activity_add_program.*
+
 import th.ac.up.agr.thai_mini_chicken.DetailActivity
-import th.ac.up.agr.thai_mini_chicken.Fragment.HistoryFragment
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.Animation
-import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
-import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
+
 import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardVHConfig
 import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardViewHolder
 
@@ -37,10 +26,7 @@ class ProgramAdapter(var fragment: FragmentActivity, val ID: Int, val arr: Array
     private var lastPosition: Int = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        //val a = LayoutInflater.from(parent.context)
-        //val themeWrapper = ContextThemeWrapper(parent.context,R.style.MelonTheme_LightGreen_Material)
-        //val b = a.cloneInContext(themeWrapper)
-        //val view = b.inflate(R.layout.data_card,parent,false)
+
         val view = LayoutInflater.from(parent.context).inflate(R.layout.data_card, parent, false)
 
         context = parent.context
@@ -90,30 +76,7 @@ class ProgramAdapter(var fragment: FragmentActivity, val ID: Int, val arr: Array
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-/*
-        holder.card_more.setOnClickListener {
-            if (lastPosition == -1){
-                lastHolder = holder
-                lastPosition = position
 
-                dialogShow(lastHolder)
-            } else {
-                dialogHide(lastHolder)
-
-                lastHolder = holder
-                lastPosition = position
-
-                dialogShow(lastHolder)
-            }
-        }
-
-        holder.menu_dialog.setOnClickListener {
-            //dialogHide(lastHolder)
-            //dialogHide(holder)
-            dialogAnimationHide(lastHolder)
-        }
-
-*/
 
         holder.card_item.setOnClickListener {
             when (ID) {
@@ -129,10 +92,7 @@ class ProgramAdapter(var fragment: FragmentActivity, val ID: Int, val arr: Array
         }
 
         holder.card_more.setOnClickListener {
-            /* var popupMenu = PopupMenu(context,it)
-             popupMenu.inflate(R.menu.menu_main)
-             popupMenu.show()
-             */
+
             when (ID) {
                 0 -> {
                     showDialog(0, "หัวข้อ", "รหัส xxxxxxxxxx", arrayOf("แก้ไข", "เก็บประวัติ", "ลบ"))
@@ -145,19 +105,7 @@ class ProgramAdapter(var fragment: FragmentActivity, val ID: Int, val arr: Array
                 }
             }
 
-/*
-            var powerMenu = PowerMenu.Builder(context)
-                    .addItem(PowerMenuItem("ทดสอบ",false))
-                    .addItem(PowerMenuItem("HI",false))
-                    .setAnimation(MenuAnimation.SHOWUP_TOP_RIGHT)
 
-                    .setMenuRadius(10f)
-                    .setMenuShadow(10f)
-                    .setSelectedEffect(true)
-                    .build()
-
-            powerMenu.showAsDropDown(holder.card_more)
-*/
         }
 
         when (arr[position]) {

@@ -10,14 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigItems
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.params.ItemsParams
-import com.mylhyl.circledialog.params.TextParams
+
 import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Data.Event
@@ -42,7 +35,6 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
     }
 
     override fun getItemCount(): Int {
-        //Log.e("SIZE",data.size.toString())
         return data.size
     }
 
@@ -312,9 +304,7 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
                     params.height = 250
                 }
                 .setPositive("รับทราบ", {
-                    //fragment.onLoad(false)
-                    //fragment.recyclerView.scrollToPosition(pos)
-                    //fragment.recyclerView.adapter.notifyItemRemoved(pos)
+
 
                     Log.e("POS", pos.toString())
                 })
@@ -340,7 +330,6 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
                     params.height = 250
                 }
                 .setPositive("รับทราบ", {
-                    //fragment.onLoad(false)
                 })
                 .configPositive { params ->
                     params.textSize = 50
@@ -364,7 +353,6 @@ class NewProgramAdapter(val fragment: NewProgramFragment, val ID: String, val da
                     params.height = 250
                 }
                 .setPositive("รับทราบ", {
-                    //fragment.onLoad(false)
                 })
                 .configPositive { params ->
                     params.textSize = 50

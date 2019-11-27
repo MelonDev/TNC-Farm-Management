@@ -45,13 +45,10 @@ class CustomPlanActivity : AppCompatActivity() {
 
     var user = FirebaseAuth.getInstance().currentUser!!.uid
 
-    //lateinit var adapter: CustomPlanAdapter
     lateinit var adapter: NewCustomPlanAdapter
 
     lateinit var waitDialog: DialogFragment
 
-    //private lateinit var arrEvent :ArrayList<Event>
-    //private var arrPassed = ArrayList<Event>()
     lateinit var recyclerView: RecyclerView
 
     private lateinit var arrCustom: ArrayList<CustomData>
@@ -62,15 +59,13 @@ class CustomPlanActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        //setTheme(MelonTheme.from(this).getStyle())
         setTheme(R.style.DetailTheme)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_plan)
 
         val bundle = intent.extras!!
-        //val card_key = bundle.getString("CARD_KEY")
-        //val user_ID = bundle.getString("USER_ID")
+
         type = bundle.getString("TYPE")!!
 
         if (type.contentEquals("0")) {
@@ -83,7 +78,6 @@ class CustomPlanActivity : AppCompatActivity() {
 
             arrCustom = ArrayList()
 
-            //val arr = LoadTime().getTable(type)
 
             recyclerView = QuickRecyclerView(this
                     , custom_plan_recycler_view
@@ -94,14 +88,12 @@ class CustomPlanActivity : AppCompatActivity() {
                     , "alway"
                     , "high")
                     .recyclerView()
-            //adapter = CustomPlanAdapter(this, arrCustom)
             adapter = NewCustomPlanAdapter(this, arrCustom)
 
             recyclerView.adapter = adapter
 
             getCustom(type)
         } else if (type.contentEquals("1")) {
-            //custom_fab_btn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, MelonTheme.from(this).getColor()))
 
             custom_fab_btn.hide()
 
@@ -111,11 +103,7 @@ class CustomPlanActivity : AppCompatActivity() {
                 finish()
             }
 
-            //custom_fab_btn.setOnClickListener { showEditDialog() }
-
             arrCustom = ArrayList()
-
-            //val arr = LoadTime().getTable(type)
 
             recyclerView = QuickRecyclerView(this
                     , custom_plan_recycler_view
@@ -126,7 +114,6 @@ class CustomPlanActivity : AppCompatActivity() {
                     , "alway"
                     , "high")
                     .recyclerView()
-            //adapter = CustomPlanAdapter(this, arrCustom)
             adapter = NewCustomPlanAdapter(this, arrCustom)
 
             recyclerView.adapter = adapter
@@ -214,8 +201,6 @@ class CustomPlanActivity : AppCompatActivity() {
             }
         })
 
-        //val ref = firebase.child("ผู้ใช้").child(user).child("รูปแบบ").child(card_key).child("รายการที่ต้องทำ")
-
     }
 
     fun showEditDialog() {
@@ -226,20 +211,13 @@ class CustomPlanActivity : AppCompatActivity() {
         val dialogView = inflater.inflate(R.layout.dialog_add, null)
         dialog.setView(dialogView)
         dialogView.dialog_add_text.text = "ตั้งชื่อรูปแบบ"
-        //dialog.setTitle(Title);
-        //dialog.setMessage(Message);
+
         val editText = dialogView.custom_dialog_edittext
         editText.requestFocus()
 
-        /*
-        if (this.dataCard.breed.isNotEmpty()) {
-            editText.setText(activity.dataCard.breed)
-        }
-*/
         editText.inputType = InputType.TYPE_CLASS_TEXT
 
         val abc = dialog.create()
-        //abc.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         abc.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
         abc.show()
@@ -255,13 +233,7 @@ class CustomPlanActivity : AppCompatActivity() {
 
         dialogView.dialog_add_confirm.setOnClickListener {
             val x = editText.text.toString()
-            /*if (x.isNotEmpty()) {
-                activity.add_program_breed_text.text = x
-                activity.dataCard.breed = x
-            } else {
-                activity.add_program_breed_text.text = "ไม่ระบุ"
-            }
-*/
+
             if (x.isNotEmpty()) {
 
                 var firebase = Firebase.reference
@@ -327,28 +299,7 @@ class CustomPlanActivity : AppCompatActivity() {
                 .setProgressText("กำลังบันทึก...")
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(this.supportFragmentManager)
-        //waitDialog.dismiss()
-        //                        .setProgressDrawable(R.drawable.bg_progress_s)
-        /*waitDialog = CircleDialog.Builder(activity
-        )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
-                .setProgressText("登录中...")
-                .setProgressStyle(ProgressParams.STYLE_SPINNER)
-                .setText("กำลังบันทึก")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
 
-*/
     }
 
 
@@ -365,14 +316,13 @@ class CustomPlanActivity : AppCompatActivity() {
                     params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
                     params.height = 250
                 }
-                .setPositive("รับทราบ", {
-                    //this.finish()
+                .setPositive("รับทราบ") {
                     var intent = Intent(this, DetailNotificationActivity::class.java)
                     intent.putExtra("USER_ID", user)
                     intent.putExtra("CARD_KEY", key)
                     intent.putExtra("TYPE", "2")
                     startActivity(intent)
-                })
+                }
                 .configPositive { params ->
                     params.textSize = 50
                     params.textColor = ContextCompat.getColor(this@CustomPlanActivity, R.color.colorText)

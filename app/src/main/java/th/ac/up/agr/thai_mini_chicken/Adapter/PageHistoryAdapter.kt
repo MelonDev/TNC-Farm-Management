@@ -10,14 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigItems
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.params.ItemsParams
-import com.mylhyl.circledialog.params.TextParams
+
 import com.squareup.picasso.Picasso
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.DetailActivity
@@ -38,7 +31,6 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
     }
 
     override fun getItemCount(): Int {
-        //activity.progress.visibility = View.GONE
         if(data.size == 0){
             activity.emptyText.visibility = View.VISIBLE
         }else {
@@ -69,7 +61,6 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
             intent.putExtra("CARD_KEY", data[position].cardID)
             intent.putExtra("USER_ID", ID)
             activity.startActivity(intent)
-            //Log.e("ACTION", "CLICKED")
         }
 
 
@@ -79,7 +70,6 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
         holder.icon_area.setCardBackgroundColor(ContextCompat.getColor(activity.context!!, R.color.colorText))
     }
     fun setTitle(card: CardData, holder: CardViewHolder) {
-        //val databaseReferences = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน").child(key)
         holder.title_item.visibility = View.VISIBLE
         holder.card_item.visibility = View.GONE
         holder.message_area.visibility = View.GONE
@@ -99,14 +89,12 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
             set(Calendar.DAY_OF_MONTH,part.get(Calendar.DAY_OF_MONTH))
         }
 
-        //calendar.set(card.dateYear.toInt(), card.dateMonth.toInt() - 1, card.dateDay.toInt())
 
 
         val difference = today.timeInMillis - calendar.timeInMillis
         val days = (difference / (1000 * 60 * 60 * 24)).toInt()
         if (days == 0) {
             holder.title_item.text = "วันนี้"
-            //Log.e((difference/ (1000 * 60 * 60)).toString(),days.toString())
         } else if (days == 1) {
             holder.title_item.text = "เมื่อวานนี้"
         } else {
@@ -116,8 +104,6 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
     }
 
     fun getValue(card: CardData, holder: CardViewHolder) {
-        //val databaseReferences = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน")
-        //val y = databaseReferences.child(key).child("รายละเอียด")
 
         holder.title_item.visibility = View.GONE
         holder.card_item.visibility = View.VISIBLE
@@ -164,7 +150,6 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
         }
 
         holder.apply {
-            //card_des.text = plusDes("0")
             info_date.text = "${slot.dateDay} ${ConvertCard().getMonth(slot.dateMonth)} ${ConvertCard().getYear(slot.dateYear)}"
             info_objective.text = ConvertCard().getObjective(slot.userObjective)
         }
@@ -177,14 +162,10 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
         CircleDialog.Builder(activity.activity!!
         )
                 .configDialog { params -> params.animStyle = R.style.dialogWindowAnim }
-                //.setTitle(title)
-                //.setTitleColor(ContextCompat.getColor(fragment, R.color.colorPrimary))
-                //.setSubTitle(sub)
                 .setItems(arr) { parent, view, position, id ->
                     when (position) {
                         0 -> {
                             val ref = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey).child("รายละเอียด").child("status")
-                            //val pathTo = Firebase.reference.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey)
 
                             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onCancelled(p0: DatabaseError) {
@@ -224,7 +205,6 @@ class PageHistoryAdapter(val activity: HistoryFragment, val ID: String, val data
 
         val database = FirebaseDatabase.getInstance().reference
         val path = database.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน").child(cardKey)
-        //val ref = database.child("ผู้ใช้").child(userID).child("รายการ").child("ใช้งาน")
 
         CircleDialog.Builder(activity.activity!!
         )

@@ -16,19 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.app_bar_program_main.*
 import kotlinx.android.synthetic.main.fragment_history.view.*
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import th.ac.up.agr.thai_mini_chicken.Adapter.PageHistoryAdapter
-import th.ac.up.agr.thai_mini_chicken.Adapter.ProgramAdapter
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.Date
-import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 import th.ac.up.agr.thai_mini_chicken.Tools.QuickRecyclerView
-import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardVHConfig
 import java.util.*
 
 class HistoryFragment : Fragment() {
@@ -85,10 +80,8 @@ class HistoryFragment : Fragment() {
                 mSwipeRefreshLayout.isRefreshing = true
 
                 onLoad()
-                // Fetching data from server
-                //loadRecyclerViewData()
+
             }
-            //Log.e("LOAD","sdaksd")
         }
 
         run = true
@@ -108,16 +101,13 @@ class HistoryFragment : Fragment() {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.value != null) {
                     progress.visibility = View.GONE
-                    //emptyText.visibility = View.GONE
                     arrData.clear()
                     recyclerView.adapter!!.notifyDataSetChanged()
 
-                    //Log.e("HISTORY","OUTFOR")
 
                     p0.children.forEach {
                         val key = it.key.toString()
 
-                        //Log.e("HISTORY","INFOR")
 
                         val rf = Firebase.reference.child("ผู้ใช้").child(ID).child("รายการ").child("ใช้งาน").child(key).child("รายละเอียด")
                         rf.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -177,24 +167,17 @@ class HistoryFragment : Fragment() {
                                                 set(Calendar.DAY_OF_MONTH, b.get(Calendar.DAY_OF_MONTH))
                                             }
 
-                                            //Log.e("C",calendar.get(Calendar.DAY_OF_MONTH).toString())
-                                            //Log.e("L",last.get(Calendar.DAY_OF_MONTH).toString())
 
-                                            //calendar.set(slot.dateYear.toInt(), slot.dateMonth.toInt() - 1, slot.dateDay.toInt())
-                                            //last.set(lSlot.dateYear.toInt(), lSlot.dateMonth.toInt() - 1, lSlot.dateDay.toInt())
                                             val difference = calendar.timeInMillis - last.timeInMillis
                                             val days = (difference / (1000 * 60 * 60 * 24)).toInt()
 
-                                            //Log.e(slot.createDate,days.toString())
 
                                             if (days == 0) {
                                                 val a = arrData[arrData.lastIndex]
                                                 arrData.removeAt(arrData.lastIndex)
                                                 arrData.add(slot)
                                                 arrData.add(a)
-                                                //Log.e("P","A")
                                             } else {
-                                                //Log.e("P","B")
                                                 val a = CardData()
                                                 a.apply {
                                                     cardID = "null"
@@ -204,11 +187,9 @@ class HistoryFragment : Fragment() {
                                                 arrData.add(a)
 
                                             }
-                                            //Log.e("PRO", "LOAD")
                                             recyclerView.adapter!!.notifyDataSetChanged()
                                             this@HistoryFragment.mSwipeRefreshLayout.isRefreshing = false
                                         }
-                                        //arrData.add(slot)
 
                                     }
                                 }
@@ -233,11 +214,5 @@ class HistoryFragment : Fragment() {
         onLoad()
     }
 
-    fun reset(){
-        if (run){
-            //adapter.resetMenu()
-        }
-
-    }
 
 }

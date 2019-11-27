@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_knowledge_table.*
 import kotlinx.android.synthetic.main.fragment_knowledge_table.view.*
 import th.ac.up.agr.thai_mini_chicken.Adapter.TableAdapter
 import th.ac.up.agr.thai_mini_chicken.Data.TableData
@@ -21,7 +20,6 @@ class KnowledgeTableFragment : Fragment() {
 
         fun newInstance(ID: String): KnowledgeTableFragment {
             val args = Bundle()
-            //args.putString("TITLE", title)
             args.putString("ID", ID)
             val fragment = KnowledgeTableFragment()
             fragment.arguments = args
@@ -31,7 +29,6 @@ class KnowledgeTableFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_knowledge_table, container, false)
     }
 

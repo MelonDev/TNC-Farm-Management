@@ -38,7 +38,6 @@ class NewHistoryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_new_history, container, false)
         v = view
 
@@ -102,9 +101,7 @@ class NewHistoryFragment : Fragment() {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.value != null) {
                     arrData.clear()
-                    //recyclerView.adapter.notifyDataSetChanged()
 
-                    //v.new_history_empty_area.visibility = View.GONE
 
                     var count = 0
                     val size = p0.children.count()
@@ -165,24 +162,16 @@ class NewHistoryFragment : Fragment() {
                                                 set(Calendar.DAY_OF_MONTH, b.get(Calendar.DAY_OF_MONTH))
                                             }
 
-                                            //Log.e("C",calendar.get(Calendar.DAY_OF_MONTH).toString())
-                                            //Log.e("L",last.get(Calendar.DAY_OF_MONTH).toString())
 
-                                            //calendar.set(slot.dateYear.toInt(), slot.dateMonth.toInt() - 1, slot.dateDay.toInt())
-                                            //last.set(lSlot.dateYear.toInt(), lSlot.dateMonth.toInt() - 1, lSlot.dateDay.toInt())
                                             val difference = calendar.timeInMillis - last.timeInMillis
                                             val days = (difference / (1000 * 60 * 60 * 24)).toInt()
-
-                                            //Log.e(slot.createDate,days.toString())
 
                                             if (days == 0) {
                                                 val a = arrData[arrData.lastIndex]
                                                 arrData.removeAt(arrData.lastIndex)
                                                 arrData.add(slot)
                                                 arrData.add(a)
-                                                //Log.e("P","A")
                                             } else {
-                                                //Log.e("P","B")
                                                 val a = CardData()
                                                 a.apply {
                                                     cardID = "null"
@@ -192,11 +181,9 @@ class NewHistoryFragment : Fragment() {
                                                 arrData.add(a)
 
                                             }
-                                            //Log.e("PRO", "LOAD")
                                             recyclerView.adapter!!.notifyDataSetChanged()
                                             check()
                                         }
-                                        //arrData.add(slot)
 
                                     }
                                 }
@@ -217,9 +204,6 @@ class NewHistoryFragment : Fragment() {
 
 
 
-                } else {
-                    //progress.visibility = View.GONE
-                    //emptyText.visibility = View.VISIBLE
                 }
             }
         })

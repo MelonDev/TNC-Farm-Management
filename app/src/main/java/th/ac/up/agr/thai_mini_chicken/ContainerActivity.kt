@@ -26,8 +26,7 @@ class ContainerActivity : AppCompatActivity() {
         container_title_name.text = title
 
         container_back_btn.setOnClickListener {
-            //val intent = Intent(this,ProgramMainActivity::class.java)
-            //startActivity(intent)
+
             finish()
         }
 
@@ -108,8 +107,7 @@ class ContainerActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        //val intent = Intent(this,ProgramMainActivity::class.java)
-        //startActivity(intent)
+
         finish()
     }
 

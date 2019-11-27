@@ -43,14 +43,12 @@ class HelpActivity : AppCompatActivity() {
             this.putExtra(Intent.EXTRA_TEXT, message)
 
             this.type = "text/email"
-            //this.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            //this.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail")
+
 
         }
 
         startActivity(Intent.createChooser(intent, "เลือกแอปอีเมลที่ต้องการส่ง :"))
         finish()
-        //startActivity(intent)
 
     }
 

@@ -341,9 +341,6 @@ class AddNotiCardActivity : AppCompatActivity() {
         val item = ConvertCard().getNotiObjective()
         showDialog("วัตถุประสงค์", arrayOf(item[0], item[1], item[2], item[3], item[4]))
 
-        //hideAll()
-        //bottomSheetView.input_dialog_objective_area.visibility = View.VISIBLE
-        //return TakeAction(bottomSheetDialog)
     }
 
     fun showDialog(title: String, arr: Array<String>) {
@@ -371,9 +368,7 @@ class AddNotiCardActivity : AppCompatActivity() {
 
         if (!day.contentEquals("null") && !week.contentEquals("null")) {
             bottomSheetView.add_program_old_day_wheel.selectedItemPosition = day.toInt()
-            //ageDay = activity.dataCard.ageDay
             bottomSheetView.add_program_old_week_wheel.selectedItemPosition = week.toInt()
-            //ageWeek = activity.dataCard.ageWeek
         } else {
             bottomSheetView.add_program_old_week_wheel.selectedItemPosition = 0
             bottomSheetView.add_program_old_day_wheel.selectedItemPosition = 0
@@ -477,28 +472,7 @@ class AddNotiCardActivity : AppCompatActivity() {
                 .setProgressText("กำลังบันทึก...")
                 .setProgressStyle(ProgressParams.STYLE_SPINNER)
                 .show(this.supportFragmentManager)
-        //waitDialog.dismiss()
-        //                        .setProgressDrawable(R.drawable.bg_progress_s)
-        /*waitDialog = CircleDialog.Builder(activity
-        )
-                .configDialog(object : ConfigDialog() {
-                    override fun onConfig(params: DialogParams) {
-                        params.canceledOnTouchOutside = false
-                    }
-                })
-                .setProgressText("登录中...")
-                .setProgressStyle(ProgressParams.STYLE_SPINNER)
-                .setText("กำลังบันทึก")
-                .configText(object : ConfigText() {
-                    override fun onConfig(params: TextParams?) {
-                        params!!.textSize = 60
-                        params.textColor = ContextCompat.getColor(activity, R.color.colorText)
-                        params.padding = intArrayOf(0, 0, 0, 0) //(Bottom,TOP,Right,Left)
-                        params.height = 250
-                    }
-                })
 
-*/
     }
 
 }

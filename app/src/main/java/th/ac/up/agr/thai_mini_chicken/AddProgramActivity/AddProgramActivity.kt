@@ -1,33 +1,24 @@
 package th.ac.up.agr.thai_mini_chicken.AddProgramActivity
 
-import android.content.Context
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
-import com.aigestudio.wheelpicker.widgets.WheelDayPicker
-import com.aigestudio.wheelpicker.widgets.WheelMonthPicker
-import com.aigestudio.wheelpicker.widgets.WheelYearPicker
 
 import kotlinx.android.synthetic.main.activity_add_program.*
 import th.ac.up.agr.thai_mini_chicken.R
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
-import android.view.inputmethod.InputMethodManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import th.ac.up.agr.thai_mini_chicken.CustomPlanActivity
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
-import th.ac.up.agr.thai_mini_chicken.Firebase.AddDataFirebase
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 import android.app.Activity
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
-import th.ac.up.agr.thai_mini_chicken.Tools.LoadTime
 
 
 class AddProgramActivity : AppCompatActivity() {
@@ -53,10 +44,7 @@ class AddProgramActivity : AppCompatActivity() {
     var change = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //setTheme(R.style.MelonTheme_Amber_Material)
         setTheme(MelonTheme.from(this).getStyle())
-
-        //AddDataFirebase.from(this).setDataToActive(CardData())
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_program)
@@ -146,10 +134,6 @@ class AddProgramActivity : AppCompatActivity() {
             })
         }
 
-
-        //add_program_edittext.clearFocus()
-
-        //window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         hideKeyB()
 
         add_program_back_btn.setOnClickListener { finish() }
@@ -161,10 +145,8 @@ class AddProgramActivity : AppCompatActivity() {
         }
 
         add_program_objective_area.setOnClickListener {
-            //dialog.objectiveDialog().show()
             dialog.newObjectiveDialog()
             position = 1
-            //dialog.setTitle(position)
         }
 
         add_program_amount_area.setOnClickListener {
@@ -219,15 +201,8 @@ class AddProgramActivity : AppCompatActivity() {
 
                 if (manager_objective.contentEquals("1") || manager_objective.contentEquals("0")) {
 
-                    //val table = ConvertCard().getObjective()
-
-                    //val num = table.indexOf(manager_result)
-
-
-                    //manager_result = table[num]
                     add_program_manager_text.text = manager_result
-                    //manager_result = dataCard.managerName
-                    //manager_objective = dataCard.managerObjective
+
                 } else if (manager_objective.contentEquals("2")) {
 
                     val firebase = Firebase.reference
@@ -250,13 +225,6 @@ class AddProgramActivity : AppCompatActivity() {
                 } else {
                     add_program_manager_text.text = "ไม่พบรูปแบบ"
                 }
-/*
-                if (objective.contentEquals("0")) {
-
-                } else if (objective.contentEquals("1")) {
-
-                }
-*/
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Log.e("ALERT", "CANCEL")
