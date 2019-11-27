@@ -68,14 +68,6 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         }
 
 
-        /*
-        fab = program_main_activity_fab
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-*/
-
         ProgramViewPager(this)
         ProgramNavDrawer(this)
 
