@@ -60,14 +60,6 @@ open class QuickCircleDialog(private val mFragmentActivity: FragmentActivity) {
         return this
     }
 
-
-    fun item(lambda: () -> Unit): QuickCircleDialog {
-        return this
-    }
-
-
-
-
     open fun build(): QuickCircleDialog {
         return this
     }

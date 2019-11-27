@@ -101,4 +101,19 @@
     <string name="upload_complete_message">Upload completed</string>
 
 
+    <string name="choose_image_from_message">Choose image from</string>
+    <string name="take_picture_from_message">Take picture from</string>
+
+    <string name="request_permission_message">Request permission</string>
+    <string name="open_camera_message">Open camera</string>
+    <string name="choose_image_from_gallery_message">Choose image from gallery</string>
+    <string name="explanation_message">Explanation</string>
+
+    <string name="open_setting_message">Open settings</string>
+
+    <string name="permission_skiped_message">Because you has press the button "Do not show again" in permission dialog, If you would like to get permission, Please "Go Settings" and press the button "App permission" and then take permission do you want</string>
+    <string name="explanation_of_camera_permission_message">If would like to open camera, You can press "Take permission" and then press "Accept"</string>
+    <string name="explanation_of_gallery_permission_message">If would like to open gallery, You can press "Take permission" and then press "Accept"</string>
+
+
 </resources>

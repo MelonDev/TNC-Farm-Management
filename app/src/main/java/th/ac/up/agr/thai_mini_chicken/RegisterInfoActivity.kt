@@ -111,7 +111,7 @@ class RegisterInfoActivity : AppCompatActivity() {
 
         register_info_image_area.setOnClickListener {
 
-            showOptionDialog(arrayOf("เปิดกล้อง", "เลือกรูปจากคลังภาพ"))
+            showOptionDialog(arrayOf(getString(R.string.open_camera_message), getString(R.string.choose_image_from_gallery_message)))
 
         }
 
@@ -128,7 +128,7 @@ class RegisterInfoActivity : AppCompatActivity() {
                         0 -> {
                             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
-                                setQuestionDialog(0, "คำอธิบาย", "หากคุณต้องการเปิดกล้องให้คุณกด \"ขอสิทธิ์\" แล้วกด \"ยอมรับ\" ตามลำดับ", REQUEST_PERMISSION_CAMERA, "ขอสิทธิ์", "ยกเลิก")
+                                setQuestionDialog(0, getString(R.string.explanation_message), getString(R.string.explanation_of_camera_permission_message), REQUEST_PERMISSION_CAMERA, getString(R.string.request_permission_message), getString(R.string.cancel_message_response))
                             } else {
                                 goToCamera()
                             }
@@ -136,14 +136,14 @@ class RegisterInfoActivity : AppCompatActivity() {
                         }
                         1 -> {
                             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                setQuestionDialog(0, "คำอธิบาย", "หากคุณต้องการเปิดคลังภาพให้คุณกด \"ขอสิทธิ์\" แล้วกด \"ยอมรับ\" ตามลำดับ", REQUEST_PERMISSION_GALLERY, "ขอสิทธิ์", "ยกเลิก")
+                                setQuestionDialog(0, getString(R.string.explanation_message), getString(R.string.explanation_of_gallery_permission_message), REQUEST_PERMISSION_GALLERY, getString(R.string.request_permission_message), getString(R.string.cancel_message_response))
                             } else {
                                 goToGallery()
                             }
                         }
                     }
                 }
-                .setNegative("ยกเลิก", null)
+                .setNegative(getString(R.string.cancel_message_response), null)
                 .configNegative { params ->
                     params.textSize = 50
                     params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
@@ -153,21 +153,19 @@ class RegisterInfoActivity : AppCompatActivity() {
 
     private fun goToCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(Intent.createChooser(intent, "ถ่ายรูปจาก"), REQUEST_PERMISSION_CAMERA)
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.take_picture_from_message)), REQUEST_PERMISSION_CAMERA)
 
     }
 
     private fun goToGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
-        startActivityForResult(Intent.createChooser(intent, "เลือกรูปจาก"), REQUEST_PERMISSION_GALLERY)
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.choose_image_from_message)), REQUEST_PERMISSION_GALLERY)
     }
 
     private fun upload() {
 
         filepath?.let { uri ->
-
-
             val bmp = if (Build.VERSION.SDK_INT >= 29) {
                 ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, uri))
             } else {
@@ -240,30 +238,32 @@ class RegisterInfoActivity : AppCompatActivity() {
     private fun uploadC() {
         imageBitmap?.let { image ->
             showProgressDialog(R.string.dialog_upload_message)
-            val ref = FirebaseStorage.getInstance().reference.child("profile").child(FirebaseAuth.getInstance().currentUser!!.uid)
 
-            val data = imageCalculate(image)
+            mFirebaseAuth.currentUser?.let { user ->
+                val ref = FirebaseStorage.getInstance().reference.child("profile").child(user.uid)
 
-            ref.putBytes(data)
-                    .addOnSuccessListener {
-                        progressDialog.dismiss()
-                        showAlertDialog(R.string.upload_complete_message)
+                val data = imageCalculate(image)
 
-                        ref.downloadUrl.addOnSuccessListener {
-                            //Picasso.get().load(it).error(R.drawable.man).into(this@RegisterInfoActivity.register_info_image_image)
-                            userInfo.photoURL = it.toString()
+                ref.putBytes(data)
+                        .addOnSuccessListener {
+                            progressDialog.dismiss()
+                            showAlertDialog(R.string.upload_complete_message)
+
+                            ref.downloadUrl.addOnSuccessListener {
+                                userInfo.photoURL = it.toString()
+                            }
+                        }.addOnFailureListener {
+                            progressDialog.dismiss()
+                            showAlertDialog(R.string.error_message)
+                        }.addOnCanceledListener {
+                            progressDialog.dismiss()
+                        }.addOnProgressListener {
+                            val progress = 100.0 * it.bytesTransferred / it.totalByteCount
+                            Log.e("PROGRESS", progress.toString())
                         }
-                        //Log.e("URI",it.uploadSessionUri.toString())
-                    }.addOnFailureListener {
-                        progressDialog.dismiss()
-                        showAlertDialog(R.string.error_message)
-                    }.addOnCanceledListener {
-                        progressDialog.dismiss()
-                        Log.e("UPLOAD", "CANCEL")
-                    }.addOnProgressListener {
-                        val progress = 100.0 * it.bytesTransferred / it.totalByteCount
-                        Log.e("PROGRESS", progress.toString())
-                    }
+            }
+
+
         }
     }
 
@@ -320,8 +320,6 @@ class RegisterInfoActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
-            } else {
-                Log.e("PER", "0")
             }
         }
     }
@@ -335,7 +333,7 @@ class RegisterInfoActivity : AppCompatActivity() {
                     } else if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
                         val showRationale = shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA)
                         if (!showRationale) {
-                            setQuestionDialog(1, "คำอธิบาย", "เนื่องจากคุณได้ทำการกด \"ไม่ต้องแสดงอีก\" ในหน้าขอสิทธิ์ หากคุณต้่องการจะขอสิทธิ์อีกครั้ง ให้กด \"ไปที่ตั้งค่า\" แล้วกดเลือก \"สิทธิ์ของแอป\" จากนั้นกดเปิดสิทธิ์ที่ต้องการ ", REQUEST_PERMISSION_CAMERA, "ไปที่ตั้งค่า", "ยกเลิก")
+                            setQuestionDialog(1, getString(R.string.explanation_message), getString(R.string.permission_skiped_message), REQUEST_PERMISSION_CAMERA, getString(R.string.open_setting_message), getString(R.string.cancel_message_response))
                         }
                     } else {
 
@@ -350,7 +348,7 @@ class RegisterInfoActivity : AppCompatActivity() {
                     } else if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
                         val showRationale = shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE)
                         if (!showRationale) {
-                            setQuestionDialog(1, "คำอธิบาย", "เนื่องจากคุณได้ทำการกด \"ไม่ต้องแสดงอีก\" ในหน้าขอสิทธิ์ หากคุณต้่องการจะขอสิทธิ์อีกครั้ง ให้กด \"ไปที่ตั้งค่า\" แล้วกดเลือก \"สิทธิ์ของแอป\" จากนั้นกดเปิดสิทธิ์ที่ต้องการ ", REQUEST_PERMISSION_GALLERY, "ไปที่ตั้งค่า", "ยกเลิก")
+                            setQuestionDialog(1, getString(R.string.explanation_message), getString(R.string.permission_skiped_message), REQUEST_PERMISSION_GALLERY, getString(R.string.open_setting_message), getString(R.string.cancel_message_response))
                         }
                     } else {
                         showAlertDialog(R.string.error_message)
@@ -367,14 +365,19 @@ class RegisterInfoActivity : AppCompatActivity() {
                 .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText(sub)
                 .configText { params ->
-                    params!!.textSize = 50
-                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
-                    params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
+                    params?.let {
+                        params.textSize = 50
+                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, R.color.colorText)
+                        params.padding = intArrayOf(50, 10, 50, 70) //(Left,TOP,Right,Bottom)
+                    }
+
                 }
                 .setTitle(title)
                 .configTitle { params ->
-                    params!!.textSize = 60
-                    params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, MelonTheme.from(this@RegisterInfoActivity).getColor())
+                    params?.let {
+                        params.textSize = 60
+                        params.textColor = ContextCompat.getColor(this@RegisterInfoActivity, MelonTheme.from(this@RegisterInfoActivity).getColor())
+                    }
                 }
                 .setPositive(positive) {
                     if (ID == 0) {
@@ -454,22 +457,30 @@ class RegisterInfoActivity : AppCompatActivity() {
     }
 
     private fun pushToFirebase() {
-        val firebase = Firebase.reference.child("ผู้ใช้").child(FirebaseAuth.getInstance().currentUser!!.uid).child("รายละเอียด")
 
-        firebase.setValue(userInfo) { p0, _ ->
-            if (p0 != null) {
-                progressDialog.dismiss()
-                showAlertDialog(R.string.error_message)
-                offScreen = false
-            } else {
-                progressDialog.dismiss()
-                ActionDialog(this).setMessage(R.string.saved_message).positive(R.string.ok_message_response) {
-                    val intent = Intent(this, ProgramMainActivity::class.java)
-                    this.startActivity(intent)
-                    this.finish()
-                }.build().show()
+        mFirebaseAuth.currentUser?.let { user ->
+            val firebase = Firebase.reference.child("ผู้ใช้").child(user.uid).child("รายละเอียด")
+
+            firebase.setValue(userInfo) { p0, _ ->
+
+                p0?.let {
+                    progressDialog.dismiss()
+                    showAlertDialog(R.string.error_message)
+                    offScreen = false
+                } ?: run {
+                    progressDialog.dismiss()
+                    ActionDialog(this).setMessage(R.string.saved_message).positive(R.string.ok_message_response) {
+                        val intent = Intent(this, ProgramMainActivity::class.java)
+                        this.startActivity(intent)
+                        this.finish()
+                    }.build().show()
+                }
+
+
             }
         }
+
+
     }
 
     private fun showAlertDialog(resource: Int) {

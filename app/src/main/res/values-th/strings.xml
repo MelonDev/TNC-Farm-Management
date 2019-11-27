@@ -97,5 +97,19 @@
 
     <string name="upload_complete_message">อัพโหลดเสร็จสิ้น</string>
 
+    <string name="choose_image_from_message">เลือกรูปจาก</string>
+    <string name="take_picture_from_message">ถ่ายรูปจาก</string>
+
+    <string name="request_permission_message">ขอสิทธิ์</string>
+    <string name="open_camera_message">เปิดกล้อง</string>
+    <string name="choose_image_from_gallery_message">เลือกรูปจากคลังภาพ</string>
+    <string name="explanation_message">คำอธิบาย</string>
+
+    <string name="open_setting_message">ไปที่ตั้งค่า</string>
+
+    <string name="permission_skiped_message">เนื่องจากคุณได้ทำการกด "ไม่ต้องแสดงอีก" ในหน้าขอสิทธิ์ หากคุณต้่องการจะขอสิทธิ์อีกครั้ง ให้กด "ไปที่ตั้งค่า" แล้วกดเลือก "สิทธิ์ของแอป" จากนั้นกดเปิดสิทธิ์ที่ต้องการ </string>
+    <string name="explanation_of_camera_permission_message">หากคุณต้องการเปิดกล้องให้คุณกด "ขอสิทธิ์" แล้วกด "ยอมรับ" ตามลำดับ</string>
+    <string name="explanation_of_gallery_permission_message">หากคุณต้องการเปิดคลังภาพให้คุณกด "ขอสิทธิ์" แล้วกด "ยอมรับ" ตามลำดับ</string>
+
 
 </resources>
