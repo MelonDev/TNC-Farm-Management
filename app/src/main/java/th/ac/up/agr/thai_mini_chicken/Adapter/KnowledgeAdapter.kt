@@ -28,7 +28,7 @@ class KnowledgeAdapter(val activity: KnowledgeActivity,val ID :String, val data:
         val slot = data[position]
 
         holder.textView.text = slot.name
-        Picasso.get().load(slot.image.toInt()).into(holder.imageView)
+        Picasso.get().load(slot.image).into(holder.imageView)
 
         holder.area.setOnClickListener {
             if(ID.contentEquals("0") && data[position].name.contentEquals("วิธีการทำน้ำหมักเอนไซน์แทนการใช้สารเคมี")){

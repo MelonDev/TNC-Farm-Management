@@ -88,7 +88,7 @@ class TimeManager {
     private fun setEvent(title: String, message: String, week: Int, day: Int): Event {
         var a = week * 7
         a += day
-        return Event().setEvent(title, message, week, day, a)
+        return Event(title, message, week, day, a.toString())
     }
 
 }

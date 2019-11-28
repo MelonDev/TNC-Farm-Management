@@ -16,11 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <androidx.cardview.widget.CardView
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/noti_card_width"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
@@ -58,13 +59,15 @@
 
                 </LinearLayout>
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:layout_gravity="center_horizontal"
+
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/noti_card_width"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
@@ -107,12 +110,14 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:layout_gravity="center_horizontal"
+
                 android:id="@+id/knowledge_list_area_C"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="20dp"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/noti_card_width"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="10dp"

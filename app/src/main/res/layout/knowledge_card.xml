@@ -5,8 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
+
+        android:layout_centerHorizontal="true"
         android:id="@+id/knowledge_card_item"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/noti_card_width"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/colorWhite"
         app:cardCornerRadius="10dp"

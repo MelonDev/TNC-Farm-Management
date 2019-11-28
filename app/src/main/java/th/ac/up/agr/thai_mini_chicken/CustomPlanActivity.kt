@@ -129,12 +129,12 @@ class CustomPlanActivity : AppCompatActivity() {
 
                     if (p0.children.count() == 0) {
                         if (type.contentEquals("1")) {
-                            arrCustom.add(CustomData().init("ว่างเปล่า", "example", ""))
+                            arrCustom.add(CustomData("ว่างเปล่า", "example", ""))
                         }
                         arrCustom.apply {
-                            add(CustomData().init("มาตรฐาน", "title", ""))
-                            add(CustomData().init("ไก่พ่อ-แม่พันธุ์", "example", ""))
-                            add(CustomData().init("ไก่เนื้อ", "example", ""))
+                            add(CustomData("มาตรฐาน", "title", ""))
+                            add(CustomData("ไก่พ่อ-แม่พันธุ์", "example", ""))
+                            add(CustomData("ไก่เนื้อ", "example", ""))
                         }
                         recyclerView.adapter!!.notifyDataSetChanged()
                     } else {
@@ -145,13 +145,13 @@ class CustomPlanActivity : AppCompatActivity() {
 
                             if (!check) {
                                 if (type.contentEquals("1")) {
-                                    arrCustom.add(CustomData().init("ว่างเปล่า", "example", ""))
+                                    arrCustom.add(CustomData("ว่างเปล่า", "example", ""))
                                 }
                                 arrCustom.apply {
-                                    add(CustomData().init("มาตรฐาน", "title", ""))
-                                    add(CustomData().init("ไก่พ่อ-แม่พันธุ์", "example", ""))
-                                    add(CustomData().init("ไก่เนื้อ", "example", ""))
-                                    add(CustomData().init("ของฉัน", "title", ""))
+                                    add(CustomData("มาตรฐาน", "title", ""))
+                                    add(CustomData("ไก่พ่อ-แม่พันธุ์", "example", ""))
+                                    add(CustomData("ไก่เนื้อ", "example", ""))
+                                    add(CustomData("ของฉัน", "title", ""))
                                 }
 
                                 check = true
@@ -177,12 +177,12 @@ class CustomPlanActivity : AppCompatActivity() {
                     arrCustom.clear()
 
                     if (type.contentEquals("1")) {
-                        arrCustom.add(CustomData().init("ว่างเปล่า", "example", ""))
+                        arrCustom.add(CustomData("ว่างเปล่า", "example", ""))
                     }
                     arrCustom.apply {
-                        add(CustomData().init("มาตรฐาน", "title", ""))
-                        add(CustomData().init("ไก่พ่อ-แม่พันธุ์", "example", ""))
-                        add(CustomData().init("ไก่เนื้อ", "example", ""))
+                        add(CustomData("มาตรฐาน", "title", ""))
+                        add(CustomData("ไก่พ่อ-แม่พันธุ์", "example", ""))
+                        add(CustomData("ไก่เนื้อ", "example", ""))
                     }
                     recyclerView.adapter!!.notifyDataSetChanged()
 
