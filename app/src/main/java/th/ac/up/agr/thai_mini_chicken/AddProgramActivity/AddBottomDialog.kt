@@ -100,21 +100,9 @@ class AddBottomDialog(private val activity: AddProgramActivity) : WheelPicker.On
         bottomSheetView.add_program_month_wheel_s.setOnItemSelectedListener(this)
         bottomSheetView.add_program_year_wheel_s.setOnItemSelectedListener(this)
 
-        var a = ArrayList<Int>()
-        var i = 0
 
-        while (a.size <= 999) {
-            a.add(i)
-            i += 1
-        }
-
-        var b = ArrayList<Int>()
-        var j = 2530
-
-        while (j <= 2590) {
-            b.add(j)
-            j += 1
-        }
+        val a = (0..999).toList()
+        val b = (2530..2590).toList()
 
         bottomSheetDialog.setOnCancelListener {
             resetDate()

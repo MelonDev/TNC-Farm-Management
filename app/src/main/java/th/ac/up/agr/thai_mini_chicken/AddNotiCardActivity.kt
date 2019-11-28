@@ -145,13 +145,8 @@ class AddNotiCardActivity : AppCompatActivity() {
             day = position.toString()
         }
 
-        var a = ArrayList<Int>()
-        var i = 0
 
-        while (a.size <= 999) {
-            a.add(i)
-            i += 1
-        }
+        val a = (0..999).toList()
 
         bottomSheetView.add_program_old_day_wheel.data = a
         bottomSheetView.add_program_old_week_wheel.data = a
