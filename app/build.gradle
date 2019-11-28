@@ -65,6 +65,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.2.0'
     implementation 'com.google.code.gson:gson:2.8.5'
 
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
 
     implementation 'com.google.firebase:firebase-storage:19.1.0'
 
