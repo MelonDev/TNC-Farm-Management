@@ -56,10 +56,7 @@ class ProgramNavDrawer(private val activity: ProgramMainActivity) {
     }
 
     private fun onClick() {
-        navView.nav_profile_area.setOnClickListener {
-            val intent = Intent(activity, TestAuthActivity::class.java)
-            activity.startActivity(intent)
-        }
+
         navView.nav_program_area.setOnClickListener {
             hideDrawer()
         }

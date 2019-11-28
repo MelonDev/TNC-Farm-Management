@@ -7,23 +7,17 @@ import android.os.Bundle
 import android.util.Log
 
 import kotlinx.android.synthetic.main.activity_detail_notification.*
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import th.ac.up.agr.thai_mini_chicken.Adapter.DetailNotificationAdapter
-import th.ac.up.agr.thai_mini_chicken.Adapter.ProgramAdapter
 import th.ac.up.agr.thai_mini_chicken.Data.Event
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
-import th.ac.up.agr.thai_mini_chicken.Tools.LoadTime
 import th.ac.up.agr.thai_mini_chicken.Tools.QuickRecyclerView
-import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardVHConfig
 import android.view.View
 import com.google.firebase.database.*
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 import java.util.*
 import kotlin.collections.ArrayList
-import android.R.attr.label
 import android.app.Activity
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView

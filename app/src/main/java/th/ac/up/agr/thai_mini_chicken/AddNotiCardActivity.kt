@@ -1,34 +1,22 @@
 package th.ac.up.agr.thai_mini_chicken
 
-import android.content.Intent
 import android.os.Bundle
 
-import android.text.InputType
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
-import com.aigestudio.wheelpicker.WheelPicker
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
 import com.mylhyl.circledialog.params.ProgressParams
-import com.mylhyl.circledialog.params.TextParams
 
 import kotlinx.android.synthetic.main.activity_add_noti_card.*
-import kotlinx.android.synthetic.main.dialog_add.view.*
 import kotlinx.android.synthetic.main.input_dialog.view.*
-import th.ac.up.agr.thai_mini_chicken.Data.CardNotification
 import th.ac.up.agr.thai_mini_chicken.Data.Event
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard

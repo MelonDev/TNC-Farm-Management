@@ -1,24 +1,15 @@
 package th.ac.up.agr.thai_mini_chicken.Fragment
 
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 
 import android.util.Log
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import android.view.animation.AnimationSet
-import android.view.animation.LayoutAnimationController
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.app_bar_program_main.*
 import kotlinx.android.synthetic.main.fragment_program.view.*
 import th.ac.up.agr.thai_mini_chicken.Adapter.PageProgramAdapter
-import th.ac.up.agr.thai_mini_chicken.Adapter.ProgramAdapter
-import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 
@@ -26,14 +17,12 @@ import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.Date
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 import th.ac.up.agr.thai_mini_chicken.Tools.QuickRecyclerView
-import th.ac.up.agr.thai_mini_chicken.ViewHolder.CardVHConfig
 import java.util.*
 import kotlin.collections.ArrayList
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.fragment_program.*
 
 
 class ProgramFragment : Fragment() {

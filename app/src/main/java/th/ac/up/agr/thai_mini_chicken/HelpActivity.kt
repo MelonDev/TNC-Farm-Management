@@ -34,7 +34,7 @@ class HelpActivity : AppCompatActivity() {
 
     }
 
-    fun sendEmail(email: String, message: String) {
+    private fun sendEmail(email: String, message: String) {
 
         val intent = Intent(Intent.ACTION_SEND)
         intent.apply {

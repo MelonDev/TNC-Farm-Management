@@ -1,7 +1,6 @@
 package th.ac.up.agr.thai_mini_chicken
 
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 
 import android.util.Log
@@ -9,20 +8,9 @@ import android.view.View
 import android.view.ViewTreeObserver
 import com.google.firebase.database.*
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigItems
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.params.ItemsParams
-import com.mylhyl.circledialog.params.TextParams
 
 import kotlinx.android.synthetic.main.activity_detail.*
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
-import th.ac.up.agr.thai_mini_chicken.Data.CardDate
-import th.ac.up.agr.thai_mini_chicken.Tools.Animation
 import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 import android.os.Build
@@ -32,7 +20,6 @@ import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
 import th.ac.up.agr.thai_mini_chicken.Data.Event
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Tools.Date
-import th.ac.up.agr.thai_mini_chicken.Tools.ToolReference
 import java.util.*
 import kotlin.collections.ArrayList
 

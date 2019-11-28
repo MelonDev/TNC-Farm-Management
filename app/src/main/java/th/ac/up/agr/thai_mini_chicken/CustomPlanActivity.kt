@@ -7,7 +7,6 @@ import android.os.Bundle
 
 import android.text.InputType
 import android.util.Log
-import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,22 +19,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
 import com.mylhyl.circledialog.params.ProgressParams
-import com.mylhyl.circledialog.params.TextParams
 
 import kotlinx.android.synthetic.main.activity_custom_plan.*
-import kotlinx.android.synthetic.main.activity_detail_notification.*
 import kotlinx.android.synthetic.main.dialog_add.view.*
-import th.ac.up.agr.thai_mini_chicken.Adapter.CustomPlanAdapter
-import th.ac.up.agr.thai_mini_chicken.Adapter.DetailNotificationAdapter
 import th.ac.up.agr.thai_mini_chicken.Adapter.NewCustomPlanAdapter
 import th.ac.up.agr.thai_mini_chicken.Data.CustomData
-import th.ac.up.agr.thai_mini_chicken.Data.Event
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Tools.Date
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
