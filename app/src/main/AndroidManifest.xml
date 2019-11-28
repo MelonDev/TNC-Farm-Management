@@ -57,10 +57,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TestAuthActivity"
-            android:label="@string/title_activity_test_auth"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".AddNotiCardActivity"
             android:label="@string/title_activity_add_noti_card"
             android:theme="@style/AppTheme.NoActionBar" />
