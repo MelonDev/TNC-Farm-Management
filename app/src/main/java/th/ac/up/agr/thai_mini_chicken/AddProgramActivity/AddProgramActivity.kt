@@ -19,6 +19,9 @@ import android.app.Activity
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import th.ac.up.agr.thai_mini_chicken.Tools.ConvertCard
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
 class AddProgramActivity : AppCompatActivity() {
@@ -177,6 +180,47 @@ class AddProgramActivity : AppCompatActivity() {
             startActivityForResult(intent, 999)
         }
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putParcelable("DATA", dataCard)
+
+
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val data = savedInstanceState.getParcelable<CardData>("DATA")
+
+        data?.let {
+            dataCard = data
+
+            restoreToField()
+
+        }
+
+
+    }
+
+    fun restoreToField() {
+        dateTV.text = "${dataCard.dateDay} ${ConvertCard().getMonth(dataCard.dateMonth)} ${ConvertCard().getYear(dataCard.dateYear)}"
+        objectiveTV.text = ConvertCard().getObjective(dataCard.userObjective)
+        add_program_system_text.text = ConvertCard().getSystem(dataCard.systemFarm)
+        add_program_edittext.setText(dataCard.cardName)
+        add_program_amount_male_text.text = "เพศผู้ ${dataCard.amountMale} ตัว"
+        add_program_amount_female_text.text = "เพศเมีย ${dataCard.amountFemale} ตัว"
+        add_program_notify_me.isChecked = dataCard.notification.toBoolean()
+        add_program_notify_before.isChecked = dataCard.notiBefore.toBoolean()
+        add_program_age_text.text = "${dataCard.ageWeek} สัปดาห์ ${dataCard.ageDay} วัน"
+
+        if (dataCard.breed.isNotEmpty()) {
+            add_program_breed_text.text = dataCard.breed
+        } else {
+            add_program_breed_text.text = "ไม่ระบุ"
+        }
     }
 
     fun hideKeyB() {
