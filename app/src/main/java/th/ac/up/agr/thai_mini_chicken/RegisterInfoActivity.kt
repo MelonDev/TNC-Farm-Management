@@ -288,7 +288,7 @@ class RegisterInfoActivity : AppCompatActivity() {
                 intent.data?.let {
                     filepath = it
 
-                    Picasso.get().load(it).error(R.drawable.man).into(this@RegisterInfoActivity.register_info_image_image)
+                    Picasso.get().load(it).error(R.drawable.ic_man).into(this@RegisterInfoActivity.register_info_image_image)
 
                     upload()
                 }
@@ -432,7 +432,7 @@ class RegisterInfoActivity : AppCompatActivity() {
             register_info_farm_address_edittext.setText(userInfo.farmAddress)
         }
         if (userInfo.photoURL.isNotEmpty()) {
-            Picasso.get().load(userInfo.photoURL).error(R.drawable.man).into(register_info_image_image)
+            Picasso.get().load(userInfo.photoURL).error(R.drawable.ic_man).into(register_info_image_image)
         }
     }
 

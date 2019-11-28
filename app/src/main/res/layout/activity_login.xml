@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/wallpaper"
+            android:src="@drawable/bg_wallpaper"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             />
@@ -60,7 +60,7 @@
                <ImageView
                    android:layout_width="60dp"
                    android:layout_height="60dp"
-                   android:background="@drawable/logo"
+                   android:background="@drawable/app_logo"
                    android:scaleType="centerCrop" />
 
            </RelativeLayout>
@@ -334,7 +334,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/google_icon" />
+            android:src="@drawable/google_logo" />
 
         <LinearLayout
             android:layout_width="wrap_content"

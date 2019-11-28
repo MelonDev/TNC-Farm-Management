@@ -40,11 +40,11 @@ class ProgramNavDrawer(private val activity: ProgramMainActivity) {
                     if (user.photoURL.isNotEmpty()) {
                         Picasso.get()
                                 .load(user.photoURL)
-                                .error(R.drawable.man)
+                                .error(R.drawable.ic_man)
                                 .into(navView.nav_icon_image)
                     } else {
                         Picasso.get()
-                                .load(R.drawable.man)
+                                .load(R.drawable.ic_man)
                                 .into(navView.nav_icon_image)
                     }
 
