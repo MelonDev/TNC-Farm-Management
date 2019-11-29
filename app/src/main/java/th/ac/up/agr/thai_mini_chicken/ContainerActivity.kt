@@ -7,8 +7,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.activity_container.*
+import th.ac.up.agr.thai_mini_chicken.Data.MoreKnowledgeType
 import th.ac.up.agr.thai_mini_chicken.Fragment.KnowledgeListFragment
-import th.ac.up.agr.thai_mini_chicken.Fragment.KnowledgeTableFragment
+import th.ac.up.agr.thai_mini_chicken.Fragment.MoreKnowledgeFragment
 import th.ac.up.agr.thai_mini_chicken.Fragment.KnowledgeWebFragment
 import th.ac.up.agr.thai_mini_chicken.ProgramMainActivity.ProgramMainActivity
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
@@ -32,7 +33,7 @@ class ContainerActivity : AppCompatActivity() {
 
         when (title) {
             "โปรแกรมวัคซีนและยาถ่ายพยาธิ" -> {
-                val fragment = KnowledgeTableFragment.newInstance("0")
+                val fragment = MoreKnowledgeFragment.newInstance(MoreKnowledgeType.PROGRAM)
                 supportFragmentManager.beginTransaction().replace(R.id.container_frame, fragment).commit()
             }
             "เทคนิคการเลี้ยงไก่พื้นเมือง" -> {
@@ -98,7 +99,7 @@ class ContainerActivity : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().replace(R.id.container_frame, fragment).commit()
             }
             "สมุนไพรที่ใช้เลี้ยงไก่" -> {
-                val fragment = KnowledgeTableFragment.newInstance("1")
+                val fragment = MoreKnowledgeFragment.newInstance(MoreKnowledgeType.HERB)
                 supportFragmentManager.beginTransaction().replace(R.id.container_frame, fragment).commit()
             }
         }
