@@ -22,8 +22,6 @@ import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.Date
 import th.ac.up.agr.thai_mini_chicken.Tools.QuickRecyclerView
 import java.util.*
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
 import org.threeten.bp.Period
 
 
