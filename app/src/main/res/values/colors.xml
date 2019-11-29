@@ -12,6 +12,9 @@
     <color name="colorText">#939393</color>
     <color name="colorTabInActiveText">#99ffffff</color>
 
+    <color name="colorCustomButtonDisable">#D5D5D5</color>
+
+
     <color name="colorStatusBarTran">#3c000000</color>
 
     <color name="colorStatusBarOverlay">#3c000000</color>
