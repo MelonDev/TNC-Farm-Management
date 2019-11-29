@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.Window
 import android.content.Intent
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.jakewharton.threetenabp.AndroidThreeTen
+import org.threeten.bp.*
 import th.ac.up.agr.thai_mini_chicken.Data.Information
 import th.ac.up.agr.thai_mini_chicken.Firebase.Firebase
 import th.ac.up.agr.thai_mini_chicken.Logic.Dialog.ActionDialog
@@ -25,7 +28,6 @@ class SplashActivity : AppCompatActivity() {
     private var time: Long = 1000L
 
     private lateinit var mFirebaseAuth: FirebaseAuth
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +51,7 @@ class SplashActivity : AppCompatActivity() {
         }
 
     }
+
 
     private fun checkProcess() {
         FirebaseAuth.getInstance().currentUser?.let { user ->
