@@ -2,6 +2,8 @@ package th.ac.up.agr.thai_mini_chicken
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +21,25 @@ class HelpActivity : AppCompatActivity() {
 
         help_email_area.visibility = View.GONE
 
+        help_confirm_btn.isEnabled = false
+
         help_back_btn.setOnClickListener {
             finish()
+
         }
+
+        help_message_edittext.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                help_confirm_btn.isEnabled = count != 0
+            }
+
+        })
 
         help_confirm_btn.setOnClickListener {
 
