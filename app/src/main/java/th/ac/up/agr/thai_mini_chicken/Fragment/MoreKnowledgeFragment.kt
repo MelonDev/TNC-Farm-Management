@@ -45,7 +45,7 @@ class MoreKnowledgeFragment : Fragment() {
         }
 
 
-        var data: ArrayList<MoreKnowledgeData> = when (type) {
+        val data: ArrayList<MoreKnowledgeData> = when (type) {
             MoreKnowledgeType.PROGRAM -> ChickenProgram().getArrayData()
             MoreKnowledgeType.HERB -> ChickenHerb().getArrayData()
             else -> ArrayList()
