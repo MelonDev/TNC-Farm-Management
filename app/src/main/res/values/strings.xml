@@ -115,5 +115,7 @@
     <string name="explanation_of_camera_permission_message">If would like to open camera, You can press "Take permission" and then press "Accept"</string>
     <string name="explanation_of_gallery_permission_message">If would like to open gallery, You can press "Take permission" and then press "Accept"</string>
 
+    <string name="exit_from_application_message">"Are you want exit?"</string>
+    <string name="exit_message">Exit</string>
 
 </resources>

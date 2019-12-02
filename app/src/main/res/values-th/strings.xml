@@ -111,5 +111,7 @@
     <string name="explanation_of_camera_permission_message">หากคุณต้องการเปิดกล้องให้คุณกด "ขอสิทธิ์" แล้วกด "ยอมรับ" ตามลำดับ</string>
     <string name="explanation_of_gallery_permission_message">หากคุณต้องการเปิดคลังภาพให้คุณกด "ขอสิทธิ์" แล้วกด "ยอมรับ" ตามลำดับ</string>
 
+    <string name="exit_from_application_message">"คุณต้องการจะออกจากแอปหรือไม่?"</string>
+    <string name="exit_message">ออก</string>
 
 </resources>
