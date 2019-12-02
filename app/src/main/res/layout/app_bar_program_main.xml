@@ -60,7 +60,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:layout_marginBottom="0dp"
         android:id="@+id/program_main_activity_viewpager"
         android:layout_width="match_parent"

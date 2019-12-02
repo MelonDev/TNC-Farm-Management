@@ -10,32 +10,23 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 
 import com.mylhyl.circledialog.CircleDialog
 
 import kotlinx.android.synthetic.main.activity_program_main.*
 import kotlinx.android.synthetic.main.app_bar_program_main.*
+import th.ac.up.agr.thai_mini_chicken.Adapter.ProgramMainViewPagerAdapter
 import th.ac.up.agr.thai_mini_chicken.AddProgramActivity.AddProgramActivity
 import th.ac.up.agr.thai_mini_chicken.CustomPlanActivity
-import th.ac.up.agr.thai_mini_chicken.Fragment.*
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.MelonTheme
 
 class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    val programFragment: ProgramFragment = ProgramFragment()
-    val notificationFragment: NotificationFragment = NotificationFragment()
-    val historyFragment: HistoryFragment = HistoryFragment()
-
-    val newProgramFragment: NewProgramFragment = NewProgramFragment()
-    val newNotificationFragment: NewNotificationFragment = NewNotificationFragment()
-    val newHistoryFragment: NewHistoryFragment = NewHistoryFragment()
-
-    lateinit var fab: FloatingActionButton
-
+    private lateinit var fab: FloatingActionButton
     private var close = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //setTheme(R.style.MelonTheme_Amber_Material)
@@ -58,13 +49,24 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             startActivity(intent)
         }
 
-
-        ProgramViewPager(this)
+        setUpViewPagerAndTab()
         ProgramNavDrawer(this)
 
 
     }
 
+    private fun setUpViewPagerAndTab() {
+        val adapter = ProgramMainViewPagerAdapter(this)
+        program_main_activity_viewpager.adapter = adapter
+
+        TabLayoutMediator(program_main_activity_tabbar, program_main_activity_viewpager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "รายการ"
+                1 -> "แจ้งเตือน"
+                else -> "ประวัติ"
+            }
+        }.attach()
+    }
 
     private fun setNavigationDrawer() {
         setSupportActionBar(toolbar)
@@ -80,18 +82,21 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else if (close) {
-            super.onBackPressed()
-        } else {
-            setQuestionDialog()
+        when {
+            drawer_layout.isDrawerOpen(GravityCompat.START) -> {
+                drawer_layout.closeDrawer(GravityCompat.START)
+            }
+            close -> {
+                super.onBackPressed()
+            }
+            else -> {
+                setQuestionDialog()
+            }
         }
     }
 
     fun setQuestionDialog() {
-        CircleDialog.Builder(this
-        )
+        CircleDialog.Builder()
                 .configDialog { params -> params.canceledOnTouchOutside = false }
                 .setText("คุณต้องการจะออกจากแอปหรือไม่?")
                 .configText { params ->
@@ -104,28 +109,27 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                     params!!.textSize = 60
                     params.textColor = ContextCompat.getColor(this@ProgramMainActivity, MelonTheme.from(this@ProgramMainActivity).getColor())
                 }
-                .setPositive("ออก", {
+                .setPositive("ออก") {
                     close = true
                     this.onBackPressed()
-                })
+                }
                 .configPositive { params ->
                     params.textSize = 50
                     params.textColor = ContextCompat.getColor(this@ProgramMainActivity, MelonTheme.from(this@ProgramMainActivity).getColor())
                 }
-                .setNegative("ยกเลิก", {
-                })
+                .setNegative("ยกเลิก") {
+                }
                 .configNegative { params ->
                     params.textSize = 50
 
                     params.textColor = ContextCompat.getColor(this@ProgramMainActivity, R.color.colorText)
                 }
-                .show()
+                .show(this.supportFragmentManager)
 
 
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
