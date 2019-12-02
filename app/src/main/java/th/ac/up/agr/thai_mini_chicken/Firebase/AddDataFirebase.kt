@@ -20,7 +20,7 @@ import th.ac.up.agr.thai_mini_chicken.Data.Event
 
 class AddDataFirebase(val activity: FragmentActivity) {
 
-    private var firebase: DatabaseReference = Firebase.reference
+    private var firebase: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     private val userRef: DatabaseReference
     private val container: DatabaseReference
@@ -148,7 +148,7 @@ class AddDataFirebase(val activity: FragmentActivity) {
                 }
             }
         } else if (objective.contentEquals("2")) {
-            var firebase = Firebase.reference
+            var firebase = FirebaseDatabase.getInstance().reference
             var database = firebase.child("ผู้ใช้").child(FirebaseAuth.getInstance().currentUser!!.uid).child("รูปแบบ")
             val abs = database.child(result).child("รายการที่ต้องทำ")
             val refA = database
