@@ -2,8 +2,8 @@ package th.ac.up.agr.thai_mini_chicken.Fragment
 
 
 import android.os.Bundle
-
 import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.synthetic.main.fragment_new_notification.view.*
+import org.threeten.bp.Duration
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalTime
 import th.ac.up.agr.thai_mini_chicken.Adapter.NewNotificationAdapter
 import th.ac.up.agr.thai_mini_chicken.Data.CardData
 import th.ac.up.agr.thai_mini_chicken.Data.CardSlot
@@ -22,239 +27,242 @@ import th.ac.up.agr.thai_mini_chicken.Data.Event
 
 import th.ac.up.agr.thai_mini_chicken.R
 import th.ac.up.agr.thai_mini_chicken.Tools.QuickRecyclerView
-import java.util.*
+import kotlin.collections.ArrayList
 
 class NewNotificationFragment : Fragment() {
 
-    private lateinit var v: View
-    lateinit var recyclerView: RecyclerView
-    lateinit var adapter: NewNotificationAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: NewNotificationAdapter
     private lateinit var arr: ArrayList<CardSlot>
 
     private var process: Boolean = false
+
+    private var isLoading: Boolean = false
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_new_notification, container, false)
-        v = view
-        arr = ArrayList<CardSlot>()
 
+        arr = ArrayList()
 
-        recyclerView = QuickRecyclerView(context!!
-                , view.new_notification_recycler_view
-                , "linear"
-                , 1
-                , "vertical"
-                , false
-                , "alway"
-                , "Low")
-                .recyclerView()
-
-        adapter = NewNotificationAdapter(this, arr)
-        recyclerView.adapter = adapter
+        AndroidThreeTen.init(this.activity)
 
         return view
     }
 
-    override fun onStart() {
-        super.onStart()
-        onDataLoad()
+    private fun initialRecyclerView() {
+
+        view?.let {
+            recyclerView = QuickRecyclerView(context!!
+                    , it.new_notification_recycler_view
+                    , "linear"
+                    , 1
+                    , "vertical"
+                    , false
+                    , "alway"
+                    , "Low")
+                    .recyclerView()
+
+            adapter = NewNotificationAdapter(this, arr)
+            recyclerView.adapter = adapter
+        }
     }
 
-    fun onDataLoad() {
-        val firebase = FirebaseDatabase.getInstance().reference
+    override fun onStart() {
+        super.onStart()
+        initialRecyclerView()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadDataFromFirebase()
+    }
+
+    private fun loadDataFromFirebase() {
+        val firebase = FirebaseDatabase.getInstance().reference
         val database = firebase.child("ผู้ใช้").child(FirebaseAuth.getInstance().currentUser!!.uid).child("รายการ").child("ใช้งาน")
-        val today = Calendar.getInstance()
 
         database.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                v.new_notification_empty_area.visibility = View.VISIBLE
+                view?.new_notification_empty_area?.visibility = View.VISIBLE
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                if (p0.value != null) {
-                    if (!process) {
-                        process = true
-
-
-                        onRun()
-                    }
-                } else {
-                    arr.clear()
-                    recyclerView.adapter!!.notifyDataSetChanged()
-                    v.new_notification_empty_area.visibility = View.VISIBLE
-                }
+                prepareBeforePrepareArrayData(p0)
             }
         })
 
     }
 
-    fun onRun() {
-
-        val firebase = FirebaseDatabase.getInstance().reference
-
-        val database = firebase.child("ผู้ใช้").child(FirebaseAuth.getInstance().currentUser!!.uid).child("รายการ").child("ใช้งาน")
-        val today = Calendar.getInstance()
-
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Log.e("","")
+    private fun prepareBeforePrepareArrayData(p0: DataSnapshot) {
+        p0.value?.let {
+            if (!isLoading) {
+                isLoading = true
+                prepareArrayData(p0)
             }
+        } ?: run {
+            showEmptyView()
+        }
+    }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.value != null) {
-                    arr.clear()
+    private fun showEmptyView() {
 
-                    val si = p0.children.count()
+        arr.clear()
+        refreshingAdapter()
+        view?.new_notification_empty_area?.visibility = View.VISIBLE
+    }
 
-                    var count = 0
+    private fun refreshingAdapter() {
+        recyclerView.adapter?.run {
+            notifyDataSetChanged()
+        }
+    }
 
-                    for (it in p0.children){
+    private fun prepareArrayData(dataSnapshot: DataSnapshot) {
+        arr.clear()
 
-                        val y = database.child(it.key.toString()).child("รายการที่ต้องทำ")
-                        val n = database.child(it.key.toString()).child("รายละเอียด")
+        var countDataSnapshot = 0
 
-                        n.addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onCancelled(p1: DatabaseError) {
-                                Log.e("","")
-                            }
+        dataSnapshot.children.forEach { childDataSnapshot ->
 
-                            override fun onDataChange(p1: DataSnapshot) {
-                                if (p1.value != null) {
-                                    val cardData = p1.getValue(CardData::class.java)!!
-                                    val calendar = Calendar.getInstance()
+            val detail = getDetailData(childDataSnapshot)
+            val calendar = initialCalendarFromDateOnDetail(detail)
+            val reminderList = getListOfReminder(childDataSnapshot)
 
-                                    calendar.set(cardData.dateYear.toInt(), cardData.dateMonth.toInt() - 1, cardData.dateDay.toInt())
-                                    calendar.add(Calendar.WEEK_OF_YEAR, 0 - cardData.ageWeek.toInt())
-                                    calendar.add(Calendar.DAY_OF_YEAR, 0 - cardData.ageDay.toInt())
+            var countReminder = 0
 
-                                    y.addListenerForSingleValueEvent(object : ValueEventListener {
-                                        override fun onCancelled(p0: DatabaseError) {
-                                            Log.e("","")
-                                        }
+            reminderList.forEach { event ->
+                prepareCard(calendar, event, detail)
+                countReminder += 1
 
-                                        override fun onDataChange(p2: DataSnapshot) {
-                                            if (p2.value != null) {
-
-
-                                                var s = p2.children.count()
-                                                var c = 0
-
-                                                for(it in p2.children){
-
-                                                    val slot = it.getValue(Event::class.java)!!
-
-
-                                                    val z = calendar.clone() as Calendar
-
-                                                    z.add(Calendar.WEEK_OF_YEAR, slot.week)
-                                                    z.add(Calendar.DAY_OF_YEAR, slot.day)
-
-                                                    val difference = z.timeInMillis - today.timeInMillis
-                                                    val days = (difference / (1000 * 60 * 60 * 24)).toInt()
-
-                                                    val cs = CardSlot()
-                                                    cs.dataCard = cardData
-                                                    cs.event = slot
-
-                                                    var daysss = ""
-
-                                                    when (days.toString().length) {
-                                                        1 -> {
-                                                            daysss = "0000000$days"
-                                                        }
-                                                        2 -> {
-                                                            daysss = "000000$days"
-                                                        }
-                                                        3 -> {
-                                                            daysss = "00000$days"
-                                                        }
-                                                        4 -> {
-                                                            daysss = "0000$days"
-                                                        }
-                                                        5 -> {
-                                                            daysss = "000$days"
-                                                        }
-                                                        6 -> {
-                                                            daysss = "00$days"
-                                                        }
-                                                        7 -> {
-                                                            daysss = "0$days"
-                                                        }
-                                                        else -> {
-                                                            daysss = "$days"
-                                                        }
-                                                    }
-
-
-                                                    cs.day = "${daysss}-slot"
-
-                                                    if (days >= 0 && slot.status.contentEquals("ACTIVE") && cardData.status.contentEquals("ACTIVE")) {
-                                                        if (!arr.any { it.day.contentEquals(daysss) }) {
-                                                            val m = CardSlot()
-                                                            arr.add(m.apply {
-                                                                day = daysss
-                                                                dataCard = cardData
-                                                                event = slot
-                                                            })
-                                                        }
-                                                        arr.add(cs)
-                                                        arr.sortBy({ it.day })
-                                                    }
-
-                                                    c+=1
-
-                                                    if(c == s){
-                                                        recyclerView.adapter!!.notifyDataSetChanged()
-                                                    }
-
-                                                    countSize()
-
-                                                }
-                                            } else {
-
-                                                countSize()
-
-                                                recyclerView.adapter!!.notifyDataSetChanged()
-                                            }
-                                        }
-                                    })
-
-                                }
-
-                            }
-                        })
-
-
-                        count += 1
-                        if (si == count) {
-                            process = false
-
-                            if (arr.size == 0) {
-                                v.new_notification_empty_area.visibility = View.VISIBLE
-                            } else {
-                                v.new_notification_empty_area.visibility = View.GONE
-                            }
-
-                            recyclerView.adapter!!.notifyDataSetChanged()
-                        }
-
-
-                    }
-
-
+                if (countReminder == reminderList.size) {
+                    refreshingAdapter()
                 }
+                emptyViewManage()
             }
+
+            if (reminderList.isEmpty()) {
+                emptyViewManage()
+                refreshingAdapter()
+            }
+
+            countDataSnapshot += 1
+
+            if (dataSnapshot.childrenCount.toInt() == countDataSnapshot) {
+                dataSnapshotLoopFinish()
+            }
+        }
+    }
+
+
+    private fun dataSnapshotLoopFinish() {
+        loadingSuccess()
+        emptyViewManage()
+        refreshingAdapter()
+    }
+
+    private fun prepareCard(calendar: LocalDate, event: Event, detail: CardData) {
+        val calendarEvent = initialCalendarFromDateOnEvent(calendar, event)
+        val duration = findDateDuration(calendarEvent)
+
+        val titleCard = initialTitleCard(detail, event, duration)
+
+        if (isFutureDateOrCardIsActive(duration, event, detail)) {
+            if (isCardNotDuplicated(duration)) {
+                initialCard(detail, duration, event)
+            }
+            arr.add(titleCard)
+            sortDataArray()
+        }
+    }
+
+    private fun isFutureDateOrCardIsActive(duration: Int, event: Event, detail: CardData): Boolean {
+        return duration >= 0 && event.status.contentEquals("ACTIVE") && detail.status.contentEquals("ACTIVE")
+    }
+
+    private fun sortDataArray() {
+        arr.sortBy { it.duration }
+    }
+
+    private fun initialCard(detail: CardData, duration: Int, event: Event) {
+        val m = CardSlot()
+        arr.add(m.apply {
+            this.day = duration.toString()
+            this.dataCard = detail
+            this.event = event
+            this.duration = duration
         })
     }
 
-    fun countSize(){
-        if (arr.size == 0) {
-            v.new_notification_empty_area.visibility = View.VISIBLE
+    private fun isCardNotDuplicated(duration: Int): Boolean {
+        return !arr.any { it.duration == duration }
+    }
+
+    private fun initialTitleCard(detail: CardData, event: Event, duration: Int): CardSlot {
+        return CardSlot().apply {
+            this.dataCard = detail
+            this.event = event
+            this.day = "${duration}-slot"
+            this.duration = duration
+        }
+    }
+
+    private fun findDateDuration(calendar: LocalDate): Int {
+
+        val date1 = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0, 0))
+        val date2 = LocalDateTime.of(calendar, LocalTime.of(0, 0, 0))
+
+        return Duration.between(date1, date2).toDays().toInt()
+    }
+
+    private fun initialCalendarFromDateOnEvent(calendar: LocalDate, event: Event): LocalDate {
+        return calendar.plusWeeks(event.week.toLong()).plusDays(event.day.toLong())
+    }
+
+    private fun initialCalendarFromDateOnDetail(detail: CardData): LocalDate {
+        return LocalDate.of(detail.dateYear.toInt(), detail.dateMonth.toInt(), detail.dateDay.toInt()).plusWeeks((0 - detail.ageWeek.toInt()).toLong()).plusDays((0 - detail.ageDay.toInt()).toLong())
+    }
+
+    private fun getListOfReminder(dataSnapshot: DataSnapshot): List<Event> {
+        val eventDataSnapshot = dataSnapshot.child("รายการที่ต้องทำ")
+        return dataSnapshot.child("รายการที่ต้องทำ").value?.let { _ ->
+            getListEventFromDataSnapshot(eventDataSnapshot)
+        } ?: arrayListOf()
+    }
+
+    private fun getListEventFromDataSnapshot(eventDataSnapshot: DataSnapshot): List<Event> {
+        return eventDataSnapshot.children.map {
+            it.getValue(Event::class.java) ?: Event()
+        }
+    }
+
+    private fun getDetailData(dataSnapshot: DataSnapshot): CardData {
+        val detailDataSnapshot = dataSnapshot.child("รายละเอียด")
+        return detailDataSnapshot.let { childSnapshot ->
+            childSnapshot.value?.let { _ ->
+                getDetailFromDataSnapshot(childSnapshot)
+            } ?: run { CardData() }
+        }
+    }
+
+    private fun getDetailFromDataSnapshot(childSnapshot: DataSnapshot): CardData? {
+        return childSnapshot.getValue(CardData::class.java)?.let { cardData ->
+            cardData
+        } ?: run { null }
+    }
+
+    private fun loadingSuccess() {
+        process = false
+
+    }
+
+    private fun emptyViewManage() {
+        if (arr.isEmpty()) {
+            view?.new_notification_empty_area?.visibility = View.VISIBLE
         } else {
-            v.new_notification_empty_area.visibility = View.GONE
+            view?.new_notification_empty_area?.visibility = View.GONE
         }
     }
 

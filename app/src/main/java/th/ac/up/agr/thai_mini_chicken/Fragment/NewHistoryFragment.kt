@@ -25,8 +25,6 @@ import java.util.*
 
 class NewHistoryFragment : Fragment() {
 
-    private lateinit var v :View
-
     private lateinit var recyclerView: RecyclerView
     lateinit var adapter: NewHistoryAdapter
 
@@ -39,7 +37,6 @@ class NewHistoryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_new_history, container, false)
-        v = view
 
         recyclerView = QuickRecyclerView(context!!
                 , view.new_history_recycler_view
@@ -70,7 +67,7 @@ class NewHistoryFragment : Fragment() {
             override fun onCancelled(p0: DatabaseError) {
                 arrData.clear()
                 recyclerView.adapter!!.notifyDataSetChanged()
-                v.new_history_empty_area.visibility = View.VISIBLE
+                view?.new_history_empty_area?.visibility = View.VISIBLE
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -83,7 +80,7 @@ class NewHistoryFragment : Fragment() {
                 } else {
                     arrData.clear()
                     recyclerView.adapter!!.notifyDataSetChanged()
-                    v.new_history_empty_area.visibility = View.VISIBLE
+                    view?.new_history_empty_area?.visibility = View.VISIBLE
                 }
             }
         })
@@ -211,9 +208,9 @@ class NewHistoryFragment : Fragment() {
 
     fun check(){
         if(arrData.isEmpty()){
-            v.new_history_empty_area.visibility = View.VISIBLE
+            view?.new_history_empty_area?.visibility = View.VISIBLE
         }else{
-            v.new_history_empty_area.visibility = View.GONE
+            view?.new_history_empty_area?.visibility = View.GONE
 
         }
     }

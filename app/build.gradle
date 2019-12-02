@@ -11,7 +11,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "th.ac.up.agr.thai_mini_chicken"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 3
         versionName "1.0"

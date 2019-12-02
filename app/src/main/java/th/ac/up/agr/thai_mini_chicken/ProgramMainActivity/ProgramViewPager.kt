@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import kotlinx.android.synthetic.main.activity_program_main.*
 import kotlinx.android.synthetic.main.app_bar_program_main.*
 
 
@@ -42,7 +43,6 @@ class ProgramViewPager(val activity: ProgramMainActivity) {
 
     private inner class PageListener : ViewPager.SimpleOnPageChangeListener() {
         override fun onPageSelected(position: Int) {
-
             when (position) {
                 0 -> activity.fab.show()
                 1 -> activity.fab.hide()
@@ -69,7 +69,12 @@ class ProgramViewPager(val activity: ProgramMainActivity) {
         }
 
         override fun getPageTitle(position: Int): CharSequence {
-            return mFragmentTitleList[position]
+            return when (position) {
+                0 -> "รายการ"
+                1 -> "แจ้งเตือน"
+                2 -> "ประวัติ"
+                else -> "-"
+            }
         }
     }
 
