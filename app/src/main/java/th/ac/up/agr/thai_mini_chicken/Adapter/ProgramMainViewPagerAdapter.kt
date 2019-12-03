@@ -21,14 +21,4 @@ class ProgramMainViewPagerAdapter(private val fragmentActivity: FragmentActivity
             else -> NewHistoryFragment()
         }
     }
-
-    override fun onBindViewHolder(holder: FragmentViewHolder, position: Int, payloads: MutableList<Any>) {
-        super.onBindViewHolder(holder, position, payloads)
-
-        when (position) {
-            0 -> fragmentActivity.program_main_activity_fab.show()
-            else -> fragmentActivity.program_main_activity_fab.hide()
-        }
-    }
-
 }

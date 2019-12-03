@@ -153,7 +153,6 @@ class FirebaseUserProgramCard : Firebase() {
     }
 
     private fun findDateDuration(calendar: LocalDate): Int {
-
         val date1 = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0, 0))
         val date2 = LocalDateTime.of(calendar, LocalTime.of(0, 0, 0))
 

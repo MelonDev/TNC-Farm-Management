@@ -2,11 +2,13 @@ package th.ac.up.agr.thai_mini_chicken.ProgramMainActivity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayoutMediator
@@ -55,8 +57,16 @@ class ProgramMainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     private fun setUpViewPagerAndTab() {
         val adapter = ProgramMainViewPagerAdapter(this)
         program_main_activity_viewpager.adapter = adapter
-
+        program_main_activity_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> program_main_activity_fab.show()
+                    else -> program_main_activity_fab.hide()
+                }
+            }
+        })
         TabLayoutMediator(program_main_activity_tabbar, program_main_activity_viewpager) { tab, position ->
+            Log.e("Check", "Position $position")
             tab.text = when (position) {
                 0 -> "รายการ"
                 1 -> "แจ้งเตือน"

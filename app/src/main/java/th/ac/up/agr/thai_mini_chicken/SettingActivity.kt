@@ -173,9 +173,7 @@ class SettingActivity : AppCompatActivity() {
 
         if (material) {
             style = when (position) {
-                0 -> {
-                    R.style.MelonTheme_Amber_Material
-                }
+                0 -> R.style.MelonTheme_Amber_Material
                 1 -> {
                     R.style.MelonTheme_Red_Material
                 }
