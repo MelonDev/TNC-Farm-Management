@@ -28,8 +28,6 @@ import java.util.*
 
 class NewHistoryAdapter(val fragment: NewHistoryFragment, val ID: String, val data: ArrayList<CardData>) : RecyclerView.Adapter<CardViewHolder>() {
 
-    private val activity = fragment.activity!!
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder = CardViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.data_card, parent, false))
 
     override fun getItemCount(): Int = data.size
