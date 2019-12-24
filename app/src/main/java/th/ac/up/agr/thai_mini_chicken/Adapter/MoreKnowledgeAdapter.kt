@@ -15,16 +15,10 @@ class MoreKnowledgeAdapter(
         val data: ArrayList<MoreKnowledgeData>
 ) : RecyclerView.Adapter<MoreKnowledgeViewholder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoreKnowledgeViewholder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.table_card, parent, false)
-        return MoreKnowledgeViewholder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoreKnowledgeViewholder = MoreKnowledgeViewholder(LayoutInflater.from(parent.context).inflate(R.layout.table_card, parent, false))
 
-    override fun getItemCount(): Int {
-        return data.size
-    }
+    override fun getItemCount(): Int = data.size
 
-    override fun onBindViewHolder(holder: MoreKnowledgeViewholder, position: Int) {
-        holder.bind(type, data[position], position, data.lastIndex)
-    }
+    override fun onBindViewHolder(holder: MoreKnowledgeViewholder, position: Int) = holder.bind(type, data[position], position, data.lastIndex)
+
 }
